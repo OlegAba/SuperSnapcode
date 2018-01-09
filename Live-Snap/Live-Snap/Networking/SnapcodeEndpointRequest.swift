@@ -12,29 +12,36 @@ import Alamofire
 class SnapcodeEndpointRequest {
     
     var snapchatUsername: String
-    
+
     init(snapchatUsername: String) {
         self.snapchatUsername = snapchatUsername
     }
-    
+
     func start(completion: @escaping ((UIImage?) -> ())) {
         
         let url = "https://feelinsonice-hrd.appspot.com/web/deeplink/snapcode?username=\(snapchatUsername)&type=PNG&size=800"
-    
-        Alamofire.request(url).responseData { (response: DataResponse<Data>) in
 
-            response.result.ifSuccess {
+        Alamofire.request(url).validate().responseData { (response: DataResponse<Data>) in
+            
+            switch response.result {
+            case .success:
                 if let imageData = response.result.value {
                     let image = UIImage(data: imageData)
                     completion(image)
-            }
-            }
-            
-            response.result.ifFailure {
-                print("Error in making the request")
-            }
+                } else {
+                    completion(nil)
+                }
+            case .failure(let error):
+                let statusCode = response.response?.statusCode
+                let errorMessage = error.localizedDescription
                 
+                print("\n---Request Failed---")
+                print("URL: \(url)")
+                print("Status Code: \(String(describing: statusCode))")
+                print("Error Message: \(errorMessage)")
+            }
         
         }
+    
     }
 }
