@@ -11,7 +11,9 @@
 		7C2B41D02000A7220038CDCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2B41CF2000A7220038CDCE /* ViewController.swift */; };
 		7C2B41D52000A7220038CDCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C2B41D42000A7220038CDCE /* Assets.xcassets */; };
 		7C2B41D82000A7220038CDCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C2B41D62000A7220038CDCE /* LaunchScreen.storyboard */; };
+		7C6E4D032000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E4D022000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift */; };
 		87FEDBF175B199DB77C65F63 /* Pods_Live_Snap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 867AA8EF1C093CB0C3455C0F /* Pods_Live_Snap.framework */; };
+		95E156952005BD60002B2DC0 /* LivePhotoMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E156942005BD60002B2DC0 /* LivePhotoMaker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +25,9 @@
 		7C2B41D42000A7220038CDCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C2B41D72000A7220038CDCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7C2B41D92000A7220038CDCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7C6E4D022000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapcodeEndpointRequest.swift; sourceTree = "<group>"; };
 		867AA8EF1C093CB0C3455C0F /* Pods_Live_Snap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Live_Snap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		95E156942005BD60002B2DC0 /* LivePhotoMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LivePhotoMaker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +53,7 @@
 		7C2B41C12000A7220038CDCE = {
 			isa = PBXGroup;
 			children = (
+				7CF615642005A9DA00DB8148 /* Utility */,
 				7C2B41CC2000A7220038CDCE /* Live-Snap */,
 				7C2B41CB2000A7220038CDCE /* Products */,
 				C02FF99667EFE895D677EA44 /* Pods */,
@@ -68,12 +73,54 @@
 			isa = PBXGroup;
 			children = (
 				7C2B41CD2000A7220038CDCE /* AppDelegate.swift */,
+				7C6E4D012000AC9C0017A4B3 /* Networking */,
+				7C6E4CFE2000AB9C0017A4B3 /* Models */,
+				7C6E4CFF2000ABA80017A4B3 /* Views */,
+				7C6E4D002000ABB60017A4B3 /* Controllers */,
 				7C2B41CF2000A7220038CDCE /* ViewController.swift */,
+				95E156942005BD60002B2DC0 /* LivePhotoMaker.swift */,
 				7C2B41D42000A7220038CDCE /* Assets.xcassets */,
 				7C2B41D62000A7220038CDCE /* LaunchScreen.storyboard */,
 				7C2B41D92000A7220038CDCE /* Info.plist */,
 			);
 			path = "Live-Snap";
+			sourceTree = "<group>";
+		};
+		7C6E4CFE2000AB9C0017A4B3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7C6E4CFF2000ABA80017A4B3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7C6E4D002000ABB60017A4B3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7C2B41CF2000A7220038CDCE /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		7C6E4D012000AC9C0017A4B3 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				7C6E4D022000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		7CF615642005A9DA00DB8148 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		C02FF99667EFE895D677EA44 /* Pods */ = {
@@ -213,6 +260,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C6E4D032000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift in Sources */,
+				95E156952005BD60002B2DC0 /* LivePhotoMaker.swift in Sources */,
 				7C2B41D02000A7220038CDCE /* ViewController.swift in Sources */,
 				7C2B41CE2000A7220038CDCE /* AppDelegate.swift in Sources */,
 			);
