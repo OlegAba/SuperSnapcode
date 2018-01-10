@@ -51,6 +51,7 @@
 		7C2B41C12000A7220038CDCE = {
 			isa = PBXGroup;
 			children = (
+				7CF615642005A9DA00DB8148 /* Utility */,
 				7C2B41CC2000A7220038CDCE /* Live-Snap */,
 				7C2B41CB2000A7220038CDCE /* Products */,
 				C02FF99667EFE895D677EA44 /* Pods */,
@@ -109,6 +110,13 @@
 				7C6E4D022000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		7CF615642005A9DA00DB8148 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		C02FF99667EFE895D677EA44 /* Pods */ = {
