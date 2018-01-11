@@ -88,10 +88,10 @@ class LivePhotoMaker {
     func convertVideoToLivePhotoFormat(inputVideoPath: String, outputVideoPath: String, completion: @escaping (Bool) -> ()) {
         
         // Create asset writer and set its metadata
-        guard let writer = try? AVAssetWriter(outputURL: URL(fileURLWithPath: outputVideoPath), fileType: AVFileTypeQuickTimeMovie) else { completion(false); return }
+        guard let writer = try? AVAssetWriter(outputURL: URL(fileURLWithPath: outputVideoPath), fileType: .mov) else { completion(false); return }
         let item = AVMutableMetadataItem()
         item.key = "com.apple.quicktime.content.identifier" as (NSCopying & NSObjectProtocol)?
-        item.keySpace = AVMetadataKeySpaceQuickTimeMetadata
+        item.keySpace = AVMetadataKeySpace.quickTimeMetadata
         item.value = assetID as (NSCopying & NSObjectProtocol)?
         item.dataType = "com.apple.metadata.datatype.UTF-8"
         writer.metadata = [item]
@@ -106,11 +106,11 @@ class LivePhotoMaker {
         
         // Input from video file
         let outputSettings = [
-            AVVideoCodecKey: AVVideoCodecH264 as AnyObject,
+            AVVideoCodecKey: AVVideoCodecType.h264 as AnyObject,
             AVVideoWidthKey: track.naturalSize.width as AnyObject,
             AVVideoHeightKey: track.naturalSize.height as AnyObject
         ]
-        let writerInput = AVAssetWriterInput(mediaType: AVMediaTypeVideo, outputSettings: outputSettings)
+        let writerInput = AVAssetWriterInput(mediaType: .video, outputSettings: outputSettings)
         writerInput.expectsMediaDataInRealTime = true
         writerInput.transform = track.preferredTransform
         writer.add(writerInput)
@@ -125,7 +125,7 @@ class LivePhotoMaker {
         
         var formatDescription: CMFormatDescription?
         CMMetadataFormatDescriptionCreateWithMetadataSpecifications(kCFAllocatorDefault, kCMMetadataFormatType_Boxed, [metadataSpecifications] as CFArray, &formatDescription)
-        let assetWriterInput = AVAssetWriterInput(mediaType: AVMediaTypeMetadata, outputSettings: nil, sourceFormatHint: formatDescription)
+        let assetWriterInput = AVAssetWriterInput(mediaType: .metadata, outputSettings: nil, sourceFormatHint: formatDescription)
         
         let adapter = AVAssetWriterInputMetadataAdaptor(assetWriterInput: assetWriterInput)
         writer.add(adapter.assetWriterInput)
@@ -139,7 +139,7 @@ class LivePhotoMaker {
         // write metadata track
         let item2 = AVMutableMetadataItem()
         item2.key = keyStillImageTime as (NSCopying & NSObjectProtocol)?
-        item2.keySpace = AVMetadataKeySpaceQuickTimeMetadata
+        item2.keySpace = AVMetadataKeySpace.quickTimeMetadata
         item2.value = 0 as (NSCopying & NSObjectProtocol)?
         item2.dataType = "com.apple.metadata.datatype.int8"
         adapter.append(AVTimedMetadataGroup(items: [item2], timeRange: CMTimeRangeMake(CMTimeMake(0, 1000), CMTimeMake(200, 3000))))
