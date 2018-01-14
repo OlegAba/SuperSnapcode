@@ -75,33 +75,18 @@
 		7C2B41CC2000A7220038CDCE /* Live-Snap */ = {
 			isa = PBXGroup;
 			children = (
-				7C8906E4200AD2B600E64CAB /* Extensions */,
 				7C2B41CD2000A7220038CDCE /* AppDelegate.swift */,
+				95D127D2200ADD26000AE7EF /* Models */,
+				95D127D3200ADD39000AE7EF /* Views */,
+				7C6E4D002000ABB60017A4B3 /* Controllers */,
 				7CF615642005A9DA00DB8148 /* Utility */,
 				7C6E4D012000AC9C0017A4B3 /* Networking */,
-				7C6E4CFE2000AB9C0017A4B3 /* Models */,
-				7C6E4CFF2000ABA80017A4B3 /* Views */,
-				7C6E4D002000ABB60017A4B3 /* Controllers */,
-				7C8906E2200AD21300E64CAB /* LivePhotoMaker.swift */,
+				7C8906E4200AD2B600E64CAB /* Extensions */,
 				7C2B41D42000A7220038CDCE /* Assets.xcassets */,
 				7C2B41D62000A7220038CDCE /* LaunchScreen.storyboard */,
 				7C2B41D92000A7220038CDCE /* Info.plist */,
 			);
 			path = "Live-Snap";
-			sourceTree = "<group>";
-		};
-		7C6E4CFE2000AB9C0017A4B3 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		7C6E4CFF2000ABA80017A4B3 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		7C6E4D002000ABB60017A4B3 /* Controllers */ = {
@@ -132,8 +117,23 @@
 			isa = PBXGroup;
 			children = (
 				7C5B7BA32006D8980062E399 /* VideoFromImages.swift */,
+				7C8906E2200AD21300E64CAB /* LivePhotoMaker.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		95D127D2200ADD26000AE7EF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		95D127D3200ADD39000AE7EF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		C02FF99667EFE895D677EA44 /* Pods */ = {
