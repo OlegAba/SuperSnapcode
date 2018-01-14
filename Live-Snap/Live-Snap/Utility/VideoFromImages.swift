@@ -24,10 +24,7 @@ class VideoFromImages {
 
         if images.count < 1 { completion(false); return }
         
-        guard var videoOutputURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { completion(false); return }
-        videoOutputURL.appendPathComponent("movie.mov")
-        
-        guard let assetWriter = try? AVAssetWriter(url: videoOutputURL, fileType: .mov) else { completion(false); return }
+        guard let assetWriter = try? AVAssetWriter(url: url, fileType: .mov) else { completion(false); return }
         
         let writerInput = AVAssetWriterInput(mediaType: .video, outputSettings: ["AVVideoCodecKey": AVVideoCodecType.h264,
                                                                                 "AVVideoWidthKey": Int(images[0].size.width),
