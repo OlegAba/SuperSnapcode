@@ -1,6 +1,6 @@
 //
 //  LivePhoto.swift
-//  live
+//  Live-Snap
 //
 //  Created by Baby on 1/8/18.
 //  Copyright © 2018 Baby. All rights reserved.

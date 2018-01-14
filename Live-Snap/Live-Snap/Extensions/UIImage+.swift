@@ -37,4 +37,63 @@ extension UIImage {
         
         return pixelBuffer
     }
+    
+    func darkenedAndBlurred(darkness: Double, blurRadius: Int) -> UIImage? {
+        
+        guard let cgImage = cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        guard let blurFilter = CIFilter(name: "CIGaussianBlur") else { return nil }
+        blurFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        blurFilter.setValue(blurRadius, forKey: kCIInputRadiusKey)
+        
+        guard let blurredCIImage = blurFilter.outputImage else { return nil }
+        
+        guard let darknessFilter = CIFilter(name: "CIColorControls") else { return nil }
+        darknessFilter.setValue(blurredCIImage, forKey: kCIInputImageKey)
+        darknessFilter.setValue(-darkness, forKey: kCIInputBrightnessKey)
+        
+        guard let darkenedCIImage = darknessFilter.outputImage else { return nil }
+        
+        let context = CIContext(options: nil)
+        if let newCGImage = context.createCGImage(darkenedCIImage, from: ciImage.extent) {
+            return UIImage(cgImage: newCGImage)
+        }
+        
+        return nil
+    }
+    
+    func blurred(blurRadius: Int) -> UIImage? {
+        
+        guard let cgImage = cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        guard let filter = CIFilter(name: "CIGaussianBlur") else { return nil }
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(blurRadius, forKey: kCIInputRadiusKey)
+        
+        let context = CIContext(options: nil)
+        if let outputImage = filter.outputImage, let newCGImage = context.createCGImage(outputImage, from: ciImage.extent) {
+            return UIImage(cgImage: newCGImage)
+        }
+        
+        return nil
+    }
+    
+    func darkened(darkness: Double) -> UIImage? {
+        
+        guard let cgImage = cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        guard let filter = CIFilter(name: "CIColorControls") else { return nil }
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(-darkness, forKey: kCIInputBrightnessKey)
+        
+        let context = CIContext(options: nil)
+        if let outputImage = filter.outputImage, let newCGImage = context.createCGImage(outputImage, from: ciImage.extent) {
+            return UIImage(cgImage: newCGImage)
+        }
+        
+        return nil
+    }
 }
