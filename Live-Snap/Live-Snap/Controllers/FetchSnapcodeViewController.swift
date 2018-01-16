@@ -47,12 +47,12 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         nextButton.setBackgroundImage(UIImage(color: UIColor.snapYellow, size: nextButton.frame.size), for: .normal)
         nextButton.setBackgroundImage(UIImage(color: UIColor.snapYellow.withAlphaComponent(0.75), size: nextButton.frame.size), for: .highlighted)
         nextButton.addTarget(self, action: #selector(nextButtonWasPressed), for: .touchUpInside)
+        
         // Notification for when keyboard will show up to set frame of next button
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: .UIKeyboardWillChangeFrame, object: nil)
         
-        // Display keyboard without animations
+        // Display keyboard
         usernameTextField.becomeFirstResponder()
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,9 +66,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let keyboardHeight = keyboardSize.height
-            
-            nextButton.center = CGPoint(x: view.frame.width / 2.0, y: view.frame.height - keyboardHeight - nextButton.frame.height / 2.0)
+            nextButton.center = CGPoint(x: view.frame.width / 2.0, y: view.frame.height - keyboardSize.height - nextButton.frame.height / 2.0)
         }
     }
     
