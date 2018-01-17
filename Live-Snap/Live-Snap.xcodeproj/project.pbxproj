@@ -22,6 +22,7 @@
 		95D127DF200D609B000AE7EF /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D127DE200D609B000AE7EF /* UIColor+.swift */; };
 		95D127E1200D65A4000AE7EF /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D127E0200D65A4000AE7EF /* UITextField+.swift */; };
 		95D127E5200D6ACB000AE7EF /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D127E4200D6ACB000AE7EF /* UIView+.swift */; };
+		95D127E9200D88D1000AE7EF /* CropWallpaperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D127E8200D88D1000AE7EF /* CropWallpaperViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		95D127DE200D609B000AE7EF /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		95D127E0200D65A4000AE7EF /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		95D127E4200D6ACB000AE7EF /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		95D127E8200D88D1000AE7EF /* CropWallpaperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropWallpaperViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 			children = (
 				7C8906E0200AD1D700E64CAB /* ViewController.swift */,
 				95D127DC200D5C24000AE7EF /* FetchSnapcodeViewController.swift */,
+				95D127E8200D88D1000AE7EF /* CropWallpaperViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -263,7 +266,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		D6E9E7A987DC4AD976414051 /* [CP] Embed Pods Frameworks */ = {
@@ -300,6 +303,7 @@
 				7C5B7BA42006D8980062E399 /* VideoFromImages.swift in Sources */,
 				7CF942F4200AD36C00896C4A /* UIImage+.swift in Sources */,
 				7C2B41CE2000A7220038CDCE /* AppDelegate.swift in Sources */,
+				95D127E9200D88D1000AE7EF /* CropWallpaperViewController.swift in Sources */,
 				7C8906E3200AD21300E64CAB /* LivePhotoMaker.swift in Sources */,
 				95D127DF200D609B000AE7EF /* UIColor+.swift in Sources */,
 				95D127E1200D65A4000AE7EF /* UITextField+.swift in Sources */,
