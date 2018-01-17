@@ -6,9 +6,7 @@
 //  Copyright © 2018 Oleg Abalonski. All rights reserved.
 //
 
-import AVFoundation
 import AVKit
-import UIKit
 
 class VideoFromImages {
     

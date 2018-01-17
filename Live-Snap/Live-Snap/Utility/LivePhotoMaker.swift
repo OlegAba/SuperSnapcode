@@ -6,12 +6,7 @@
 //  Copyright © 2018 Baby. All rights reserved.
 //
 
-import UIKit
 import Photos
-import PhotosUI
-import AVFoundation
-import AVKit
-import ImageIO
 import MobileCoreServices
 
 class LivePhotoMaker {
