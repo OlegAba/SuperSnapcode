@@ -11,7 +11,7 @@ import CropViewController
 
 class CropWallpaperViewController: UIViewController, CropViewControllerDelegate {
     
-    var imageToCrop: UIImage!
+    var imageToCrop: UIImage! = UIImage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
