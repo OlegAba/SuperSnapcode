@@ -23,6 +23,8 @@
 		95D127E1200D65A4000AE7EF /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D127E0200D65A4000AE7EF /* UITextField+.swift */; };
 		95D127E5200D6ACB000AE7EF /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D127E4200D6ACB000AE7EF /* UIView+.swift */; };
 		95D127E9200D88D1000AE7EF /* CropWallpaperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D127E8200D88D1000AE7EF /* CropWallpaperViewController.swift */; };
+		95D127ED2011BA63000AE7EF /* ExportWallpaperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D127EC2011BA63000AE7EF /* ExportWallpaperViewController.swift */; };
+		95D127EF2011BDC8000AE7EF /* LivePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D127EE2011BDC8000AE7EF /* LivePhoto.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		95D127E0200D65A4000AE7EF /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		95D127E4200D6ACB000AE7EF /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		95D127E8200D88D1000AE7EF /* CropWallpaperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropWallpaperViewController.swift; sourceTree = "<group>"; };
+		95D127EC2011BA63000AE7EF /* ExportWallpaperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportWallpaperViewController.swift; sourceTree = "<group>"; };
+		95D127EE2011BDC8000AE7EF /* LivePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePhoto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 				7C8906E0200AD1D700E64CAB /* ViewController.swift */,
 				95D127DC200D5C24000AE7EF /* FetchSnapcodeViewController.swift */,
 				95D127E8200D88D1000AE7EF /* CropWallpaperViewController.swift */,
+				95D127EC2011BA63000AE7EF /* ExportWallpaperViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -146,6 +151,7 @@
 		95D127D2200ADD26000AE7EF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				95D127EE2011BDC8000AE7EF /* LivePhoto.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -295,12 +301,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				95D127E5200D6ACB000AE7EF /* UIView+.swift in Sources */,
+				95D127ED2011BA63000AE7EF /* ExportWallpaperViewController.swift in Sources */,
 				7C8906E1200AD1D700E64CAB /* ViewController.swift in Sources */,
 				7C6E4D032000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift in Sources */,
 				95D127DD200D5C24000AE7EF /* FetchSnapcodeViewController.swift in Sources */,
 				95D127D5200AE014000AE7EF /* GenerateLiveWallpaperWithBarcode.swift in Sources */,
 				95D127DB200AF391000AE7EF /* FileManager+.swift in Sources */,
 				7C5B7BA42006D8980062E399 /* VideoFromImages.swift in Sources */,
+				95D127EF2011BDC8000AE7EF /* LivePhoto.swift in Sources */,
 				7CF942F4200AD36C00896C4A /* UIImage+.swift in Sources */,
 				7C2B41CE2000A7220038CDCE /* AppDelegate.swift in Sources */,
 				95D127E9200D88D1000AE7EF /* CropWallpaperViewController.swift in Sources */,
