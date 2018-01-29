@@ -14,10 +14,14 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     var collectionView: UICollectionView!
     var toolBar: UIToolbar!
     var tableView: UITableView!
+    var containerView: UIView!
+    var progressView: UIView!
+    var activityIndicator: UIActivityIndicatorView!
     
     var photoAlbums = [PhotoAlbum]()
     var photoThumbnails = [UIImage]()
     var currentAlbumName = "All Photos"
+    
     let statusBarHeight = UIApplication.shared.statusBarFrame.height
     
     override func viewDidLoad() {
@@ -58,6 +62,11 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         tableView.tableFooterView = UIView()
         tableView.isHidden = true
         
+        containerView = UIView()
+        progressView = UIView()
+        activityIndicator = UIActivityIndicatorView()
+ 
+ 
         view.addSubview(collectionView)
         view.addSubview(tableView)
         view.addSubview(toolBar)
@@ -138,22 +147,34 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         
         currentAlbumName = selectedAlbumName
         
-        for photoAlbum in photoAlbums {
-            if photoAlbum.name == selectedAlbumName {
-                ImageManager.shared.grabThumbnailsFromPhotoAlbum(photoAlbum: photoAlbum, completion: { (thumbnails) in
-                    if thumbnails != nil {
-                        DispatchQueue.main.async {
-                            self.photoThumbnails = thumbnails!
+        DispatchQueue.global(qos: .userInitiated).sync {
+            self.animateTableView()
+            
+            showActivityIndicator()
+        
+        }
+        
+        DispatchQueue.main.async {
+            
+            for photoAlbum in self.photoAlbums {
+                if photoAlbum.name == selectedAlbumName {
+                    ImageManager.shared.grabThumbnailsFromPhotoAlbum(photoAlbum: photoAlbum, completion: { (thumbnails: [UIImage]?) in
+                        if let thumbnails = thumbnails {
+                            self.photoThumbnails = thumbnails
                             self.collectionView.reloadData()
                             if let toolbarItems = self.toolBar.items, toolbarItems.count >= 2 {
                                 toolbarItems[2].title = selectedAlbumName
                             }
-                            self.animateTableView()
+                            //self.activityIndicatorView.stopAnimating()
+                            self.hideActivityIndicator()
+                            
                         }
-                    }
-                })
+                    })
+                }
             }
+            
         }
+        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -178,6 +199,39 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                 self.view.isUserInteractionEnabled = true
             })
         }
+    }
+    
+    func showActivityIndicator() {
+        containerView.frame = view.frame
+        containerView.center = view.center
+        //containerView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1)
+        
+        
+        progressView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
+        progressView.center = view.center
+        progressView.backgroundColor = UIColor(red: 21 / 255.0, green: 25 / 255.0, blue: 28 / 255.0, alpha: 0.7)
+        progressView.layer.borderWidth = 0.5
+        progressView.layer.borderColor = UIColor.snapYellow.cgColor
+        progressView.clipsToBounds = true
+        progressView.layer.cornerRadius = 10
+        
+        
+        
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        activityIndicator.activityIndicatorViewStyle = .whiteLarge
+        activityIndicator.center = CGPoint(x: progressView.bounds.width / 2, y: progressView.bounds.height / 2)
+        
+        progressView.addSubview(activityIndicator)
+        containerView.addSubview(progressView)
+        view.addSubview(containerView)
+        
+        activityIndicator.startAnimating()
+        
+    }
+    
+    func hideActivityIndicator() {
+        activityIndicator.stopAnimating()
+        containerView.removeFromSuperview()
     }
     
 }

@@ -50,21 +50,10 @@ class ImageManager {
         let albumAssetCollections = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: PHFetchOptions())
         albumAssetCollections.enumerateObjects{ (assetCollection: PHAssetCollection, index: Int, stop: UnsafeMutablePointer<ObjCBool>) in
             if let albumName = assetCollection.localizedTitle {
-//                let fetchOptions = PHFetchOptions()
-//                fetchOptions.predicate = NSPredicate(format: "title = %@", albumName)
-//                //fetchOptions.predicate = NSPredicate(format: "title = %@ AND mediaType = %d", argumentArray: [albumName, PHAssetMediaType.image])
-//                //fetchOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
-//                //How to combine predicates???
-//
-//                var assetCollection = PHAssetCollection()
-//                let collection = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
-//                if let firstObject = collection.firstObject {
-//                    assetCollection = firstObject
-//                }
-//
-                let newFetchOptions = PHFetchOptions()
-                newFetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-                let fetchedAssets = PHAsset.fetchAssets(in: assetCollection, options: newFetchOptions)
+                let fetchOptions = PHFetchOptions()
+                fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+                fetchOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
+                let fetchedAssets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
                 if fetchedAssets.count > 0 {
                     albumAssets[albumName] = fetchedAssets
                 }
@@ -85,10 +74,6 @@ class ImageManager {
             let smartAlbum = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: albumSubtype, options: PHFetchOptions())
             smartAlbum.enumerateObjects{ (assetCollection: PHAssetCollection, index: Int, stop: UnsafeMutablePointer<ObjCBool>) in
                 if let albumName = assetCollection.localizedTitle {
-//                    var assetCollection = PHAssetCollection()
-//                    if let firstObject = smartAlbum.firstObject {
-//                        assetCollection = firstObject
-//                    }
                     let fetchOptions = PHFetchOptions()
                     fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
                     let fetchedAssets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
