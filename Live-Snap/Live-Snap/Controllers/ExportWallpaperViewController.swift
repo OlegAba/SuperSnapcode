@@ -8,6 +8,7 @@
 
 import UIKit
 import PhotosUI
+import AVKit
 
 class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
     
@@ -23,16 +24,31 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         view.isUserInteractionEnabled = false
         
         livePhotoPreviewView = PHLivePhotoView(frame: view.frame)
-        livePhotoPreviewView.livePhoto = livePhoto.phLivePhoto
         livePhotoPreviewView.delegate = self
         view.addSubview(livePhotoPreviewView)
         
-        exportButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
+        exportButton = UIButton(frame: CGRect(x: 0, y: view.frame.height - 50, width: view.frame.width, height: 50))
         exportButton.setTitle("Export", for: .normal)
         exportButton.setTitleColor(UIColor.snapBlack, for: .normal)
         exportButton.setBackgroundImage(UIImage(color: UIColor.snapYellow, size: exportButton.frame.size), for: .normal)
         exportButton.setBackgroundImage(UIImage(color: UIColor.snapYellow.withAlphaComponent(0.75), size: exportButton.frame.size), for: .highlighted)
         exportButton.addTarget(self, action: #selector(exportButtonWasPressed), for: .touchUpInside)
+        
+        createLivePhoto()
+    }
+    
+    func createLivePhoto() {
+        FileManager.default.clearDocumentsDirectory()
+        let livePhotoGenerator = GenerateLiveWallpaperWithBarcode(fileName: "live_wallpaper", wallpaperImage: System.shared.wallpaper!, barcodeImage: System.shared.snapcode!)
+        livePhotoGenerator.create { (livePhoto: LivePhoto?) in
+            
+            if let livePhoto = livePhoto {
+                self.livePhoto = livePhoto
+                self.livePhotoPreviewView.livePhoto = livePhoto.phLivePhoto
+                self.showPreview()
+            }
+        }
+        
     }
     
     func showPreview() {
@@ -47,11 +63,13 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
     }
     
     @objc func exportButtonWasPressed() {
-        livePhoto.writeToPhotoLibrary { (success: Bool) in
-            if success {
-                // transition to next phase
-            } else {
-                // show error alert
+        DispatchQueue.main.async {
+            self.livePhoto.writeToPhotoLibrary { (success: Bool) in
+                if success {
+                    // transition to next phase
+                } else {
+                    // show error alert
+                }
             }
         }
     }

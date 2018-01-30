@@ -20,7 +20,19 @@ class GenerateLiveWallpaperWithBarcode {
         self.barcodeImage = barcodeImage
     }
     
-    func create(completion: @escaping (PHLivePhoto?) -> ()) {
+    func imageURL() -> URL {
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let imageFilePath = "\(documentsDirectory)/\(fileName).jpeg"
+        return URL(fileURLWithPath: imageFilePath)
+    }
+    
+    func videoURL() -> URL {
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let videoFilePath = "\(documentsDirectory)/\(fileName).mov"
+        return URL(fileURLWithPath: videoFilePath)
+    }
+    
+    func create(completion: @escaping (LivePhoto?) -> ()) {
         
         guard let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else { completion(nil); return }
         
@@ -40,7 +52,7 @@ class GenerateLiveWallpaperWithBarcode {
             let livePhotoImageData = UIImageJPEGRepresentation(livePhotoImage, 1.0)
             guard let _ = try? livePhotoImageData?.write(to: imageFilePathURL) else { completion(nil); return }
 
-            LivePhotoMaker(imagePath: imageFilePath, videoPath: videoFilePath).create(completion: { (livePhoto: PHLivePhoto?) in
+            LivePhotoMaker(imagePath: imageFilePath, videoPath: videoFilePath).create(completion: { (livePhoto: LivePhoto?) in
                 completion(livePhoto)
             })
         }
@@ -50,12 +62,12 @@ class GenerateLiveWallpaperWithBarcode {
         
         let frame1 = wallpaperImage
         
-        guard let frame2Background = frame1.darkenedAndBlurred(darkness: 0.01, blurRadius: 4) else { return nil }
-        guard let blurredSnapcode = barcodeImage.blurred(blurRadius: 4) else { return nil }
+        guard let frame2Background = frame1.darkenedAndBlurred(darkness: 0.04, blurRadius: 16) else { return nil }
+        guard let blurredSnapcode = barcodeImage.blurred(blurRadius: 16) else { return nil }
         guard let frame2 = drawSnapCodeOnImage(snapcode: blurredSnapcode, image: frame2Background) else { return nil }
         
-        guard let frame3Background = frame2Background.darkenedAndBlurred(darkness: 0.01, blurRadius: 4) else { return nil }
-        guard let frame3 = drawSnapCodeOnImage(snapcode: #imageLiteral(resourceName: "snapcode.png"), image: frame3Background) else { return nil }
+        let frame3Background = frame2Background.iOSBlurred()
+        guard let frame3 = drawSnapCodeOnImage(snapcode: barcodeImage, image: frame3Background) else { return nil }
         
         return [frame1, frame2, frame3]
     }

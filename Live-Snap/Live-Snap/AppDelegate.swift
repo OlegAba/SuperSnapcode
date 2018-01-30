@@ -13,11 +13,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    var pageViewController: PageViewController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+
+        pageViewController = PageViewController(firstViewController: FetchSnapcodeViewController())
+
         window = UIWindow()
-        window?.rootViewController = SelectPhotoViewController()
+        window?.rootViewController = pageViewController
         window?.makeKeyAndVisible()
 
         return true
@@ -47,5 +50,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
-

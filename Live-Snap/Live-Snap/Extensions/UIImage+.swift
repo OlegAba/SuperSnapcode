@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GPUImage
 
 extension UIImage {
     
@@ -19,6 +20,15 @@ extension UIImage {
         UIGraphicsEndImageContext()
         
         self.init(cgImage: image?.cgImage ?? UIImage().cgImage!)
+    }
+    
+    func resized(size: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
+        draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage ?? UIImage()
     }
     
     func pixelBuffer() -> CVPixelBuffer? {
@@ -47,6 +57,13 @@ extension UIImage {
         CVPixelBufferUnlockBaseAddress(pixelBuffer!, CVPixelBufferLockFlags(rawValue: 0))
         
         return pixelBuffer
+    }
+    
+    func iOSBlurred() -> UIImage {
+        
+        let blurFilter = GPUImageiOSBlurFilter()
+        blurFilter.blurRadiusInPixels = 30.0
+        return blurFilter.image(byFilteringImage: self)
     }
     
     func darkenedAndBlurred(darkness: Double, blurRadius: Int) -> UIImage? {

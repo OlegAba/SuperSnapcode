@@ -1,18 +1,18 @@
 PODS:
   - Alamofire (4.6.0)
-  - CropViewController (2.3.5):
-    - TOCropViewController
-  - TOCropViewController (2.3.5)
+  - CropViewController (2.3.6)
+  - GPUImage (0.1.7)
 
 DEPENDENCIES:
   - Alamofire
   - CropViewController
+  - GPUImage
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
-  CropViewController: 73a095de5605b017afdf34c6f2604569e147bcbd
-  TOCropViewController: a21b39c910d161600a26b6e3f89a58707afaa4f8
+  CropViewController: e6d4bd512d15a1709e9ddf71fe7d98ffd05dda0f
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
 
-PODFILE CHECKSUM: 4adc1a49230047e0b21a77be34642eb772507af0
+PODFILE CHECKSUM: dc9ef1b7e95f862b063b218fb936196a79f405cb
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.2.0
