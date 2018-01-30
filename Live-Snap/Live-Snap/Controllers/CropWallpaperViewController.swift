@@ -21,7 +21,7 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
         let cropViewController = CropViewController(image: imageToCrop)
         cropViewController.delegate = self
         cropViewController.aspectRatioLockEnabled = true
-        cropViewController.customAspectRatio = view.frame.size
+        cropViewController.customAspectRatio = UIScreen.main.bounds.size
         cropViewController.toolbar.clampButtonHidden = true
         cropViewController.toolbar.rotateClockwiseButtonHidden = true
         cropViewController.toolbar.rotateCounterclockwiseButtonHidden = true
@@ -44,7 +44,14 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
     }
     
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
-        // transition to next view
+        let croppedCGImage = imageToCrop.cgImage?.cropping(to: cropRect)
+        let croppedImage = UIImage(cgImage: croppedCGImage!)
+        
+        System.shared.wallpaper = croppedImage
+        System.shared.snapcode = System.shared.snapcode?.resized(size: CGSize(width: croppedImage.size.width * 0.75, height: croppedImage.size.width * 0.75))
+        
+        let exportWallpaperViewController = ExportWallpaperViewController()
+        System.shared.appDelegate().pageViewController?.setViewControllers([exportWallpaperViewController], direction: .forward, animated: true, completion: nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

@@ -22,6 +22,7 @@ class LivePhoto {
     
     func writeToPhotoLibrary(completion: @escaping (Bool) -> ()) {
         PHPhotoLibrary.shared().performChanges({
+            
             let request = PHAssetCreationRequest.forAsset()
             
             request.addResource(with: .photo, fileURL: self.imageURL, options: nil)

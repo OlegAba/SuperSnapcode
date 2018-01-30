@@ -8,4 +8,5 @@ target 'Live-Snap' do
   # Pods for Live-Snap
   pod 'Alamofire'
   pod 'CropViewController'
+  pod 'GPUImage'
 end

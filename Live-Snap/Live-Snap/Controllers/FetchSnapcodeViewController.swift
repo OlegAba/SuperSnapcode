@@ -51,8 +51,13 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         // Notification for when keyboard will show up to set frame of next button
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: .UIKeyboardWillChangeFrame, object: nil)
         
-        // Display keyboard
-        usernameTextField.becomeFirstResponder()
+        showKeyboard()
+    }
+    
+    func showKeyboard() {
+        Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false) { (timer: Timer) in
+            self.usernameTextField.becomeFirstResponder()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -88,8 +93,10 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         
         let endpointRequest = SnapcodeEndpointRequest(snapchatUsername: username)
         endpointRequest.start { (snapcodeImage: UIImage?) in
-            if let _ = snapcodeImage {
-                // do something here
+            if let snapcodeImage = snapcodeImage {
+                System.shared.snapcode = snapcodeImage
+                let selectPhotoViewController = SelectPhotoViewController()
+                System.shared.appDelegate().pageViewController?.setViewControllers([selectPhotoViewController], direction: .forward, animated: true, completion: nil)
             } else {
                 // display failure case here
             }

@@ -123,7 +123,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                     if let image = image {
                         let cropWallpaperViewController = CropWallpaperViewController()
                         cropWallpaperViewController.imageToCrop = image
-                        self.present(cropWallpaperViewController, animated: true, completion: nil)
+                        System.shared.appDelegate().pageViewController?.setViewControllers([cropWallpaperViewController], direction: .forward, animated: true, completion: nil)
                     }
                 })
             }

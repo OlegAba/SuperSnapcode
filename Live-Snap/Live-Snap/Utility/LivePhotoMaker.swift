@@ -33,14 +33,18 @@ class LivePhotoMaker {
         }
     }
     
-    func create(completion: @escaping (PHLivePhoto?) -> ()) {
+    func create(completion: @escaping (LivePhoto?) -> ()) {
         guard convertImageToLivePhotoFormat(inputImagePath: inputImagePath, outputImagePath: outputImagePath) else { completion(nil); return }
         
         convertVideoToLivePhotoFormat(inputVideoPath: inputVideoPath, outputVideoPath: outputVideoPath, completion: { (success: Bool) in
             guard success else { completion(nil); return }
             
             self.makeLivePhotoFromFormattedItems(imagePath: self.outputImagePath, videoPath: self.outputVideoPath, previewImage: UIImage(), completion: { (livePhoto: PHLivePhoto?) in
-                completion(livePhoto)
+                if let livePhoto = livePhoto {
+                    completion(LivePhoto(phLivePhoto: livePhoto, imageURL: URL(fileURLWithPath: self.outputImagePath), videoURL: URL(fileURLWithPath: self.outputVideoPath)))
+                } else {
+                    completion(nil)
+                }
             })
         })
     }
