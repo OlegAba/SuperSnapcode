@@ -40,7 +40,9 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
     }
     
     func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
-        // transition to previous view
+        let selectPhotoViewController = SelectPhotoViewController()
+        
+        System.shared.appDelegate().pageViewController?.setViewControllers([selectPhotoViewController], direction: .reverse, animated: true, completion: nil)
     }
     
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
@@ -58,3 +60,4 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
         return .lightContent
     }
 }
+

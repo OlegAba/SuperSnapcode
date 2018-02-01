@@ -103,3 +103,4 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         }
     }
 }
+

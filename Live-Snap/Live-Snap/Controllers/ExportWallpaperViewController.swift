@@ -22,6 +22,7 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         
         view.backgroundColor = UIColor.snapBlack
         view.isUserInteractionEnabled = false
+        view.isIPhoneX()
         
         livePhotoPreviewView = PHLivePhotoView(frame: view.frame)
         livePhotoPreviewView.delegate = self
@@ -33,6 +34,8 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         exportButton.setBackgroundImage(UIImage(color: UIColor.snapYellow, size: exportButton.frame.size), for: .normal)
         exportButton.setBackgroundImage(UIImage(color: UIColor.snapYellow.withAlphaComponent(0.75), size: exportButton.frame.size), for: .highlighted)
         exportButton.addTarget(self, action: #selector(exportButtonWasPressed), for: .touchUpInside)
+        
+        
         
         createLivePhoto()
     }
@@ -74,3 +77,4 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         }
     }
 }
+
