@@ -24,3 +24,4 @@ class PageViewController: UIPageViewController {
         return .lightContent
     }
 }
+

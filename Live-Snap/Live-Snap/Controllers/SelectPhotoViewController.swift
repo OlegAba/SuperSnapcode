@@ -17,6 +17,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     var containerView: UIView!
     var progressView: UIView!
     var activityIndicator: UIActivityIndicatorView!
+    var statusBarView: UIView!
     
     var photoAlbums = [PhotoAlbum]()
     var photoThumbnails = [UIImage]()
@@ -27,18 +28,21 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView = UICollectionView(frame: CGRect(x: 0, y: statusBarHeight, width: view.frame.width, height: view.frame.height - 118), collectionViewLayout: UICollectionViewFlowLayout())
+        view.backgroundColor = UIColor.snapBlack
+        view.isIPhoneX()
+        
+        collectionView = UICollectionView(frame: CGRect(x: 0, y: statusBarHeight, width: view.frame.width, height: view.frame.height), collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.register(SelectPhotoCollectionViewCell.self, forCellWithReuseIdentifier: "SelectPhotoCollectionViewCellReuseIdentifier")
         collectionView.backgroundColor = UIColor.snapBlack
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        toolBar = UIToolbar(frame: CGRect(x: 0, y: view.frame.size.height - 54, width: view.frame.size.width, height: 50))
-        toolBar.layer.position = CGPoint(x: view.frame.width / 2, y: view.frame.height - 50)
+        
+        toolBar = UIToolbar(frame: CGRect(x: 0, y: view.frame.size.height - 45, width: view.frame.size.width, height: 45))
         toolBar.isTranslucent = false
         toolBar.barTintColor = UIColor.snapBlack
         
-        let backBarButton = UIBarButtonItem(title: "Back", style:.plain, target: self, action: nil)
+        let backBarButton = UIBarButtonItem(title: "Back", style:.plain, target: self, action: #selector(backButtonWasPressed))
         backBarButton.tintColor = UIColor.snapYellow
         
         let currentAlbumButton = UIBarButtonItem(title: "All Photos", style:.plain, target: self, action: nil)
@@ -65,14 +69,18 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         containerView = UIView()
         progressView = UIView()
         activityIndicator = UIActivityIndicatorView()
- 
- 
+        
+        statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+        statusBarView.backgroundColor = UIColor.snapBlack
+        
         view.addSubview(collectionView)
         view.addSubview(tableView)
         view.addSubview(toolBar)
-
+        view.addSubview(statusBarView)
+        
         getAllPhotoThumbnails()
     }
+    
     
     func getAllPhotoThumbnails() {
         photoAlbums = ImageManager.shared.grabAllPhotoAlbums()
@@ -151,11 +159,10 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
             self.animateTableView()
             
             showActivityIndicator()
-        
+            
         }
         
         DispatchQueue.main.async {
-            
             for photoAlbum in self.photoAlbums {
                 if photoAlbum.name == selectedAlbumName {
                     ImageManager.shared.grabThumbnailsFromPhotoAlbum(photoAlbum: photoAlbum, completion: { (thumbnails: [UIImage]?) in
@@ -165,7 +172,6 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                             if let toolbarItems = self.toolBar.items, toolbarItems.count >= 2 {
                                 toolbarItems[2].title = selectedAlbumName
                             }
-                            //self.activityIndicatorView.stopAnimating()
                             self.hideActivityIndicator()
                             
                         }
@@ -201,11 +207,15 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         }
     }
     
+    @objc func backButtonWasPressed() {
+        let fetchSnapcodeViewController = FetchSnapcodeViewController()
+        
+        System.shared.appDelegate().pageViewController?.setViewControllers([fetchSnapcodeViewController], direction: .reverse, animated: true, completion: nil)
+    }
+    
     func showActivityIndicator() {
         containerView.frame = view.frame
         containerView.center = view.center
-        //containerView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1)
-        
         
         progressView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
         progressView.center = view.center
@@ -214,8 +224,6 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         progressView.layer.borderColor = UIColor.snapYellow.cgColor
         progressView.clipsToBounds = true
         progressView.layer.cornerRadius = 10
-        
-        
         
         activityIndicator.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         activityIndicator.activityIndicatorViewStyle = .whiteLarge
@@ -226,7 +234,6 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         view.addSubview(containerView)
         
         activityIndicator.startAnimating()
-        
     }
     
     func hideActivityIndicator() {
@@ -235,3 +242,4 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     }
     
 }
+
