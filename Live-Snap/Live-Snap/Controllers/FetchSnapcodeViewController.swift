@@ -17,6 +17,8 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        System.shared.snapcode = nil
+        
         view.backgroundColor = UIColor.snapBlack
         
         instructionsTextLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.75, height: 100))

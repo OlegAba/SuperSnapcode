@@ -17,6 +17,7 @@ class AlbumTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.backgroundColor = UIColor.snapBlack
+        selectionStyle = .none
         
         albumTitleLabel = UILabel()
         albumTitleLabel.textColor = UIColor.snapWhite

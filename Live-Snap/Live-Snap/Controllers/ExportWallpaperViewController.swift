@@ -22,7 +22,9 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         
         view.backgroundColor = UIColor.snapBlack
         view.isUserInteractionEnabled = false
-        view.isIPhoneX()
+        if view.isIPhoneX() {
+            view.frame.size.height -= 34.0
+        }
         
         livePhotoPreviewView = PHLivePhotoView(frame: view.frame)
         livePhotoPreviewView.delegate = self

@@ -30,6 +30,12 @@ class ImageManager {
     
     static let shared = ImageManager()
     
+    func requestPhotoLibraryPermission(completion: @escaping (Bool) -> ()) {
+        PHPhotoLibrary.requestAuthorization { (status: PHAuthorizationStatus) in
+            completion(status == .denied || status == .restricted)
+        }
+    }
+    
     func grabAllPhotoAlbums() -> [PhotoAlbum] {
         
         var albumAssets = [String: PHFetchResult<PHAsset>]()
@@ -122,6 +128,7 @@ class ImageManager {
         let requestOptions = PHImageRequestOptions()
         requestOptions.isSynchronous = true
         requestOptions.deliveryMode = .highQualityFormat
+        requestOptions.isNetworkAccessAllowed = true
         
         imageManager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: requestOptions, resultHandler: { (image: UIImage?, info: [AnyHashable : Any]?) in
             completion(image)

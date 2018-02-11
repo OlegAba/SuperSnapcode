@@ -26,9 +26,11 @@ extension UIView {
         return CGPoint(x: frame.origin.x + frame.width, y: frame.origin.y + frame.height / 2.0)
     }
     
-    func isIPhoneX() {
+    func isIPhoneX() -> Bool {
         if UIScreen.main.nativeBounds.height == 2436 {
-            self.frame.size.height = self.frame.size.height - 34.0
+            return true
+        } else {
+            return false
         }
     }
     

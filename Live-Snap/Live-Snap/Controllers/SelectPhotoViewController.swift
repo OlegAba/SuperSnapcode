@@ -18,6 +18,8 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     var progressView: UIView!
     var activityIndicator: UIActivityIndicatorView!
     var statusBarView: UIView!
+    var deniedLibraryPermissionLabel: UILabel!
+    var goToUserSettingsButton: UIButton!
     
     var photoAlbums = [PhotoAlbum]()
     var photoThumbnails = [UIImage]()
@@ -29,13 +31,9 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.snapBlack
-        view.isIPhoneX()
-        
-        collectionView = UICollectionView(frame: CGRect(x: 0, y: statusBarHeight, width: view.frame.width, height: view.frame.height), collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.register(SelectPhotoCollectionViewCell.self, forCellWithReuseIdentifier: "SelectPhotoCollectionViewCellReuseIdentifier")
-        collectionView.backgroundColor = UIColor.snapBlack
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        if view.isIPhoneX() {
+            view.frame.size.height -= 34.0
+        }
         
         
         toolBar = UIToolbar(frame: CGRect(x: 0, y: view.frame.size.height - 45, width: view.frame.size.width, height: 45))
@@ -54,6 +52,13 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
         toolBar.items = [backBarButton, flexibleSpace, currentAlbumButton, flexibleSpace, selectAlbumButton]
         
+        
+        collectionView = UICollectionView(frame: CGRect(x: 0, y: statusBarHeight, width: view.frame.width, height: view.frame.height - (statusBarHeight + toolBar.frame.height)), collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.register(SelectPhotoCollectionViewCell.self, forCellWithReuseIdentifier: "SelectPhotoCollectionViewCellReuseIdentifier")
+        collectionView.backgroundColor = UIColor.snapBlack
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
         tableView = UITableView(frame: CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height))
         tableView.backgroundColor = UIColor.snapBlack
         tableView.register(AlbumTableViewCell.self, forCellReuseIdentifier: "AlbumTableViewCellReuseIdentifier")
@@ -70,15 +75,43 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         progressView = UIView()
         activityIndicator = UIActivityIndicatorView()
         
+        deniedLibraryPermissionLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.75, height: 100))
+        deniedLibraryPermissionLabel.center = view.center
+        deniedLibraryPermissionLabel.textColor = UIColor.snapWhite
+        deniedLibraryPermissionLabel.textAlignment = .center
+        let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
+        deniedLibraryPermissionLabel.text = "\(appName) needs access to your photo library to import and export images. Please click the settings button below and enable access"
+        deniedLibraryPermissionLabel.numberOfLines = 4
+        
+        goToUserSettingsButton = UIButton(frame: CGRect(x: 0, y: view.frame.height - 50, width: view.frame.width, height: 50))
+        goToUserSettingsButton.setTitle("Settings", for: .normal)
+        goToUserSettingsButton.setTitleColor(UIColor.snapBlack, for: .normal)
+        goToUserSettingsButton.setBackgroundImage(UIImage(color: UIColor.snapYellow, size: goToUserSettingsButton.frame.size), for: .normal)
+        goToUserSettingsButton.setBackgroundImage(UIImage(color: UIColor.snapYellow.withAlphaComponent(0.75), size: goToUserSettingsButton.frame.size), for: .highlighted)
+        goToUserSettingsButton.addTarget(self, action: #selector(goToSettingsButtonWasPressed), for: .touchUpInside)
+        
         statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
         statusBarView.backgroundColor = UIColor.snapBlack
         
-        view.addSubview(collectionView)
-        view.addSubview(tableView)
-        view.addSubview(toolBar)
-        view.addSubview(statusBarView)
+        ImageManager.shared.requestPhotoLibraryPermission { (status: Bool) in
+            DispatchQueue.main.async {
+                
+                self.goToUserSettingsButton.removeFromSuperview()
+                self.deniedLibraryPermissionLabel.removeFromSuperview()
+                
+                if status == true {
+                    self.view.addSubview(self.deniedLibraryPermissionLabel)
+                    self.view.addSubview(self.goToUserSettingsButton)
+                } else {
+                    self.view.addSubview(self.collectionView)
+                    self.view.addSubview(self.tableView)
+                    self.view.addSubview(self.statusBarView)
+                    self.view.addSubview(self.toolBar)
+                }
+            }
+            self.getAllPhotoThumbnails()
+        }
         
-        getAllPhotoThumbnails()
     }
     
     
@@ -91,6 +124,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                         if let thumbnails = thumbnails {
                             self.photoThumbnails = thumbnails
                             self.collectionView.reloadData()
+                            self.tableView.reloadData()
                         }
                     }
                 })
@@ -146,20 +180,19 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumTableViewCellReuseIdentifier", for: indexPath) as? AlbumTableViewCell else { return UITableViewCell()}
         cell.setText(photoAlbums[indexPath.row].name)
         cell.setAlbumCount(photoAlbums[indexPath.row].assets.count)
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let currentCell = self.tableView.cellForRow(at: indexPath) as? AlbumTableViewCell, let selectedAlbumName = currentCell.albumTitleLabel.text else { return }
         guard selectedAlbumName != currentAlbumName else { self.animateTableView(); return }
-        
+ 
         currentAlbumName = selectedAlbumName
         
         DispatchQueue.global(qos: .userInitiated).sync {
             self.animateTableView()
-            
             showActivityIndicator()
-            
         }
         
         DispatchQueue.main.async {
@@ -240,6 +273,16 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         activityIndicator.stopAnimating()
         containerView.removeFromSuperview()
     }
+    
+    
+    @objc func goToSettingsButtonWasPressed() {
+        guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else { return }
+        
+        if UIApplication.shared.canOpenURL(settingsUrl) {
+            UIApplication.shared.open(settingsUrl, completionHandler: nil)
+        }
+    }
+    
     
 }
 
