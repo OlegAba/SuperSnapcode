@@ -49,4 +49,16 @@ class AlbumTableViewCell: UITableViewCell {
         albumCountLabel.text = String(count)
     }
     
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        if selected {
+            backgroundColor = UIColor.snapYellow
+            albumTitleLabel.textColor = UIColor.black
+            albumCountLabel.textColor = UIColor.black
+        } else {
+            backgroundColor = UIColor.snapBlack
+            albumTitleLabel.textColor = UIColor.snapWhite
+            albumCountLabel.textColor = UIColor.snapWhite
+        }
+    }
+    
 }

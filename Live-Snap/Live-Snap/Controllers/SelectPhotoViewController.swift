@@ -180,10 +180,13 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumTableViewCellReuseIdentifier", for: indexPath) as? AlbumTableViewCell else { return UITableViewCell()}
         cell.setText(photoAlbums[indexPath.row].name)
         cell.setAlbumCount(photoAlbums[indexPath.row].assets.count)
+        
+        let initialSelectionIndexPath = IndexPath(row: 0, section: 0)
+        tableView.selectRow(at: initialSelectionIndexPath, animated: true, scrollPosition: .none)
 
         return cell
     }
-    
+        
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let currentCell = self.tableView.cellForRow(at: indexPath) as? AlbumTableViewCell, let selectedAlbumName = currentCell.albumTitleLabel.text else { return }
         guard selectedAlbumName != currentAlbumName else { self.animateTableView(); return }
