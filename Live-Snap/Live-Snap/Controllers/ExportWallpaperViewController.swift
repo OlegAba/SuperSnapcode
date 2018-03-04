@@ -13,6 +13,7 @@ import AVKit
 class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
     
     var livePhotoPreviewView: PHLivePhotoView!
+    var activityIndicator: UIActivityIndicatorView!
     var exportButton: UIButton!
     
     var livePhoto: LivePhoto!
@@ -29,6 +30,12 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         livePhotoPreviewView = PHLivePhotoView(frame: view.frame)
         livePhotoPreviewView.delegate = self
         view.addSubview(livePhotoPreviewView)
+        
+        activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
+        activityIndicator.activityIndicatorViewStyle = .whiteLarge
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
         
         exportButton = UIButton(frame: CGRect(x: 0, y: view.frame.height - 50, width: view.frame.width, height: 50))
         exportButton.setTitle("Export", for: .normal)
@@ -50,6 +57,7 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
             if let livePhoto = livePhoto {
                 self.livePhoto = livePhoto
                 self.livePhotoPreviewView.livePhoto = livePhoto.phLivePhoto
+                self.activityIndicator.stopAnimating()
                 self.showPreview()
             }
         }

@@ -13,6 +13,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     
     var collectionView: UICollectionView!
     var toolBar: UIToolbar!
+    var currentAlbumLabel: UILabel!
     var tableView: UITableView!
     var activityIndicator: UIActivityIndicatorView!
     var statusBarView: UIView!
@@ -33,7 +34,6 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
             view.frame.size.height -= 34.0
         }
         
-        
         toolBar = UIToolbar(frame: CGRect(x: 0, y: view.frame.size.height - 45, width: view.frame.size.width, height: 45))
         toolBar.isTranslucent = false
         toolBar.barTintColor = UIColor.snapBlack
@@ -41,15 +41,17 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         let backBarButton = UIBarButtonItem(title: "Back", style:.plain, target: self, action: #selector(backButtonWasPressed))
         backBarButton.tintColor = UIColor.snapYellow
         
-        let currentAlbumButton = UIBarButtonItem(title: "All Photos", style:.plain, target: self, action: nil)
-        currentAlbumButton.tintColor = UIColor.snapWhite
-        
         let selectAlbumButton: UIBarButtonItem = UIBarButtonItem(title: "Albums", style:.plain, target: self, action: #selector(animateTableView))
         selectAlbumButton.tintColor = UIColor.snapYellow
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        toolBar.items = [backBarButton, flexibleSpace, currentAlbumButton, flexibleSpace, selectAlbumButton]
+        toolBar.items = [backBarButton, flexibleSpace, selectAlbumButton]
         
+        currentAlbumLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width * 0.5, height: 45))
+        currentAlbumLabel.center = CGPoint(x: view.frame.width / 2, y: view.frame.height - toolBar.frame.height / 2)
+        currentAlbumLabel.text = currentAlbumName
+        currentAlbumLabel.textColor = .white
+        currentAlbumLabel.textAlignment = .center
         
         collectionView = UICollectionView(frame: CGRect(x: 0, y: statusBarHeight, width: view.frame.width, height: view.frame.height - (statusBarHeight + toolBar.frame.height)), collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.register(SelectPhotoCollectionViewCell.self, forCellWithReuseIdentifier: "SelectPhotoCollectionViewCellReuseIdentifier")
@@ -106,6 +108,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                     self.view.addSubview(self.tableView)
                     self.view.addSubview(self.statusBarView)
                     self.view.addSubview(self.toolBar)
+                    self.view.addSubview(self.currentAlbumLabel)
                 }
             }
             self.getAllPhotoThumbnails()
@@ -200,9 +203,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         
         DispatchQueue.global(qos: .userInitiated).sync {
             self.animateTableView()
-            if let toolbarItems = self.toolBar.items, toolbarItems.count >= 2 {
-                toolbarItems[2].title = selectedAlbumName
-            }
+            self.currentAlbumLabel.text = selectedAlbumName
             self.photoThumbnails = []
             self.collectionView.reloadData()
             self.activityIndicator.startAnimating()
