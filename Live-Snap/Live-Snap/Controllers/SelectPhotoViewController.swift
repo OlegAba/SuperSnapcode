@@ -14,8 +14,6 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     var collectionView: UICollectionView!
     var toolBar: UIToolbar!
     var tableView: UITableView!
-    var containerView: UIView!
-    var progressView: UIView!
     var activityIndicator: UIActivityIndicatorView!
     var statusBarView: UIView!
     var deniedLibraryPermissionLabel: UILabel!
@@ -49,7 +47,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         let selectAlbumButton: UIBarButtonItem = UIBarButtonItem(title: "Albums", style:.plain, target: self, action: #selector(animateTableView))
         selectAlbumButton.tintColor = UIColor.snapYellow
         
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         toolBar.items = [backBarButton, flexibleSpace, currentAlbumButton, flexibleSpace, selectAlbumButton]
         
         
@@ -71,9 +69,9 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         tableView.tableFooterView = UIView()
         tableView.isHidden = true
         
-        containerView = UIView()
-        progressView = UIView()
         activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
+        activityIndicator.activityIndicatorViewStyle = .whiteLarge
         
         deniedLibraryPermissionLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.75, height: 100))
         deniedLibraryPermissionLabel.center = view.center
@@ -104,6 +102,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                     self.view.addSubview(self.goToUserSettingsButton)
                 } else {
                     self.view.addSubview(self.collectionView)
+                    self.view.addSubview(self.activityIndicator)
                     self.view.addSubview(self.tableView)
                     self.view.addSubview(self.statusBarView)
                     self.view.addSubview(self.toolBar)
@@ -114,8 +113,12 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         
     }
     
-    
     func getAllPhotoThumbnails() {
+        DispatchQueue.main.sync {
+            view.isUserInteractionEnabled = false
+            activityIndicator.startAnimating()
+        }
+        
         photoAlbums = ImageManager.shared.grabAllPhotoAlbums()
         for photoAlbum in photoAlbums {
             if photoAlbum.name == "All Photos" {
@@ -125,6 +128,8 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                             self.photoThumbnails = thumbnails
                             self.collectionView.reloadData()
                             self.tableView.reloadData()
+                            self.activityIndicator.stopAnimating()
+                            self.view.isUserInteractionEnabled = true
                         }
                     }
                 })
@@ -182,20 +187,25 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         cell.setAlbumCount(photoAlbums[indexPath.row].assets.count)
         
         let initialSelectionIndexPath = IndexPath(row: 0, section: 0)
-        tableView.selectRow(at: initialSelectionIndexPath, animated: true, scrollPosition: .none)
-
+        self.tableView.selectRow(at: initialSelectionIndexPath, animated: true, scrollPosition: .none)
+        
         return cell
     }
-        
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let currentCell = self.tableView.cellForRow(at: indexPath) as? AlbumTableViewCell, let selectedAlbumName = currentCell.albumTitleLabel.text else { return }
         guard selectedAlbumName != currentAlbumName else { self.animateTableView(); return }
- 
+        
         currentAlbumName = selectedAlbumName
         
         DispatchQueue.global(qos: .userInitiated).sync {
             self.animateTableView()
-            showActivityIndicator()
+            if let toolbarItems = self.toolBar.items, toolbarItems.count >= 2 {
+                toolbarItems[2].title = selectedAlbumName
+            }
+            self.photoThumbnails = []
+            self.collectionView.reloadData()
+            self.activityIndicator.startAnimating()
         }
         
         DispatchQueue.main.async {
@@ -205,11 +215,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                         if let thumbnails = thumbnails {
                             self.photoThumbnails = thumbnails
                             self.collectionView.reloadData()
-                            if let toolbarItems = self.toolBar.items, toolbarItems.count >= 2 {
-                                toolbarItems[2].title = selectedAlbumName
-                            }
-                            self.hideActivityIndicator()
-                            
+                            self.activityIndicator.stopAnimating()
                         }
                     })
                 }
@@ -249,35 +255,6 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         System.shared.appDelegate().pageViewController?.setViewControllers([fetchSnapcodeViewController], direction: .reverse, animated: true, completion: nil)
     }
     
-    func showActivityIndicator() {
-        containerView.frame = view.frame
-        containerView.center = view.center
-        
-        progressView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
-        progressView.center = view.center
-        progressView.backgroundColor = UIColor(red: 21 / 255.0, green: 25 / 255.0, blue: 28 / 255.0, alpha: 0.7)
-        progressView.layer.borderWidth = 0.5
-        progressView.layer.borderColor = UIColor.snapYellow.cgColor
-        progressView.clipsToBounds = true
-        progressView.layer.cornerRadius = 10
-        
-        activityIndicator.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-        activityIndicator.activityIndicatorViewStyle = .whiteLarge
-        activityIndicator.center = CGPoint(x: progressView.bounds.width / 2, y: progressView.bounds.height / 2)
-        
-        progressView.addSubview(activityIndicator)
-        containerView.addSubview(progressView)
-        view.addSubview(containerView)
-        
-        activityIndicator.startAnimating()
-    }
-    
-    func hideActivityIndicator() {
-        activityIndicator.stopAnimating()
-        containerView.removeFromSuperview()
-    }
-    
-    
     @objc func goToSettingsButtonWasPressed() {
         guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else { return }
         
@@ -285,7 +262,6 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
             UIApplication.shared.open(settingsUrl, completionHandler: nil)
         }
     }
-    
     
 }
 
