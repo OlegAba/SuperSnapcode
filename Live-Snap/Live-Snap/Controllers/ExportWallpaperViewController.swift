@@ -44,9 +44,10 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         exportButton.setBackgroundImage(UIImage(color: UIColor.snapYellow.withAlphaComponent(0.75), size: exportButton.frame.size), for: .highlighted)
         exportButton.addTarget(self, action: #selector(exportButtonWasPressed), for: .touchUpInside)
         
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.createLivePhoto()
+        }
         
-        
-        createLivePhoto()
     }
     
     func createLivePhoto() {
