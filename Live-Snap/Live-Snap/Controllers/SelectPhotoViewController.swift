@@ -44,8 +44,8 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         let selectAlbumButton: UIBarButtonItem = UIBarButtonItem(title: "Albums", style:.plain, target: self, action: #selector(animateTableView))
         selectAlbumButton.tintColor = UIColor.snapYellow
         
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        toolBar.items = [backBarButton, flexibleSpace, selectAlbumButton]
+        let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolBar.items = [backBarButton, flexibleSpaceBarButtonItem, selectAlbumButton]
         
         currentAlbumLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width * 0.5, height: 45))
         currentAlbumLabel.center = CGPoint(x: view.frame.width / 2, y: view.frame.height - toolBar.frame.height / 2)
@@ -189,11 +189,14 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         cell.setText(photoAlbums[indexPath.row].name)
         cell.setAlbumCount(photoAlbums[indexPath.row].assets.count)
         
-        let initialSelectionIndexPath = IndexPath(row: 0, section: 0)
-        self.tableView.selectRow(at: initialSelectionIndexPath, animated: true, scrollPosition: .none)
+        if (photoAlbums.count - 1) == indexPath.row {
+            let initialSelectionIndexPath = IndexPath(row: 0, section: 0)
+            self.tableView.selectRow(at: initialSelectionIndexPath, animated: true, scrollPosition: .none)
+        }
         
         return cell
     }
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let currentCell = self.tableView.cellForRow(at: indexPath) as? AlbumTableViewCell, let selectedAlbumName = currentCell.albumTitleLabel.text else { return }
