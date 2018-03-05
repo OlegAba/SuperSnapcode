@@ -46,14 +46,18 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
     }
     
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
-        let croppedCGImage = imageToCrop.cgImage?.cropping(to: cropRect)
-        let croppedImage = UIImage(cgImage: croppedCGImage!)
         
-        System.shared.wallpaper = croppedImage
-        System.shared.snapcode = System.shared.snapcode?.resized(size: CGSize(width: croppedImage.size.width * 0.75, height: croppedImage.size.width * 0.75))
+        DispatchQueue.global(qos: .userInteractive).async {
+            let croppedCGImage = self.imageToCrop.cgImage?.cropping(to: cropRect)
+            let croppedImage = UIImage(cgImage: croppedCGImage!)
+            
+            System.shared.wallpaper = croppedImage
+            System.shared.snapcode = System.shared.snapcode?.resized(size: CGSize(width: croppedImage.size.width * 0.75, height: croppedImage.size.width * 0.75))
+        }
         
         let exportWallpaperViewController = ExportWallpaperViewController()
         System.shared.appDelegate().pageViewController?.setViewControllers([exportWallpaperViewController], direction: .forward, animated: true, completion: nil)
+        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

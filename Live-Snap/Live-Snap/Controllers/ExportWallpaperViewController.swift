@@ -13,6 +13,7 @@ import AVKit
 class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
     
     var livePhotoPreviewView: PHLivePhotoView!
+    var activityIndicator: UIActivityIndicatorView!
     var exportButton: UIButton!
     
     var livePhoto: LivePhoto!
@@ -30,6 +31,12 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         livePhotoPreviewView.delegate = self
         view.addSubview(livePhotoPreviewView)
         
+        activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
+        activityIndicator.activityIndicatorViewStyle = .whiteLarge
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
         exportButton = UIButton(frame: CGRect(x: 0, y: view.frame.height - 50, width: view.frame.width, height: 50))
         exportButton.setTitle("Export", for: .normal)
         exportButton.setTitleColor(UIColor.snapBlack, for: .normal)
@@ -37,9 +44,10 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         exportButton.setBackgroundImage(UIImage(color: UIColor.snapYellow.withAlphaComponent(0.75), size: exportButton.frame.size), for: .highlighted)
         exportButton.addTarget(self, action: #selector(exportButtonWasPressed), for: .touchUpInside)
         
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.createLivePhoto()
+        }
         
-        
-        createLivePhoto()
     }
     
     func createLivePhoto() {
@@ -50,6 +58,7 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
             if let livePhoto = livePhoto {
                 self.livePhoto = livePhoto
                 self.livePhotoPreviewView.livePhoto = livePhoto.phLivePhoto
+                self.activityIndicator.stopAnimating()
                 self.showPreview()
             }
         }

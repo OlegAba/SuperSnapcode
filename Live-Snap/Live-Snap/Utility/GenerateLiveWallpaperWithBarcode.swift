@@ -43,7 +43,7 @@ class GenerateLiveWallpaperWithBarcode {
         let videoFilePathURL = URL(fileURLWithPath: videoFilePath)
         
         guard let videoFrames = interpolateFrames() else { completion(nil); return }
-        VideoFromImages(images: videoFrames, framesPerSecond: 24).writeMovieToURL(url: videoFilePathURL) { (success: Bool) in
+        VideoFromImages(images: videoFrames, framesPerSecond: 3).writeMovieToURL(url: videoFilePathURL) { (success: Bool) in
             
             guard success else { completion(nil); return }
             
