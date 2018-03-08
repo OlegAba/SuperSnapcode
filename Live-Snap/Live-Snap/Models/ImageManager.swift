@@ -32,7 +32,17 @@ class ImageManager {
     
     func requestPhotoLibraryPermission(completion: @escaping (Bool) -> ()) {
         PHPhotoLibrary.requestAuthorization { (status: PHAuthorizationStatus) in
-            completion(status == .denied || status == .restricted)
+            completion(!(status == .denied || status == .restricted))
+        }
+    }
+    
+    func photoLibraryPermissionWasDenied() {
+     
+        let deniedPermissionViewControllerIsActive: Bool = System.shared.appDelegate().pageViewController?.viewControllers![0] is DeniedPhotoLibraryPermissionViewController
+        
+        if !deniedPermissionViewControllerIsActive {
+            let deniedPhotoLibraryPermissionViewController = DeniedPhotoLibraryPermissionViewController()
+            System.shared.appDelegate().pageViewController?.setViewControllers([deniedPhotoLibraryPermissionViewController], direction: .reverse, animated: true, completion: nil)
         }
     }
     
@@ -57,7 +67,7 @@ class ImageManager {
         albumAssetCollections.enumerateObjects{ (assetCollection: PHAssetCollection, index: Int, stop: UnsafeMutablePointer<ObjCBool>) in
             if let albumName = assetCollection.localizedTitle {
                 let fetchOptions = PHFetchOptions()
-                fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+                fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
                 fetchOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
                 let fetchedAssets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
                 if fetchedAssets.count > 0 {
@@ -81,7 +91,7 @@ class ImageManager {
             smartAlbum.enumerateObjects{ (assetCollection: PHAssetCollection, index: Int, stop: UnsafeMutablePointer<ObjCBool>) in
                 if let albumName = assetCollection.localizedTitle {
                     let fetchOptions = PHFetchOptions()
-                    fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+                    fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
                     let fetchedAssets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
                     if fetchedAssets.count > 0 {
                         albumAssets[albumName] = fetchedAssets
@@ -93,12 +103,29 @@ class ImageManager {
         for (albumName, assets) in albumAssets {
             results.append(PhotoAlbum(name: albumName, assets: assets))
         }
+        
+        if results[0].name != "All Photos" {
+            for index in 1..<results.count {
+                if results[index].name == "All Photos" {
+                    results.swapAt(0, index)
+                    break
+                }
+            }
+        }
+        
         return results
     }
     
-    func grabThumbnailsFromPhotoAlbum(photoAlbum: PhotoAlbum, completion: @escaping ([UIImage]?) -> ()) {
-        
-        var photoThumbnails = [UIImage]()
+    func findPhotoAlbum(photoAlbums: [PhotoAlbum], name: String) -> PhotoAlbum? {
+        for album in photoAlbums {
+            if album.name == name {
+                return album
+            }
+        }
+        return nil
+    }
+    
+    func grabThumnailFrom(photoAlbum: PhotoAlbum, index: Int, completion: @escaping (UIImage?) -> ()) {
         
         let imageManager = PHImageManager.default()
         
@@ -108,17 +135,10 @@ class ImageManager {
         
         let imageSize = CGSize(width: 250, height: 250)
         
-        for index in 0 ..< photoAlbum.assets.count {
-            imageManager.requestImage(for: photoAlbum.assets.object(at: index), targetSize: imageSize, contentMode: .aspectFill, options: requestOptions, resultHandler: { (image: UIImage?, info: [AnyHashable : Any]?) in
-                guard let thumbnail = image else { completion(nil); return }
-                photoThumbnails.append(thumbnail)
-                
-                if index == photoAlbum.assets.count - 1 {
-                    completion(photoThumbnails)
-                }
-            })
-        }
-        
+        imageManager.requestImage(for: photoAlbum.assets.object(at: index), targetSize: imageSize, contentMode: .aspectFill, options: requestOptions, resultHandler: { (image: UIImage?, info: [AnyHashable : Any]?) in
+            guard let thumbnail = image else { completion(nil); return }
+            completion(thumbnail)
+        })
     }
     
     func grabFullPhotoFromAsset(asset: PHAsset, completion: @escaping (UIImage?) -> ()) {
@@ -132,16 +152,7 @@ class ImageManager {
         
         imageManager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: requestOptions, resultHandler: { (image: UIImage?, info: [AnyHashable : Any]?) in
             
-            guard let image = image else { completion(nil); return }
-            
-            UIGraphicsBeginImageContextWithOptions(image.size, false, 1.0)
-            defer { UIGraphicsEndImageContext() }
-            
-            guard let _ = UIGraphicsGetCurrentContext() else { return }
-            
-            image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
-            
-            completion(UIGraphicsGetImageFromCurrentImageContext())
+            completion(image)
         })
     }
     

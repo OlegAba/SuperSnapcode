@@ -35,6 +35,9 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
         
         addChildViewController(cropViewController)
         cropViewController.view.frame = CGRect(x: 0, y: 20, width: view.frame.width, height: view.frame.height - 20)
+        if view.isIPhoneX() {
+            cropViewController.view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        }
         view.addSubview(cropViewController.view)
         cropViewController.didMove(toParentViewController: self)
     }
@@ -47,13 +50,8 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
     
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         
-        DispatchQueue.global(qos: .userInteractive).async {
-            let croppedCGImage = self.imageToCrop.cgImage?.cropping(to: cropRect)
-            let croppedImage = UIImage(cgImage: croppedCGImage!)
-            
-            System.shared.wallpaper = croppedImage
-            System.shared.snapcode = System.shared.snapcode?.resized(size: CGSize(width: croppedImage.size.width * 0.75, height: croppedImage.size.width * 0.75))
-        }
+        System.shared.wallpaper = image
+        System.shared.snapcode = System.shared.snapcode?.resized(size: CGSize(width: cropRect.size.width * 0.75, height: cropRect.size.width * 0.75))
         
         let exportWallpaperViewController = ExportWallpaperViewController()
         System.shared.appDelegate().pageViewController?.setViewControllers([exportWallpaperViewController], direction: .forward, animated: true, completion: nil)

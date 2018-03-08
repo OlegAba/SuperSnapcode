@@ -15,14 +15,12 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     var toolBar: UIToolbar!
     var currentAlbumLabel: UILabel!
     var tableView: UITableView!
-    var activityIndicator: UIActivityIndicatorView!
     var statusBarView: UIView!
     var deniedLibraryPermissionLabel: UILabel!
     var goToUserSettingsButton: UIButton!
     
     var photoAlbums = [PhotoAlbum]()
-    var photoThumbnails = [UIImage]()
-    var currentAlbumName = "All Photos"
+    var currentPhotoAlbum: PhotoAlbum!
     
     let statusBarHeight = UIApplication.shared.statusBarFrame.height
     
@@ -49,7 +47,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         
         currentAlbumLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width * 0.5, height: 45))
         currentAlbumLabel.center = CGPoint(x: view.frame.width / 2, y: view.frame.height - toolBar.frame.height / 2)
-        currentAlbumLabel.text = currentAlbumName
+        currentAlbumLabel.text = "All Photos"
         currentAlbumLabel.textColor = .white
         currentAlbumLabel.textAlignment = .center
         
@@ -71,10 +69,6 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         tableView.tableFooterView = UIView()
         tableView.isHidden = true
         
-        activityIndicator = UIActivityIndicatorView()
-        activityIndicator.center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
-        activityIndicator.activityIndicatorViewStyle = .whiteLarge
-        
         deniedLibraryPermissionLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.75, height: 100))
         deniedLibraryPermissionLabel.center = view.center
         deniedLibraryPermissionLabel.textColor = UIColor.snapWhite
@@ -93,60 +87,42 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
         statusBarView.backgroundColor = UIColor.snapBlack
         
-        ImageManager.shared.requestPhotoLibraryPermission { (status: Bool) in
+        ImageManager.shared.requestPhotoLibraryPermission { (authorized: Bool) in
             DispatchQueue.main.async {
-                
-                self.goToUserSettingsButton.removeFromSuperview()
-                self.deniedLibraryPermissionLabel.removeFromSuperview()
-                
-                if status == true {
-                    self.view.addSubview(self.deniedLibraryPermissionLabel)
-                    self.view.addSubview(self.goToUserSettingsButton)
-                } else {
+                if authorized {
+                    self.photoAlbums = ImageManager.shared.grabAllPhotoAlbums()
+                    self.currentPhotoAlbum = ImageManager.shared.findPhotoAlbum(photoAlbums: self.photoAlbums, name: self.currentAlbumLabel.text!)!
+                    
                     self.view.addSubview(self.collectionView)
-                    self.view.addSubview(self.activityIndicator)
                     self.view.addSubview(self.tableView)
                     self.view.addSubview(self.statusBarView)
                     self.view.addSubview(self.toolBar)
                     self.view.addSubview(self.currentAlbumLabel)
+                    
+                    self.collectionView.reloadData()
+                    self.collectionView.collectionViewLayout.invalidateLayout()
+                    self.tableView.reloadData()
+                } else {
+                    ImageManager.shared.photoLibraryPermissionWasDenied()
                 }
-            }
-            self.getAllPhotoThumbnails()
-        }
-        
-    }
-    
-    func getAllPhotoThumbnails() {
-        DispatchQueue.main.sync {
-            view.isUserInteractionEnabled = false
-            activityIndicator.startAnimating()
-        }
-        
-        photoAlbums = ImageManager.shared.grabAllPhotoAlbums()
-        for photoAlbum in photoAlbums {
-            if photoAlbum.name == "All Photos" {
-                ImageManager.shared.grabThumbnailsFromPhotoAlbum(photoAlbum: photoAlbum, completion: { (thumbnails) in
-                    DispatchQueue.main.async {
-                        if let thumbnails = thumbnails {
-                            self.photoThumbnails = thumbnails
-                            self.collectionView.reloadData()
-                            self.tableView.reloadData()
-                            self.activityIndicator.stopAnimating()
-                            self.view.isUserInteractionEnabled = true
-                        }
-                    }
-                })
             }
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photoThumbnails.count
+        return currentPhotoAlbum.assets.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SelectPhotoCollectionViewCellReuseIdentifier", for: indexPath) as? SelectPhotoCollectionViewCell else { return UICollectionViewCell() }
-        cell.setImage(image: photoThumbnails[indexPath.row])
+        ImageManager.shared.grabThumnailFrom(photoAlbum: currentPhotoAlbum, index: indexPath.row) { (image: UIImage?) in
+            
+            DispatchQueue.main.async {
+                guard let thumbnail = image else { return }
+                cell.setImage(image: thumbnail)
+            }
+        }
+        
         return cell
     }
     
@@ -166,18 +142,16 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        for photoAlbum in photoAlbums {
-            if photoAlbum.name == currentAlbumName {
-                let asset = photoAlbum.assets.object(at: indexPath.row)
-                ImageManager.shared.grabFullPhotoFromAsset(asset: asset, completion: { (image: UIImage?) in
-                    if let image = image {
-                        let cropWallpaperViewController = CropWallpaperViewController()
-                        cropWallpaperViewController.imageToCrop = image
-                        System.shared.appDelegate().pageViewController?.setViewControllers([cropWallpaperViewController], direction: .forward, animated: true, completion: nil)
-                    }
-                })
+        let asset = currentPhotoAlbum.assets.object(at: indexPath.row)
+        ImageManager.shared.grabFullPhotoFromAsset(asset: asset, completion: { (image: UIImage?) in
+            if let image = image {
+                System.shared.imageToCrop = image
+                
+                let cropWallpaperViewController = CropWallpaperViewController()
+                cropWallpaperViewController.imageToCrop = image
+                System.shared.appDelegate().pageViewController?.setViewControllers([cropWallpaperViewController], direction: .forward, animated: true, completion: nil)
             }
-        }
+        })
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -200,33 +174,14 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let currentCell = self.tableView.cellForRow(at: indexPath) as? AlbumTableViewCell, let selectedAlbumName = currentCell.albumTitleLabel.text else { return }
-        guard selectedAlbumName != currentAlbumName else { self.animateTableView(); return }
+        guard selectedAlbumName != currentAlbumLabel.text! else { self.animateTableView(); return }
         
-        currentAlbumName = selectedAlbumName
+        currentAlbumLabel.text = selectedAlbumName
+        currentPhotoAlbum = ImageManager.shared.findPhotoAlbum(photoAlbums: self.photoAlbums, name: selectedAlbumName)
         
-        DispatchQueue.global(qos: .userInitiated).sync {
-            self.animateTableView()
-            self.currentAlbumLabel.text = selectedAlbumName
-            self.photoThumbnails = []
-            self.collectionView.reloadData()
-            self.activityIndicator.startAnimating()
-        }
-        
-        DispatchQueue.main.async {
-            for photoAlbum in self.photoAlbums {
-                if photoAlbum.name == selectedAlbumName {
-                    ImageManager.shared.grabThumbnailsFromPhotoAlbum(photoAlbum: photoAlbum, completion: { (thumbnails: [UIImage]?) in
-                        if let thumbnails = thumbnails {
-                            self.photoThumbnails = thumbnails
-                            self.collectionView.reloadData()
-                            self.activityIndicator.stopAnimating()
-                        }
-                    })
-                }
-            }
-            
-        }
-        
+        animateTableView()
+        collectionView.reloadData()
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -238,13 +193,13 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         
         if self.tableView.isHidden {
             self.tableView.isHidden = false
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: 0.3, animations: {
                 self.tableView.frame = CGRect(x: 0, y: self.statusBarHeight, width: self.view.frame.width, height: self.view.frame.height)
             }, completion: { (finished: Bool) in
                 self.view.isUserInteractionEnabled = true
             })
         } else {
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: 0.3, animations: {
                 self.tableView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: self.view.frame.height)
             }, completion: { (finished: Bool) in
                 self.tableView.isHidden = true
@@ -268,4 +223,3 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     }
     
 }
-
