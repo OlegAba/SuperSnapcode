@@ -122,6 +122,27 @@ extension UIImage {
         return nil
     }
     
+    static func imageFromUIViews(views: [UIView]) -> UIImage? {
+        guard views.count > 0 else { return nil }
+        
+        UIGraphicsBeginImageContextWithOptions(views[0].frame.size, views[0].isOpaque, 0.0)
+        defer { UIGraphicsEndImageContext() }
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        
+        for view in views {
+            // Center the context around the view's anchor point
+            context.translateBy(x: view.center.x, y: view.center.y)
+            // Apply the view's transform about the anchor point
+            context.concatenate(view.transform)
+            // Offset by the portion of the bounds left of and above the anchor point
+            context.translateBy(x: -view.bounds.size.width * view.layer.anchorPoint.x, y: -view.bounds.size.height * view.layer.anchorPoint.y)
+            
+            view.layer.render(in: context)
+        }
+
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+    
     public func applyLightEffect() -> UIImage? {
         return applyBlurWithRadius(30, tintColor: UIColor(white: 1.0, alpha: 0.3), saturationDeltaFactor: 1.8)
     }

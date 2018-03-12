@@ -1,15 +1,36 @@
 PODS:
   - Alamofire (4.6.0)
+  - CocoaLumberjack (3.4.0):
+    - CocoaLumberjack/Default (= 3.4.0)
+    - CocoaLumberjack/Extensions (= 3.4.0)
+  - CocoaLumberjack/Default (3.4.0)
+  - CocoaLumberjack/Extensions (3.4.0):
+    - CocoaLumberjack/Default
   - CropViewController (2.3.6)
+  - SVGKit (2.0.1):
+    - CocoaLumberjack (~> 3.x)
 
 DEPENDENCIES:
   - Alamofire
   - CropViewController
+  - SVGKit (from `https://github.com/SVGKit/SVGKit.git`, branch `2.x`)
+
+EXTERNAL SOURCES:
+  SVGKit:
+    :branch: 2.x
+    :git: https://github.com/SVGKit/SVGKit.git
+
+CHECKOUT OPTIONS:
+  SVGKit:
+    :commit: 34781db59cb2c97a1c66067cd8847c6c512ccdd6
+    :git: https://github.com/SVGKit/SVGKit.git
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  CocoaLumberjack: e033a5d8513357af2dd456eb66e202c325c30627
   CropViewController: e6d4bd512d15a1709e9ddf71fe7d98ffd05dda0f
+  SVGKit: 4055d9e809b5db8633755979cfb3b02dc5a8c20d
 
-PODFILE CHECKSUM: 4adc1a49230047e0b21a77be34642eb772507af0
+PODFILE CHECKSUM: d654308c9e25caebf1b9e7eb061f7c74b880f84f
 
 COCOAPODS: 1.2.0

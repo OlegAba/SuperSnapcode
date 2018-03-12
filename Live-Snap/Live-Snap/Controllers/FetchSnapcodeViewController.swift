@@ -90,17 +90,103 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     
+    func getSnapcodeWithBitmojiImage(username: String, completion: @escaping (UIImage?)->()) {
+        let bitmojiImageEndpointRequest = BitmojiImageEndpointRequest(snapchatUsername: username)
+        bitmojiImageEndpointRequest.start { (bitmojiImage: UIImage?) in
+            
+            guard let bitmojiImage = bitmojiImage else { completion(nil); return }
+            
+            let bitmojiSnapcodeEndpointRequest = BitmojiSnapcodeEndpointRequest(snapchatUsername: username)
+            bitmojiSnapcodeEndpointRequest.start { (snapcodeImage: UIImage?) in
+                
+                guard let snapcodeImage = snapcodeImage else { completion(nil); return }
+                    
+                let snapcodeImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
+                snapcodeImageView.image = snapcodeImage
+                
+                let bitmojiImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 190, height: 190))
+                bitmojiImageView.center = snapcodeImageView.center
+                bitmojiImageView.backgroundColor = UIColor.snapYellow
+                bitmojiImageView.layer.cornerRadius = bitmojiImageView.frame.width / 2.0
+                bitmojiImageView.clipsToBounds = true
+                bitmojiImageView.image = bitmojiImage
+                
+                completion(UIImage.imageFromUIViews(views: [snapcodeImageView, bitmojiImageView]))
+            }
+        }
+    }
+    
+    func showCannotGetSnapcodeError() {
+        print("Could not get snapcode")
+    }
+    
+    func showInvalidSnapchatUsernameError() {
+        print("Invalid snapchat username")
+    }
+    
+    func sanitizeSnapchatUsernameString(username: String) -> String? {
+
+//Snapchat usernames:
+//● Must be 3-15 characters long
+//● Can’t contain spaces
+//● Must begin with a letter
+//● Can only contain letters, numbers, and the special characters
+//hyphen ( - ), underscore ( _ ), and period ( . ), EXCEPT that the username:
+//● Can’t begin with a number, hyphen, underscore, or period
+//● Can’t end with a hyphen, underscore, or period
+//● Can’t contain emojis or other symbols such as @, $, #, etc.
+//● Will appear only in lower-case letters within the app
+        
+        let result = username.trimmingCharacters(in: .whitespaces).lowercased()
+        
+        for i in 0 ..< result.count {
+            let character = result[i]
+            
+            if character.isLetter() || character.isDigit() {
+                continue
+            }
+            
+            if character == "-" || character == "_" || character == "." {
+                if i == 0 || i == result.count - 1 {
+                    return nil
+                }
+                continue
+            }
+            
+            return nil
+        }
+        
+        if result.count < 3 {
+            return nil
+        }
+
+        return result
+    }
+    
     @objc func nextButtonWasPressed() {
         guard let username = usernameTextField.text else { return }
+        guard let sanitizedUsername = sanitizeSnapchatUsernameString(username: username) else { showInvalidSnapchatUsernameError(); return }
         
-        let endpointRequest = SnapcodeEndpointRequest(snapchatUsername: username)
-        endpointRequest.start { (snapcodeImage: UIImage?) in
-            if let snapcodeImage = snapcodeImage {
-                System.shared.snapcode = snapcodeImage
-                let selectPhotoViewController = SelectPhotoViewController()
-                System.shared.appDelegate().pageViewController?.setViewControllers([selectPhotoViewController], direction: .forward, animated: true, completion: nil)
-            } else {
-                // display failure case here
+        // Get snapcode with bitmoji image in the middle
+        self.getSnapcodeWithBitmojiImage(username: sanitizedUsername) { (bitmojiSnapcodeImage: UIImage?) in
+            
+            // Get regular snapcode with ghose in the middle
+            let snapcodeEndpointRequest = SnapcodeEndpointRequest(snapchatUsername: sanitizedUsername)
+            snapcodeEndpointRequest.start { (snapcodeImage: UIImage?) in
+                
+                if let bitmojiSnapcodeImage = bitmojiSnapcodeImage {
+                    System.shared.snapcode = bitmojiSnapcodeImage
+                } else if let snapcodeImage = snapcodeImage {
+                    System.shared.snapcode = snapcodeImage
+                } else {
+                    self.showCannotGetSnapcodeError()
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    let selectPhotoViewController = SelectPhotoViewController()
+                    System.shared.appDelegate().pageViewController?.setViewControllers([selectPhotoViewController], direction: .forward, animated: true, completion: nil)
+                }
             }
         }
     }
