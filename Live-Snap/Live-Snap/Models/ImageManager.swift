@@ -131,7 +131,17 @@ class ImageManager {
         requestOptions.isNetworkAccessAllowed = true
         
         imageManager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: requestOptions, resultHandler: { (image: UIImage?, info: [AnyHashable : Any]?) in
-            completion(image)
+            
+            guard let image = image else { completion(nil); return }
+            
+            UIGraphicsBeginImageContextWithOptions(image.size, false, 1.0)
+            defer { UIGraphicsEndImageContext() }
+            
+            guard let _ = UIGraphicsGetCurrentContext() else { return }
+            
+            image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
+            
+            completion(UIGraphicsGetImageFromCurrentImageContext())
         })
     }
     
