@@ -19,6 +19,9 @@
 		7C8906E3200AD21300E64CAB /* LivePhotoMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8906E2200AD21300E64CAB /* LivePhotoMaker.swift */; };
 		7CF942F4200AD36C00896C4A /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF942F3200AD36C00896C4A /* UIImage+.swift */; };
 		87FEDBF175B199DB77C65F63 /* Pods_Live_Snap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 867AA8EF1C093CB0C3455C0F /* Pods_Live_Snap.framework */; };
+		958FE116204CD61500689AF6 /* BitmojiSnapcodeEndpointRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958FE115204CD61500689AF6 /* BitmojiSnapcodeEndpointRequest.swift */; };
+		959EB9BE2058E4DA00098CD5 /* BitmojiImageEndpointRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959EB9BD2058E4DA00098CD5 /* BitmojiImageEndpointRequest.swift */; };
+		959EB9C02058E5E500098CD5 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959EB9BF2058E5E500098CD5 /* String+.swift */; };
 		95D127D5200AE014000AE7EF /* GenerateLiveWallpaperWithBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D127D4200AE014000AE7EF /* GenerateLiveWallpaperWithBarcode.swift */; };
 		95D127DB200AF391000AE7EF /* FileManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D127DA200AF391000AE7EF /* FileManager+.swift */; };
 		95D127DD200D5C24000AE7EF /* FetchSnapcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D127DC200D5C24000AE7EF /* FetchSnapcodeViewController.swift */; };
@@ -49,6 +52,10 @@
 		7C8906E2200AD21300E64CAB /* LivePhotoMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LivePhotoMaker.swift; sourceTree = "<group>"; };
 		7CF942F3200AD36C00896C4A /* UIImage+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		867AA8EF1C093CB0C3455C0F /* Pods_Live_Snap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Live_Snap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		958FE115204CD61500689AF6 /* BitmojiSnapcodeEndpointRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmojiSnapcodeEndpointRequest.swift; sourceTree = "<group>"; };
+		959EB9B72056199100098CD5 /* Live-Snap-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Live-Snap-Bridging-Header.h"; sourceTree = "<group>"; };
+		959EB9BD2058E4DA00098CD5 /* BitmojiImageEndpointRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmojiImageEndpointRequest.swift; sourceTree = "<group>"; };
+		959EB9BF2058E5E500098CD5 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		95D127D4200AE014000AE7EF /* GenerateLiveWallpaperWithBarcode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateLiveWallpaperWithBarcode.swift; sourceTree = "<group>"; };
 		95D127DA200AF391000AE7EF /* FileManager+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+.swift"; sourceTree = "<group>"; };
 		95D127DC200D5C24000AE7EF /* FetchSnapcodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSnapcodeViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +118,7 @@
 				7C6E4D012000AC9C0017A4B3 /* Networking */,
 				7C8906E4200AD2B600E64CAB /* Extensions */,
 				7C2B41D42000A7220038CDCE /* Assets.xcassets */,
+				959EB9B72056199100098CD5 /* Live-Snap-Bridging-Header.h */,
 				7C2B41D62000A7220038CDCE /* LaunchScreen.storyboard */,
 				7C2B41D92000A7220038CDCE /* Info.plist */,
 			);
@@ -133,6 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				7C6E4D022000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift */,
+				958FE115204CD61500689AF6 /* BitmojiSnapcodeEndpointRequest.swift */,
+				959EB9BD2058E4DA00098CD5 /* BitmojiImageEndpointRequest.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -154,6 +164,7 @@
 				95D127DA200AF391000AE7EF /* FileManager+.swift */,
 				95D127DE200D609B000AE7EF /* UIColor+.swift */,
 				95D127E4200D6ACB000AE7EF /* UIView+.swift */,
+				959EB9BF2058E5E500098CD5 /* String+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -222,6 +233,7 @@
 				TargetAttributes = {
 					7C2B41C92000A7220038CDCE = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -322,6 +334,7 @@
 				95D127E5200D6ACB000AE7EF /* UIView+.swift in Sources */,
 				95D127ED2011BA63000AE7EF /* ExportWallpaperViewController.swift in Sources */,
 				7C6E4D032000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift in Sources */,
+				959EB9BE2058E4DA00098CD5 /* BitmojiImageEndpointRequest.swift in Sources */,
 				7C1F7D7B20184FCF00D9540B /* ImageManager.swift in Sources */,
 				95D127DD200D5C24000AE7EF /* FetchSnapcodeViewController.swift in Sources */,
 				7C5C685E2017EB0E00328E4A /* AlbumTableViewCell.swift in Sources */,
@@ -330,6 +343,7 @@
 				95D127DB200AF391000AE7EF /* FileManager+.swift in Sources */,
 				7C5B7BA42006D8980062E399 /* VideoFromImages.swift in Sources */,
 				95D127EF2011BDC8000AE7EF /* LivePhoto.swift in Sources */,
+				958FE116204CD61500689AF6 /* BitmojiSnapcodeEndpointRequest.swift in Sources */,
 				7CF942F4200AD36C00896C4A /* UIImage+.swift in Sources */,
 				7C2B41CE2000A7220038CDCE /* AppDelegate.swift in Sources */,
 				95D127E9200D88D1000AE7EF /* CropWallpaperViewController.swift in Sources */,
@@ -337,6 +351,7 @@
 				95D127DF200D609B000AE7EF /* UIColor+.swift in Sources */,
 				95D127E1200D65A4000AE7EF /* UITextField+.swift in Sources */,
 				7C7F4ADB200F37950046D70D /* SelectPhotoViewController.swift in Sources */,
+				959EB9C02058E5E500098CD5 /* String+.swift in Sources */,
 				95D127F72015B040000AE7EF /* System.swift in Sources */,
 				95D127F12011C416000AE7EF /* PageViewController.swift in Sources */,
 			);
@@ -468,6 +483,7 @@
 			baseConfigurationReference = 485CEC0DAA851B1A97331AA0 /* Pods-Live-Snap.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8MGR468NZ4;
@@ -477,6 +493,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OlegAbalonski.Projects.Live-Snap123";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Live-Snap/Live-Snap-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -487,6 +505,7 @@
 			baseConfigurationReference = 312E8FFEA88FFE1BEC68EA55 /* Pods-Live-Snap.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8MGR468NZ4;
@@ -496,6 +515,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OlegAbalonski.Projects.Live-Snap123";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Live-Snap/Live-Snap-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
