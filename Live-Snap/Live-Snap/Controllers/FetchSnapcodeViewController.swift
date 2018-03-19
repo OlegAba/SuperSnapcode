@@ -108,6 +108,8 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
                 bitmojiImageView.center = snapcodeImageView.center
                 bitmojiImageView.backgroundColor = UIColor.snapYellow
                 bitmojiImageView.layer.cornerRadius = bitmojiImageView.frame.width / 2.0
+                bitmojiImageView.layer.borderColor = UIColor.snapYellow.cgColor
+                bitmojiImageView.layer.borderWidth = 5.0
                 bitmojiImageView.clipsToBounds = true
                 bitmojiImageView.image = bitmojiImage
                 

@@ -130,6 +130,8 @@ extension UIImage {
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
         
         for view in views {
+            context.saveGState()
+            
             // Center the context around the view's anchor point
             context.translateBy(x: view.center.x, y: view.center.y)
             // Apply the view's transform about the anchor point
@@ -138,6 +140,8 @@ extension UIImage {
             context.translateBy(x: -view.bounds.size.width * view.layer.anchorPoint.x, y: -view.bounds.size.height * view.layer.anchorPoint.y)
             
             view.layer.render(in: context)
+            
+            context.restoreGState()
         }
 
         return UIGraphicsGetImageFromCurrentImageContext()
