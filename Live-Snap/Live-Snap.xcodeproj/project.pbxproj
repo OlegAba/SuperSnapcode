@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C0071BC2060B6E300D0F99E /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0071BB2060B6E300D0F99E /* UILabel+.swift */; };
 		7C1F7D7B20184FCF00D9540B /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F7D7A20184FCF00D9540B /* ImageManager.swift */; };
 		7C2B41CE2000A7220038CDCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2B41CD2000A7220038CDCE /* AppDelegate.swift */; };
 		7C2B41D52000A7220038CDCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C2B41D42000A7220038CDCE /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 		7C5B7BA42006D8980062E399 /* VideoFromImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5B7BA32006D8980062E399 /* VideoFromImages.swift */; };
 		7C5C685E2017EB0E00328E4A /* AlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5C685D2017EB0E00328E4A /* AlbumTableViewCell.swift */; };
 		7C6E4D032000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E4D022000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift */; };
+		7C713254205CBD16004D8DAC /* DeniedPhotoPermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C713253205CBD16004D8DAC /* DeniedPhotoPermissionViewController.swift */; };
 		7C7F4AD9200F37780046D70D /* SelectPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F4AD8200F37780046D70D /* SelectPhotoCollectionViewCell.swift */; };
 		7C7F4ADB200F37950046D70D /* SelectPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F4ADA200F37940046D70D /* SelectPhotoViewController.swift */; };
 		7C8906E3200AD21300E64CAB /* LivePhotoMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8906E2200AD21300E64CAB /* LivePhotoMaker.swift */; };
@@ -38,6 +40,7 @@
 /* Begin PBXFileReference section */
 		312E8FFEA88FFE1BEC68EA55 /* Pods-Live-Snap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Live-Snap.release.xcconfig"; path = "Pods/Target Support Files/Pods-Live-Snap/Pods-Live-Snap.release.xcconfig"; sourceTree = "<group>"; };
 		485CEC0DAA851B1A97331AA0 /* Pods-Live-Snap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Live-Snap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Live-Snap/Pods-Live-Snap.debug.xcconfig"; sourceTree = "<group>"; };
+		7C0071BB2060B6E300D0F99E /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		7C1F7D7A20184FCF00D9540B /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		7C2B41CA2000A7220038CDCE /* Live-Snap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Live-Snap.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C2B41CD2000A7220038CDCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +50,7 @@
 		7C5B7BA32006D8980062E399 /* VideoFromImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFromImages.swift; sourceTree = "<group>"; };
 		7C5C685D2017EB0E00328E4A /* AlbumTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTableViewCell.swift; sourceTree = "<group>"; };
 		7C6E4D022000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapcodeEndpointRequest.swift; sourceTree = "<group>"; };
+		7C713253205CBD16004D8DAC /* DeniedPhotoPermissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeniedPhotoPermissionViewController.swift; sourceTree = "<group>"; };
 		7C7F4AD8200F37780046D70D /* SelectPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		7C7F4ADA200F37940046D70D /* SelectPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPhotoViewController.swift; sourceTree = "<group>"; };
 		7C8906E2200AD21300E64CAB /* LivePhotoMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LivePhotoMaker.swift; sourceTree = "<group>"; };
@@ -133,6 +137,7 @@
 				95D127E8200D88D1000AE7EF /* CropWallpaperViewController.swift */,
 				95D127EC2011BA63000AE7EF /* ExportWallpaperViewController.swift */,
 				7C7F4ADA200F37940046D70D /* SelectPhotoViewController.swift */,
+				7C713253205CBD16004D8DAC /* DeniedPhotoPermissionViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -160,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				7CF942F3200AD36C00896C4A /* UIImage+.swift */,
+				7C0071BB2060B6E300D0F99E /* UILabel+.swift */,
 				95D127E0200D65A4000AE7EF /* UITextField+.swift */,
 				95D127DA200AF391000AE7EF /* FileManager+.swift */,
 				95D127DE200D609B000AE7EF /* UIColor+.swift */,
@@ -299,7 +305,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D6E9E7A987DC4AD976414051 /* [CP] Embed Pods Frameworks */ = {
@@ -310,14 +316,20 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Live-Snap/Pods-Live-Snap-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/TOCropViewController/TOCropViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SVGKit/SVGKit.framework",
+
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TOCropViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVGKit.framework",
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -340,11 +352,13 @@
 				7C5C685E2017EB0E00328E4A /* AlbumTableViewCell.swift in Sources */,
 				95D127D5200AE014000AE7EF /* GenerateLiveWallpaperWithBarcode.swift in Sources */,
 				7C7F4AD9200F37780046D70D /* SelectPhotoCollectionViewCell.swift in Sources */,
+				7C0071BC2060B6E300D0F99E /* UILabel+.swift in Sources */,
 				95D127DB200AF391000AE7EF /* FileManager+.swift in Sources */,
 				7C5B7BA42006D8980062E399 /* VideoFromImages.swift in Sources */,
 				95D127EF2011BDC8000AE7EF /* LivePhoto.swift in Sources */,
 				958FE116204CD61500689AF6 /* BitmojiSnapcodeEndpointRequest.swift in Sources */,
 				7CF942F4200AD36C00896C4A /* UIImage+.swift in Sources */,
+				7C713254205CBD16004D8DAC /* DeniedPhotoPermissionViewController.swift in Sources */,
 				7C2B41CE2000A7220038CDCE /* AppDelegate.swift in Sources */,
 				95D127E9200D88D1000AE7EF /* CropWallpaperViewController.swift in Sources */,
 				7C8906E3200AD21300E64CAB /* LivePhotoMaker.swift in Sources */,
