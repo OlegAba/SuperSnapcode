@@ -16,8 +16,6 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     var currentAlbumLabel: UILabel!
     var tableView: UITableView!
     var statusBarView: UIView!
-    var deniedLibraryPermissionLabel: UILabel!
-    var goToUserSettingsButton: UIButton!
     
     var photoAlbums = [PhotoAlbum]()
     var currentPhotoAlbum: PhotoAlbum!
@@ -69,21 +67,6 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         tableView.tableFooterView = UIView()
         tableView.isHidden = true
         
-        deniedLibraryPermissionLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.75, height: 100))
-        deniedLibraryPermissionLabel.center = view.center
-        deniedLibraryPermissionLabel.textColor = UIColor.snapWhite
-        deniedLibraryPermissionLabel.textAlignment = .center
-        let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
-        deniedLibraryPermissionLabel.text = "\(appName) needs access to your photo library to import and export images. Please click the settings button below and enable access"
-        deniedLibraryPermissionLabel.numberOfLines = 4
-        
-        goToUserSettingsButton = UIButton(frame: CGRect(x: 0, y: view.frame.height - 50, width: view.frame.width, height: 50))
-        goToUserSettingsButton.setTitle("Settings", for: .normal)
-        goToUserSettingsButton.setTitleColor(UIColor.snapBlack, for: .normal)
-        goToUserSettingsButton.setBackgroundImage(UIImage(color: UIColor.snapYellow, size: goToUserSettingsButton.frame.size), for: .normal)
-        goToUserSettingsButton.setBackgroundImage(UIImage(color: UIColor.snapYellow.withAlphaComponent(0.75), size: goToUserSettingsButton.frame.size), for: .highlighted)
-        goToUserSettingsButton.addTarget(self, action: #selector(goToSettingsButtonWasPressed), for: .touchUpInside)
-        
         statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
         statusBarView.backgroundColor = UIColor.snapBlack
         
@@ -93,7 +76,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        super.viewDidAppear(animated)
         
         ImageManager.shared.requestPhotoLibraryPermission { (authorized) in
             DispatchQueue.main.async {
@@ -191,10 +174,6 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     @objc func animateTableView() {
         view.isUserInteractionEnabled = false
         
@@ -216,17 +195,10 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     }
     
     @objc func backButtonWasPressed() {
+        view.isUserInteractionEnabled = false
+        
         let fetchSnapcodeViewController = FetchSnapcodeViewController()
         
         System.shared.appDelegate().pageViewController?.setViewControllers([fetchSnapcodeViewController], direction: .reverse, animated: true, completion: nil)
     }
-    
-    @objc func goToSettingsButtonWasPressed() {
-        guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else { return }
-        
-        if UIApplication.shared.canOpenURL(settingsUrl) {
-            UIApplication.shared.open(settingsUrl, completionHandler: nil)
-        }
-    }
-    
 }
