@@ -87,7 +87,15 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
         statusBarView.backgroundColor = UIColor.snapBlack
         
-        ImageManager.shared.requestPhotoLibraryPermission { (authorized: Bool) in
+        self.view.addSubview(self.statusBarView)
+        self.view.addSubview(self.toolBar)
+        self.view.addSubview(self.currentAlbumLabel)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        ImageManager.shared.requestPhotoLibraryPermission { (authorized) in
             DispatchQueue.main.async {
                 if authorized {
                     self.photoAlbums = ImageManager.shared.grabAllPhotoAlbums()
@@ -95,9 +103,8 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                     
                     self.view.addSubview(self.collectionView)
                     self.view.addSubview(self.tableView)
-                    self.view.addSubview(self.statusBarView)
-                    self.view.addSubview(self.toolBar)
-                    self.view.addSubview(self.currentAlbumLabel)
+                    self.view.bringSubview(toFront: self.toolBar)
+                    self.view.bringSubview(toFront: self.currentAlbumLabel)
                     
                     self.collectionView.reloadData()
                     self.collectionView.collectionViewLayout.invalidateLayout()
