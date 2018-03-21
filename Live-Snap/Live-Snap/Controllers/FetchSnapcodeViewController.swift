@@ -166,8 +166,10 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func nextButtonWasPressed() {
-        guard let username = usernameTextField.text else { return }
-        guard let sanitizedUsername = sanitizeSnapchatUsernameString(username: username) else { showInvalidSnapchatUsernameError(); return }
+        nextButton.isUserInteractionEnabled = false
+        
+        guard let username = usernameTextField.text else { nextButton.isUserInteractionEnabled = true; return }
+        guard let sanitizedUsername = sanitizeSnapchatUsernameString(username: username) else { showInvalidSnapchatUsernameError(); nextButton.isUserInteractionEnabled = true; return }
         
         // Get snapcode with bitmoji image in the middle
         self.getSnapcodeWithBitmojiImage(username: sanitizedUsername) { (bitmojiSnapcodeImage: UIImage?) in
@@ -182,6 +184,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
                     System.shared.snapcode = snapcodeImage
                 } else {
                     self.showCannotGetSnapcodeError()
+                    self.nextButton.isUserInteractionEnabled = true
                     return
                 }
                 
@@ -193,5 +196,5 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-
+    
 }
