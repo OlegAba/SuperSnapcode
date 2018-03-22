@@ -101,10 +101,12 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
     }
     
     func livePhotoView(_ livePhotoView: PHLivePhotoView, didEndPlaybackWith playbackStyle: PHLivePhotoViewPlaybackStyle) {
-        view.addSubview(toolBar)
-        view.addSubview(forceTouchNotifierLabel)
-        animateToolBarAndLivePhotoView()
-        view.isUserInteractionEnabled = true
+        if !toolBar.isDescendant(of: view) {
+            view.addSubview(toolBar)
+            view.addSubview(forceTouchNotifierLabel)
+            animateToolBarAndLivePhotoView()
+            view.isUserInteractionEnabled = true
+        }
     }
     
     func animateToolBarAndLivePhotoView() {

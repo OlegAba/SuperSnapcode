@@ -158,7 +158,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
             return nil
         }
         
-        if result.count < 3 {
+        if result.count < 3 || result.count > 15 {
             return nil
         }
 
