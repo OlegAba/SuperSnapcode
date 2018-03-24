@@ -93,7 +93,8 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                     self.collectionView.collectionViewLayout.invalidateLayout()
                     self.tableView.reloadData()
                 } else {
-                    ImageManager.shared.photoLibraryPermissionWasDenied()
+                    let deniedPhotoLibraryPermissionViewController = DeniedPhotoLibraryPermissionViewController()
+                    System.shared.appDelegate().pageViewController?.setViewControllers([deniedPhotoLibraryPermissionViewController], direction: .reverse, animated: true, completion: nil)
                 }
             }
         }

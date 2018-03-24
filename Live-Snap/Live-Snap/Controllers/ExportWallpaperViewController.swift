@@ -41,6 +41,7 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         toolBar = UIToolbar(frame: CGRect(x: 0, y: view.frame.size.height, width: view.frame.size.width, height: 45))
         toolBar.isTranslucent = false
         toolBar.barTintColor = UIColor.snapBlack
+        toolBar.isHidden = true
         
         let backBarButton = UIBarButtonItem(title: "Back", style:.plain, target: self, action: #selector(backButtonWasPressed))
         backBarButton.tintColor = UIColor.snapYellow
@@ -66,6 +67,7 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         forceTouchNotifierLabel.center = toolBar.center
         forceTouchNotifierLabel.textColor = .white
         forceTouchNotifierLabel.textAlignment = .center
+        forceTouchNotifierLabel.isHidden = true
         
         saveSuccessIndicator = JGProgressHUD(style: .dark)
         saveSuccessIndicator.indicatorView = JGProgressHUDSuccessIndicatorView()
@@ -78,6 +80,9 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         saveErrorIndicator.textLabel.text = "Failed to save!\nPlease try again"
         saveErrorIndicator.shadow = JGProgressHUDShadow()
         saveErrorIndicator.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
+        
+        view.addSubview(toolBar)
+        view.addSubview(forceTouchNotifierLabel)
         
         DispatchQueue.global(qos: .userInitiated).async {
             self.createLivePhoto()
@@ -101,9 +106,9 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
     }
     
     func livePhotoView(_ livePhotoView: PHLivePhotoView, didEndPlaybackWith playbackStyle: PHLivePhotoViewPlaybackStyle) {
-        if !toolBar.isDescendant(of: view) {
-            view.addSubview(toolBar)
-            view.addSubview(forceTouchNotifierLabel)
+        if toolBar.isHidden {
+            toolBar.isHidden = false
+            forceTouchNotifierLabel.isHidden = false
             animateToolBarAndLivePhotoView()
             view.isUserInteractionEnabled = true
         }
