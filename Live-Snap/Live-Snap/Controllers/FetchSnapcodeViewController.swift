@@ -126,7 +126,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         print("Invalid snapchat username")
     }
     
-    func sanitizeSnapchatUsernameString(username: String?) -> String? {
+    func sanitizeSnapchatUsernameString(username: String) -> String? {
 
 //Snapchat usernames:
 //● Must be 3-15 characters long
@@ -138,8 +138,6 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
 //● Can’t end with a hyphen, underscore, or period
 //● Can’t contain emojis or other symbols such as @, $, #, etc.
 //● Will appear only in lower-case letters within the app
-        
-        guard let username = username else { return nil }
         
         let result = username.trimmingCharacters(in: .whitespaces).lowercased()
         
@@ -160,7 +158,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
             return nil
         }
         
-        if result.count < 3 || result.count > 15 {
+        if result.count < 3 || result.count > 30 {
             return nil
         }
 
@@ -170,7 +168,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     @objc func nextButtonWasPressed() {
         nextButton.isUserInteractionEnabled = false
         
-        guard let sanitizedUsername = sanitizeSnapchatUsernameString(username: usernameTextField.text) else {
+        guard let username = usernameTextField.text, let sanitizedUsername = sanitizeSnapchatUsernameString(username: username) else {
             showInvalidSnapchatUsernameError()
             nextButton.isUserInteractionEnabled = true
             return
