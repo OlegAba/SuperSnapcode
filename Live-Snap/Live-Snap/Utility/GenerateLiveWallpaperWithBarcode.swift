@@ -66,8 +66,8 @@ class GenerateLiveWallpaperWithBarcode {
         guard let blurredSnapcode = barcodeImage.blurred(blurRadius: 16) else { return nil }
         guard let frame2 = drawSnapCodeOnImage(snapcode: blurredSnapcode, image: frame2Background) else { return nil }
         
-        let frame3Background = frame2Background.iOSBlurred()
-        guard let frame3 = drawSnapCodeOnImage(snapcode: barcodeImage, image: frame3Background) else { return nil }
+        let frame3Background = frame1.darkenedAndBlurred(darkness: 0.06, blurRadius: 30)
+        guard let frame3 = drawSnapCodeOnImage(snapcode: barcodeImage, image: frame3Background!) else { return nil }
         
         return [frame1, frame2, frame3]
     }

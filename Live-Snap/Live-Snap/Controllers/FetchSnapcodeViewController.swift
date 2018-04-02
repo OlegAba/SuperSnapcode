@@ -49,6 +49,10 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         nextButton.setBackgroundImage(UIImage(color: UIColor.snapYellow, size: nextButton.frame.size), for: .normal)
         nextButton.setBackgroundImage(UIImage(color: UIColor.snapYellow.withAlphaComponent(0.75), size: nextButton.frame.size), for: .highlighted)
         nextButton.addTarget(self, action: #selector(nextButtonWasPressed), for: .touchUpInside)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         // Notification for when keyboard will show up to set frame of next button
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: .UIKeyboardWillChangeFrame, object: nil)
@@ -65,10 +69,6 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -158,7 +158,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
             return nil
         }
         
-        if result.count < 3 {
+        if result.count < 3 || result.count > 30 {
             return nil
         }
 
@@ -166,8 +166,13 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func nextButtonWasPressed() {
-        guard let username = usernameTextField.text else { return }
-        guard let sanitizedUsername = sanitizeSnapchatUsernameString(username: username) else { showInvalidSnapchatUsernameError(); return }
+        nextButton.isUserInteractionEnabled = false
+        
+        guard let username = usernameTextField.text, let sanitizedUsername = sanitizeSnapchatUsernameString(username: username) else {
+            showInvalidSnapchatUsernameError()
+            nextButton.isUserInteractionEnabled = true
+            return
+        }
         
         // Get snapcode with bitmoji image in the middle
         self.getSnapcodeWithBitmojiImage(username: sanitizedUsername) { (bitmojiSnapcodeImage: UIImage?) in
@@ -182,15 +187,17 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
                     System.shared.snapcode = snapcodeImage
                 } else {
                     self.showCannotGetSnapcodeError()
+                    self.nextButton.isUserInteractionEnabled = true
                     return
                 }
                 
                 DispatchQueue.main.async {
+                    
                     let selectPhotoViewController = SelectPhotoViewController()
                     System.shared.appDelegate().pageViewController?.setViewControllers([selectPhotoViewController], direction: .forward, animated: true, completion: nil)
                 }
             }
         }
     }
+    
 }
-

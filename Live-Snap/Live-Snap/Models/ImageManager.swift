@@ -36,16 +36,6 @@ class ImageManager {
         }
     }
     
-    func photoLibraryPermissionWasDenied() {
-     
-        let deniedPermissionViewControllerIsActive: Bool = System.shared.appDelegate().pageViewController?.viewControllers![0] is DeniedPhotoLibraryPermissionViewController
-        
-        if !deniedPermissionViewControllerIsActive {
-            let deniedPhotoLibraryPermissionViewController = DeniedPhotoLibraryPermissionViewController()
-            System.shared.appDelegate().pageViewController?.setViewControllers([deniedPhotoLibraryPermissionViewController], direction: .reverse, animated: true, completion: nil)
-        }
-    }
-    
     func grabAllPhotoAlbums() -> [PhotoAlbum] {
         
         var albumAssets = [String: PHFetchResult<PHAsset>]()
