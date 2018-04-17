@@ -95,11 +95,13 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         let livePhotoGenerator = GenerateLiveWallpaperWithBarcode(fileName: "live_wallpaper", wallpaperImage: System.shared.wallpaper!, barcodeImage: System.shared.snapcode!)
         livePhotoGenerator.create { (livePhoto: LivePhoto?) in
             if let livePhoto = livePhoto {
-                self.livePhoto = livePhoto
-                self.livePhotoPreviewView.livePhoto = livePhoto.phLivePhoto
-                self.activityIndicatorForCreatingLivePhoto.dismiss(animated: false)
-                self.activityIndicatorForCreatingLivePhoto.animation.animationFinished()
-                self.livePhotoPreviewView.startPlayback(with: .full)
+                DispatchQueue.main.async {
+                    self.livePhoto = livePhoto
+                    self.livePhotoPreviewView.livePhoto = livePhoto.phLivePhoto
+                    self.activityIndicatorForCreatingLivePhoto.dismiss(animated: false)
+                    self.activityIndicatorForCreatingLivePhoto.animation.animationFinished()
+                    self.livePhotoPreviewView.startPlayback(with: .full)
+                }
             }
         }
         

@@ -18,6 +18,8 @@ class System {
     
     let appName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
     
+    let statusBarHeight = UIApplication.shared.statusBarFrame.height
+    
     func appDelegate() -> AppDelegate {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return AppDelegate() }
         return appDelegate

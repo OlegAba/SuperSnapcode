@@ -36,6 +36,7 @@ class BitmojiSnapcodeEndpointRequest {
                     completion(nil)
                 }
             case .failure(let error):
+                completion(nil)
                 let statusCode = response.response?.statusCode
                 let errorMessage = error.localizedDescription
                 
