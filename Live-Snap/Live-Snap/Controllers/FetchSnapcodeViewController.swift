@@ -16,11 +16,11 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     var getSnapcodeButton: UIButton!
     var fetchSnapcodeIndicator: JGProgressHUD!
     
-    var snapcodeImageView: UIImageView!
-    var bitmojiToolbar: UIToolbar!
+    var snapcodeSelectionImageView: UIImageView!
+    var snapcodeSelectionToolbar: UIToolbar!
     var toolbarInsturctionsLabel: UILabel!
-    var bitmojiInsturctionsLabel: UILabel!
-    var snapcodeSwitch: UISwitch!
+    var snapcodeSelectionInsturctionsLabel: UILabel!
+    var snapcodeSelectionSwitch: UISwitch!
     
     var bitmojiSnapcode: UIImage?
     var defaultSnapcode: UIImage?
@@ -70,13 +70,13 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         fetchSnapcodeIndicator.textLabel.text = "Fetching Snapcode"
         
         //Snapcode Selection UI
-        snapcodeImageView = UIImageView()
-        snapcodeImageView.frame = CGRect(x: 0.0, y: System.shared.statusBarHeight + usernameTextField.frame.height + 10.0, width: view.frame.width * 0.75, height: view.frame.width * 0.75)
-        snapcodeImageView.center.x = view.center.x
+        snapcodeSelectionImageView = UIImageView()
+        snapcodeSelectionImageView.frame = CGRect(x: 0.0, y: System.shared.statusBarHeight + usernameTextField.frame.height + 10.0, width: view.frame.width * 0.75, height: view.frame.width * 0.75)
+        snapcodeSelectionImageView.center.x = view.center.x
         
-        bitmojiToolbar = UIToolbar(frame: CGRect(x: 0, y: view.frame.height - 45, width: view.frame.size.width, height: 45))
-        bitmojiToolbar.isTranslucent = false
-        bitmojiToolbar.barTintColor = UIColor.snapBlack
+        snapcodeSelectionToolbar = UIToolbar(frame: CGRect(x: 0, y: view.frame.height - 45, width: view.frame.size.width, height: 45))
+        snapcodeSelectionToolbar.isTranslucent = false
+        snapcodeSelectionToolbar.barTintColor = UIColor.snapBlack
         
         let cancelBarButton = UIBarButtonItem(title: "Back", style:.plain, target: self, action: #selector(cancelButtonWasPressed))
         cancelBarButton.tintColor = UIColor.snapYellow
@@ -85,28 +85,28 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         nextButton.tintColor = UIColor.snapYellow
         
         let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        bitmojiToolbar.items = [cancelBarButton, flexibleSpaceBarButtonItem, nextButton]
+        snapcodeSelectionToolbar.items = [cancelBarButton, flexibleSpaceBarButtonItem, nextButton]
         
         toolbarInsturctionsLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width * 0.5, height: 45))
-        toolbarInsturctionsLabel.center = bitmojiToolbar.center
+        toolbarInsturctionsLabel.center = snapcodeSelectionToolbar.center
         toolbarInsturctionsLabel.text = "Select Snapcode"
         toolbarInsturctionsLabel.textColor = .white
         toolbarInsturctionsLabel.textAlignment = .center
         
-        bitmojiInsturctionsLabel = UILabel()
-        bitmojiInsturctionsLabel.text = "Bitmoji Snapcode"
-        bitmojiInsturctionsLabel.sizeToFit()
-        bitmojiInsturctionsLabel.textColor = .white
-        bitmojiInsturctionsLabel.textAlignment = .left
-        bitmojiInsturctionsLabel.frame.origin.y = snapcodeImageView.frame.maxY + usernameTextField.frame.height * 1.5 + 40
-        bitmojiInsturctionsLabel.frame.origin.x = snapcodeImageView.frame.minX
+        snapcodeSelectionInsturctionsLabel = UILabel()
+        snapcodeSelectionInsturctionsLabel.text = "Bitmoji Snapcode"
+        snapcodeSelectionInsturctionsLabel.sizeToFit()
+        snapcodeSelectionInsturctionsLabel.textColor = .white
+        snapcodeSelectionInsturctionsLabel.textAlignment = .left
+        snapcodeSelectionInsturctionsLabel.frame.origin.y = snapcodeSelectionImageView.frame.maxY + usernameTextField.frame.height * 1.5 + 40
+        snapcodeSelectionInsturctionsLabel.frame.origin.x = snapcodeSelectionImageView.frame.minX
         
-        snapcodeSwitch = UISwitch()
-        snapcodeSwitch.center.y = bitmojiInsturctionsLabel.frame.midY
-        snapcodeSwitch.frame.origin.x = snapcodeImageView.frame.maxX - snapcodeSwitch.frame.width
-        snapcodeSwitch.setOn(true, animated: false)
-        snapcodeSwitch.onTintColor = UIColor.snapYellow
-        snapcodeSwitch.addTarget(self, action: #selector(switchIsTapped(toggle:)), for: .valueChanged)
+        snapcodeSelectionSwitch = UISwitch()
+        snapcodeSelectionSwitch.center.y = snapcodeSelectionInsturctionsLabel.frame.midY
+        snapcodeSelectionSwitch.frame.origin.x = snapcodeSelectionImageView.frame.maxX - snapcodeSelectionSwitch.frame.width
+        snapcodeSelectionSwitch.setOn(true, animated: false)
+        snapcodeSelectionSwitch.onTintColor = UIColor.snapYellow
+        snapcodeSelectionSwitch.addTarget(self, action: #selector(switchIsTapped(toggle:)), for: .valueChanged)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -254,6 +254,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
                 if let bitmojiSnapcodeImage = bitmojiSnapcodeImage {
                     
                     if let snapcodeImage = snapcodeImage {
+                        System.shared.snapcode = bitmojiSnapcodeImage
                         self.bitmojiSnapcode = bitmojiSnapcodeImage
                         self.defaultSnapcode = snapcodeImage
                         self.snapcodeSelectionUI()
@@ -282,26 +283,29 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         fetchSnapcodeIndicator.dismiss(animated: false)
         fetchSnapcodeIndicator.animation.animationFinished()
         
-        snapcodeImageView.image = bitmojiSnapcode
+        snapcodeSelectionImageView.image = bitmojiSnapcode
         
         usernameTextField.isUserInteractionEnabled = false
-        usernameTextField.frame.origin.y = snapcodeImageView.frame.maxY + 40
+        usernameTextField.frame.origin.y = snapcodeSelectionImageView.frame.maxY + 40
         
         
-        view.addSubview(bitmojiToolbar)
+        view.addSubview(snapcodeSelectionToolbar)
         view.addSubview(toolbarInsturctionsLabel)
         view.addSubview(usernameTextField)
-        view.addSubview(bitmojiInsturctionsLabel)
-        view.addSubview(snapcodeSwitch)
-        view.addSubview(snapcodeImageView)
+        view.addSubview(snapcodeSelectionInsturctionsLabel)
+        view.addSubview(snapcodeSelectionSwitch)
+        view.addSubview(snapcodeSelectionImageView)
+        
+        let hapticFeedback = UIImpactFeedbackGenerator(style: .heavy)
+        hapticFeedback.impactOccurred()
     }
     
     @objc func switchIsTapped(toggle: UISwitch) {
         if toggle.isOn {
-            snapcodeImageView.image = bitmojiSnapcode
+            snapcodeSelectionImageView.image = bitmojiSnapcode
             System.shared.snapcode = bitmojiSnapcode
         } else {
-            snapcodeImageView.image = defaultSnapcode
+            snapcodeSelectionImageView.image = defaultSnapcode
             System.shared.snapcode = defaultSnapcode
         }
     }

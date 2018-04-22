@@ -98,7 +98,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                 }
             }
         }
-    }
+    }       
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return currentPhotoAlbum.assets.count

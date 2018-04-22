@@ -84,11 +84,14 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         view.addSubview(toolBar)
         view.addSubview(forceTouchNotifierLabel)
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         DispatchQueue.global(qos: .userInitiated).async {
             self.createLivePhoto()
         }
-        
     }
+
     
     func createLivePhoto() {
         FileManager.default.clearDocumentsDirectory()
@@ -161,7 +164,7 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         livePhoto.writeToPhotoLibrary { (success: Bool) in
             DispatchQueue.main.sync {
                 if success {
-                        self.saveSuccessIndicator.show(in: self.view, animated: true)
+                        self.saveSuccessIndicator.show(in: self.view, animated: true)        
                         self.saveSuccessIndicator.dismiss(afterDelay: 1.5, animated: true)
                         self.saveSuccessIndicator.animation.animationFinished()
                         let fetchSnapcodeViewController = FetchSnapcodeViewController()
