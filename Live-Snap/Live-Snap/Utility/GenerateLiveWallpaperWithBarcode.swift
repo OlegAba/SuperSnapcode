@@ -43,7 +43,7 @@ class GenerateLiveWallpaperWithBarcode {
         let videoFilePathURL = URL(fileURLWithPath: videoFilePath)
         
         guard let videoFrames = interpolateFrames() else { completion(nil); return }
-        VideoFromImages(images: videoFrames, framesPerSecond: 3).writeMovieToURL(url: videoFilePathURL) { (success: Bool) in
+        VideoFromImages(images: videoFrames, framesPerSecond: 2).writeMovieToURL(url: videoFilePathURL) { (success: Bool) in
             
             guard success else { completion(nil); return }
             
@@ -60,21 +60,10 @@ class GenerateLiveWallpaperWithBarcode {
     
     func interpolateFrames() -> [UIImage]? {
         
-        let frame1 = wallpaperImage
+        guard let frame2Background = wallpaperImage.darkenedAndBlurred(darkness: 0.06, blurRadius: 60) else { return nil }
+        guard let frame2 = drawSnapCodeOnImage(snapcode: barcodeImage, image: frame2Background) else { return nil }
         
-        /*
-        guard let frame2Background = frame1.darkenedAndBlurred(darkness: 0.04, blurRadius: 16) else { return nil }
-        guard let blurredSnapcode = barcodeImage.blurred(blurRadius: 16) else { return nil }
-        guard let frame2 = drawSnapCodeOnImage(snapcode: blurredSnapcode, image: frame2Background) else { return nil }
-        
-        let frame3Background = frame1.darkenedAndBlurred(darkness: 0.06, blurRadius: 30)
-        guard let frame3 = drawSnapCodeOnImage(snapcode: barcodeImage, image: frame3Background!) else { return nil }
-        */
-
-        guard let frame2 = drawSnapCodeOnImage(snapcode: barcodeImage, image: frame1) else { return nil }
- 
-        //return [frame1, frame2, frame3]
-        return [frame1, frame2]
+        return [wallpaperImage, frame2]
     }
     
     func drawSnapCodeOnImage(snapcode: UIImage, image: UIImage) -> UIImage? {

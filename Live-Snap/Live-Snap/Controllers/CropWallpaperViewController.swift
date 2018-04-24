@@ -60,7 +60,7 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
     
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         
-        let resizedImage = image.resized(size: CGSize(width: 1666.0, height: 3615.0))
+        let resizedImage = image.resized(size: CGSize(width: UIScreen.main.bounds.size.width * 4.0, height: UIScreen.main.bounds.size.height * 4.0))
         
         System.shared.wallpaper = resizedImage
         System.shared.snapcode = System.shared.snapcode?.resized(size: CGSize(width: resizedImage.size.width * 0.6, height: resizedImage.size.width * 0.6))

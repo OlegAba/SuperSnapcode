@@ -16,7 +16,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     var getSnapcodeButton: UIButton!
     var fetchSnapcodeIndicator: JGProgressHUD!
     
-    var snapcodeSelectionImageView: UIImageView!
+    var snapcodeImageView: UIImageView!
     var snapcodeSelectionToolbar: UIToolbar!
     var toolbarInsturctionsLabel: UILabel!
     var snapcodeSelectionInsturctionsLabel: UILabel!
@@ -70,9 +70,9 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         fetchSnapcodeIndicator.textLabel.text = "Fetching Snapcode"
         
         //Snapcode Selection UI
-        snapcodeSelectionImageView = UIImageView()
-        snapcodeSelectionImageView.frame = CGRect(x: 0.0, y: System.shared.statusBarHeight + usernameTextField.frame.height + 10.0, width: view.frame.width * 0.75, height: view.frame.width * 0.75)
-        snapcodeSelectionImageView.center.x = view.center.x
+        snapcodeImageView = UIImageView()
+        snapcodeImageView.frame = CGRect(x: 0.0, y: System.shared.statusBarHeight + usernameTextField.frame.height + 10.0, width: view.frame.width * 0.75, height: view.frame.width * 0.75)
+        snapcodeImageView.center.x = view.center.x
         
         snapcodeSelectionToolbar = UIToolbar(frame: CGRect(x: 0, y: view.frame.height - 45, width: view.frame.size.width, height: 45))
         snapcodeSelectionToolbar.isTranslucent = false
@@ -98,12 +98,12 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         snapcodeSelectionInsturctionsLabel.sizeToFit()
         snapcodeSelectionInsturctionsLabel.textColor = .white
         snapcodeSelectionInsturctionsLabel.textAlignment = .left
-        snapcodeSelectionInsturctionsLabel.frame.origin.y = snapcodeSelectionImageView.frame.maxY + usernameTextField.frame.height * 1.5 + 40
-        snapcodeSelectionInsturctionsLabel.frame.origin.x = snapcodeSelectionImageView.frame.minX
+        snapcodeSelectionInsturctionsLabel.frame.origin.y = snapcodeImageView.frame.maxY + usernameTextField.frame.height * 1.5 + 40
+        snapcodeSelectionInsturctionsLabel.frame.origin.x = snapcodeImageView.frame.minX
         
         snapcodeSelectionSwitch = UISwitch()
         snapcodeSelectionSwitch.center.y = snapcodeSelectionInsturctionsLabel.frame.midY
-        snapcodeSelectionSwitch.frame.origin.x = snapcodeSelectionImageView.frame.maxX - snapcodeSelectionSwitch.frame.width
+        snapcodeSelectionSwitch.frame.origin.x = snapcodeImageView.frame.maxX - snapcodeSelectionSwitch.frame.width
         snapcodeSelectionSwitch.setOn(true, animated: false)
         snapcodeSelectionSwitch.onTintColor = UIColor.snapYellow
         snapcodeSelectionSwitch.addTarget(self, action: #selector(switchIsTapped(toggle:)), for: .valueChanged)
@@ -191,6 +191,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     
     func showInvalidSnapchatUsernameError() {
         print("Invalid snapchat username")
+//TODO: Show Invalid Snapchat Username error message
     }
     
     func sanitizeSnapchatUsernameString(username: String) -> String? {
@@ -283,29 +284,28 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         fetchSnapcodeIndicator.dismiss(animated: false)
         fetchSnapcodeIndicator.animation.animationFinished()
         
-        snapcodeSelectionImageView.image = bitmojiSnapcode
+        snapcodeImageView.image = bitmojiSnapcode
         
         usernameTextField.isUserInteractionEnabled = false
-        usernameTextField.frame.origin.y = snapcodeSelectionImageView.frame.maxY + 40
+        usernameTextField.frame.origin.y = snapcodeImageView.frame.maxY + 40
         
+        let hapticFeedback = UIImpactFeedbackGenerator(style: .heavy)
+        hapticFeedback.impactOccurred()
         
         view.addSubview(snapcodeSelectionToolbar)
         view.addSubview(toolbarInsturctionsLabel)
         view.addSubview(usernameTextField)
         view.addSubview(snapcodeSelectionInsturctionsLabel)
         view.addSubview(snapcodeSelectionSwitch)
-        view.addSubview(snapcodeSelectionImageView)
-        
-        let hapticFeedback = UIImpactFeedbackGenerator(style: .heavy)
-        hapticFeedback.impactOccurred()
+        view.addSubview(snapcodeImageView)
     }
     
     @objc func switchIsTapped(toggle: UISwitch) {
         if toggle.isOn {
-            snapcodeSelectionImageView.image = bitmojiSnapcode
+            snapcodeImageView.image = bitmojiSnapcode
             System.shared.snapcode = bitmojiSnapcode
         } else {
-            snapcodeSelectionImageView.image = defaultSnapcode
+            snapcodeImageView.image = defaultSnapcode
             System.shared.snapcode = defaultSnapcode
         }
     }
