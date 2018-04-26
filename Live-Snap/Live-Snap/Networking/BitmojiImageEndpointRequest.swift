@@ -33,13 +33,14 @@ class BitmojiImageEndpointRequest {
                     let imageData = Data(base64Encoded: base64EndodedPNGString) {
                         completion(UIImage(data: imageData))
                         return
+                    } else {
+                        completion(nil)
                     }
-                    completion(nil)
                 } else {
                     completion(nil)
                 }
+
             case .failure(let error):
-                completion(nil)
                 let statusCode = response.response?.statusCode
                 let errorMessage = error.localizedDescription
                 
@@ -47,6 +48,8 @@ class BitmojiImageEndpointRequest {
                 print("URL: \(url)")
                 print("Status Code: \(String(describing: statusCode))")
                 print("Error Message: \(errorMessage)")
+                
+                completion(nil)
             }
             
         }

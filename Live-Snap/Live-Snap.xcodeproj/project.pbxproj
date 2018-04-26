@@ -19,6 +19,7 @@
 		7C7F4AD9200F37780046D70D /* SelectPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F4AD8200F37780046D70D /* SelectPhotoCollectionViewCell.swift */; };
 		7C7F4ADB200F37950046D70D /* SelectPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7F4ADA200F37940046D70D /* SelectPhotoViewController.swift */; };
 		7C8906E3200AD21300E64CAB /* LivePhotoMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8906E2200AD21300E64CAB /* LivePhotoMaker.swift */; };
+		7C8C372F20914DC20057F17B /* UIBarButtonItem+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8C372E20914DC20057F17B /* UIBarButtonItem+.swift */; };
 		7CF942F4200AD36C00896C4A /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF942F3200AD36C00896C4A /* UIImage+.swift */; };
 		87FEDBF175B199DB77C65F63 /* Pods_Live_Snap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 867AA8EF1C093CB0C3455C0F /* Pods_Live_Snap.framework */; };
 		958FE116204CD61500689AF6 /* BitmojiSnapcodeEndpointRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958FE115204CD61500689AF6 /* BitmojiSnapcodeEndpointRequest.swift */; };
@@ -54,6 +55,7 @@
 		7C7F4AD8200F37780046D70D /* SelectPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		7C7F4ADA200F37940046D70D /* SelectPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPhotoViewController.swift; sourceTree = "<group>"; };
 		7C8906E2200AD21300E64CAB /* LivePhotoMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LivePhotoMaker.swift; sourceTree = "<group>"; };
+		7C8C372E20914DC20057F17B /* UIBarButtonItem+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+.swift"; sourceTree = "<group>"; };
 		7CF942F3200AD36C00896C4A /* UIImage+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		867AA8EF1C093CB0C3455C0F /* Pods_Live_Snap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Live_Snap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		958FE115204CD61500689AF6 /* BitmojiSnapcodeEndpointRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmojiSnapcodeEndpointRequest.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				95D127DE200D609B000AE7EF /* UIColor+.swift */,
 				95D127E4200D6ACB000AE7EF /* UIView+.swift */,
 				959EB9BF2058E5E500098CD5 /* String+.swift */,
+				7C8C372E20914DC20057F17B /* UIBarButtonItem+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				95D127ED2011BA63000AE7EF /* ExportWallpaperViewController.swift in Sources */,
 				7C6E4D032000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift in Sources */,
 				959EB9BE2058E4DA00098CD5 /* BitmojiImageEndpointRequest.swift in Sources */,
+				7C8C372F20914DC20057F17B /* UIBarButtonItem+.swift in Sources */,
 				7C1F7D7B20184FCF00D9540B /* ImageManager.swift in Sources */,
 				95D127DD200D5C24000AE7EF /* FetchSnapcodeViewController.swift in Sources */,
 				7C5C685E2017EB0E00328E4A /* AlbumTableViewCell.swift in Sources */,

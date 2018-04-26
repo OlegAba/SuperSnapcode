@@ -48,10 +48,8 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         
         let selectAlbumButton: UIBarButtonItem = UIBarButtonItem(title: "Save", style:.plain, target: self, action: #selector(saveButtonWasPressed))
         selectAlbumButton.tintColor = UIColor.snapYellow
-        
-        let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        
-        toolBar.items = [backBarButton, flexibleSpaceBarButtonItem, selectAlbumButton]
+
+        toolBar.items = [backBarButton, UIBarButtonItem.flexibleSpace(), selectAlbumButton]
         
         let forceTouchNotifierText: String = {
             if self.traitCollection.forceTouchCapability == UIForceTouchCapability.available {
@@ -105,6 +103,8 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
                     self.activityIndicatorForCreatingLivePhoto.animation.animationFinished()
                     self.livePhotoPreviewView.startPlayback(with: .full)
                 }
+            } else {
+//TODO: Handle failure Case
             }
         }
         
@@ -164,7 +164,7 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         livePhoto.writeToPhotoLibrary { (success: Bool) in
             DispatchQueue.main.sync {
                 if success {
-                        self.saveSuccessIndicator.show(in: self.view, animated: true)        
+                        self.saveSuccessIndicator.show(in: self.view, animated: true)
                         self.saveSuccessIndicator.dismiss(afterDelay: 1.5, animated: true)
                         self.saveSuccessIndicator.animation.animationFinished()
                         let fetchSnapcodeViewController = FetchSnapcodeViewController()

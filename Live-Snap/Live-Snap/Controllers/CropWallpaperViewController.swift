@@ -12,7 +12,7 @@ import CropViewController
 class CropWallpaperViewController: UIViewController, CropViewControllerDelegate {
     
     var imageToCrop: UIImage! = UIImage()
-    var toolbarInsturctionsLabel: UILabel!
+    var toolbarInstructionsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,21 +34,21 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
         cropViewController.view.backgroundColor = UIColor.snapBlack
         cropViewController.cropView.backgroundColor = UIColor.snapBlack
         
-        toolbarInsturctionsLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width * 0.5, height: 45))
-        toolbarInsturctionsLabel.center = cropViewController.toolbar.center
-        toolbarInsturctionsLabel.text = "Crop Image"
-        toolbarInsturctionsLabel.textColor = .white
-        toolbarInsturctionsLabel.textAlignment = .center
+        toolbarInstructionsLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width * 0.5, height: 45))
+        toolbarInstructionsLabel.center = cropViewController.toolbar.center
+        toolbarInstructionsLabel.text = "Crop Image"
+        toolbarInstructionsLabel.textColor = .white
+        toolbarInstructionsLabel.textAlignment = .center
         
         addChildViewController(cropViewController)
         cropViewController.view.frame = CGRect(x: 0, y: 20, width: view.frame.width, height: view.frame.height - 20)
         if view.isIPhoneX() {
             cropViewController.view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-            toolbarInsturctionsLabel.frame.origin.y -= 34.0
+            toolbarInstructionsLabel.frame.origin.y -= 34.0
         }
         
         view.addSubview(cropViewController.view)
-        view.addSubview(toolbarInsturctionsLabel)
+        view.addSubview(toolbarInstructionsLabel)
         cropViewController.didMove(toParentViewController: self)
     }
     

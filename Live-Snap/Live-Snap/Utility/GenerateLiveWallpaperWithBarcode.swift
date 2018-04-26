@@ -60,23 +60,23 @@ class GenerateLiveWallpaperWithBarcode {
     
     func interpolateFrames() -> [UIImage]? {
         
-        guard let frame2Background = wallpaperImage.darkenedAndBlurred(darkness: 0.06, blurRadius: 60) else { return nil }
-        guard let frame2 = drawSnapCodeOnImage(snapcode: barcodeImage, image: frame2Background) else { return nil }
+        guard let frame2Background = wallpaperImage.darkenedAndBlurred(darkness: 0.06, blurRadius: 30) else { return nil }
+        guard let frame2 = drawSnapCodeOnImage(barcode: barcodeImage, image: frame2Background) else { return nil }
         
         return [wallpaperImage, frame2]
     }
     
-    func drawSnapCodeOnImage(snapcode: UIImage, image: UIImage) -> UIImage? {
+    func drawSnapCodeOnImage(barcode: UIImage, image: UIImage) -> UIImage? {
         
         UIGraphicsBeginImageContextWithOptions(image.size, false, 1.0)
         defer { UIGraphicsEndImageContext() }
         
         guard let _ = UIGraphicsGetCurrentContext() else { return nil }
        
-        let xOffset = (image.size.width / 2.0) - snapcode.size.width / 2.0
-        let yOffset = (image.size.height / 2.0) - snapcode.size.height / 2.0
+        let xOffset = (image.size.width / 2.0) - barcode.size.width / 2.0
+        let yOffset = (image.size.height / 2.0) - barcode.size.height / 2.0
         image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
-        snapcode.draw(in: CGRect(x: xOffset, y: yOffset, width: snapcode.size.width, height: snapcode.size.height))
+        barcode.draw(in: CGRect(x: xOffset, y: yOffset, width: barcode.size.width, height: barcode.size.height))
         let image = UIGraphicsGetImageFromCurrentImageContext()
         return image
     }
