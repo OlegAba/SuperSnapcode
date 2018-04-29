@@ -82,7 +82,7 @@ extension UIImage {
         
         let context = CIContext(options: nil)
         if let newCGImage = context.createCGImage(darkenedCIImage, from: ciImage.extent) {
-            return UIImage(cgImage: newCGImage)
+            return UIImage(cgImage: newCGImage, scale: scale, orientation: imageOrientation)
         }
         
         return nil

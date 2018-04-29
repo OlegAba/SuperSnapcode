@@ -43,11 +43,10 @@ class DeniedPhotoLibraryPermissionViewController: UIViewController, UIToolbarDel
         toolBar.isTranslucent = false
         toolBar.barTintColor = UIColor.snapBlack
         
-        let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let settingsButton = UIBarButtonItem(title: "Settings", style:.plain, target: self, action: #selector(settingsButtonWasPressed))
         settingsButton.tintColor = UIColor.snapYellow
         
-        toolBar.items = [flexibleSpaceBarButtonItem, settingsButton, flexibleSpaceBarButtonItem]
+        toolBar.items = [UIBarButtonItem.flexibleSpace(), settingsButton, UIBarButtonItem.flexibleSpace()]
         
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         

@@ -48,10 +48,8 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         
         let selectAlbumButton: UIBarButtonItem = UIBarButtonItem(title: "Save", style:.plain, target: self, action: #selector(saveButtonWasPressed))
         selectAlbumButton.tintColor = UIColor.snapYellow
-        
-        let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        
-        toolBar.items = [backBarButton, flexibleSpaceBarButtonItem, selectAlbumButton]
+
+        toolBar.items = [backBarButton, UIBarButtonItem.flexibleSpace(), selectAlbumButton]
         
         let forceTouchNotifierText: String = {
             if self.traitCollection.forceTouchCapability == UIForceTouchCapability.available {
@@ -84,22 +82,29 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         view.addSubview(toolBar)
         view.addSubview(forceTouchNotifierLabel)
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         DispatchQueue.global(qos: .userInitiated).async {
             self.createLivePhoto()
         }
-        
     }
+
     
     func createLivePhoto() {
         FileManager.default.clearDocumentsDirectory()
         let livePhotoGenerator = GenerateLiveWallpaperWithBarcode(fileName: "live_wallpaper", wallpaperImage: System.shared.wallpaper!, barcodeImage: System.shared.snapcode!)
         livePhotoGenerator.create { (livePhoto: LivePhoto?) in
             if let livePhoto = livePhoto {
-                self.livePhoto = livePhoto
-                self.livePhotoPreviewView.livePhoto = livePhoto.phLivePhoto
-                self.activityIndicatorForCreatingLivePhoto.dismiss(animated: false)
-                self.activityIndicatorForCreatingLivePhoto.animation.animationFinished()
-                self.livePhotoPreviewView.startPlayback(with: .full)
+                DispatchQueue.main.async {
+                    self.livePhoto = livePhoto
+                    self.livePhotoPreviewView.livePhoto = livePhoto.phLivePhoto
+                    self.activityIndicatorForCreatingLivePhoto.dismiss(animated: false)
+                    self.activityIndicatorForCreatingLivePhoto.animation.animationFinished()
+                    self.livePhotoPreviewView.startPlayback(with: .full)
+                }
+            } else {
+//TODO: Handle failure Case
             }
         }
         

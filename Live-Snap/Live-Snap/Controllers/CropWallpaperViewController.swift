@@ -12,6 +12,7 @@ import CropViewController
 class CropWallpaperViewController: UIViewController, CropViewControllerDelegate {
     
     var imageToCrop: UIImage! = UIImage()
+    var toolbarInstructionsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +34,21 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
         cropViewController.view.backgroundColor = UIColor.snapBlack
         cropViewController.cropView.backgroundColor = UIColor.snapBlack
         
+        toolbarInstructionsLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width * 0.5, height: 45))
+        toolbarInstructionsLabel.center = cropViewController.toolbar.center
+        toolbarInstructionsLabel.text = "Crop Image"
+        toolbarInstructionsLabel.textColor = .white
+        toolbarInstructionsLabel.textAlignment = .center
+        
         addChildViewController(cropViewController)
         cropViewController.view.frame = CGRect(x: 0, y: 20, width: view.frame.width, height: view.frame.height - 20)
         if view.isIPhoneX() {
             cropViewController.view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+            toolbarInstructionsLabel.frame.origin.y -= 34.0
         }
+        
         view.addSubview(cropViewController.view)
+        view.addSubview(toolbarInstructionsLabel)
         cropViewController.didMove(toParentViewController: self)
     }
     
@@ -50,16 +60,15 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
     
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         
-        System.shared.wallpaper = image
-        System.shared.snapcode = System.shared.snapcode?.resized(size: CGSize(width: cropRect.size.width * 0.75, height: cropRect.size.width * 0.75))
+        let resizedImage = image.resized(size: CGSize(width: UIScreen.main.bounds.size.width * 4.0, height: UIScreen.main.bounds.size.height * 4.0))
+        
+        System.shared.wallpaper = resizedImage
+        System.shared.snapcode = System.shared.snapcode?.resized(size: CGSize(width: resizedImage.size.width * 0.6, height: resizedImage.size.width * 0.6))
         
         let exportWallpaperViewController = ExportWallpaperViewController()
         System.shared.appDelegate().pageViewController?.setViewControllers([exportWallpaperViewController], direction: .forward, animated: true, completion: nil)
         
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+
 }
 

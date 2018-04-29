@@ -39,6 +39,8 @@ class SnapcodeEndpointRequest {
                 print("URL: \(url)")
                 print("Status Code: \(String(describing: statusCode))")
                 print("Error Message: \(errorMessage)")
+                
+                completion(nil)
             }
         
         }

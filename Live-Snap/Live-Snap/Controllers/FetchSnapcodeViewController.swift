@@ -7,12 +7,24 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     
     var instructionsTextLabel: UILabel!
     var usernameTextField: UITextField!
-    var nextButton: UIButton!
+    var getSnapcodeButton: UIButton!
+    var fetchSnapcodeIndicator: JGProgressHUD!
+    
+    var snapcodeImageView: UIImageView!
+    var snapcodeSelectionToolbar: UIToolbar!
+    var toolbarInsturctionsLabel: UILabel!
+    var snapcodeSelectionInsturctionsLabel: UILabel!
+    var snapcodeSelectionSwitch: UISwitch!
+    
+    var bitmojiSnapcode: UIImage?
+    var defaultSnapcode: UIImage?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +32,9 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         System.shared.snapcode = nil
         
         view.backgroundColor = UIColor.snapBlack
+        if view.isIPhoneX() {
+            view.frame.size.height -= 34.0
+        }
         
         instructionsTextLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.75, height: 100))
         instructionsTextLabel.center = CGPoint(x: view.frame.width / 2.0, y: view.frame.height * 0.2)
@@ -43,12 +58,54 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         usernameTextField.delegate = self
         view.addSubview(usernameTextField)
         
-        nextButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
-        nextButton.setTitle("Next", for: .normal)
-        nextButton.setTitleColor(UIColor.snapBlack, for: .normal)
-        nextButton.setBackgroundImage(UIImage(color: UIColor.snapYellow, size: nextButton.frame.size), for: .normal)
-        nextButton.setBackgroundImage(UIImage(color: UIColor.snapYellow.withAlphaComponent(0.75), size: nextButton.frame.size), for: .highlighted)
-        nextButton.addTarget(self, action: #selector(nextButtonWasPressed), for: .touchUpInside)
+        getSnapcodeButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
+        getSnapcodeButton.setTitle("Get Snapcode", for: .normal)
+        getSnapcodeButton.setTitleColor(UIColor.snapBlack, for: .normal)
+        getSnapcodeButton.setBackgroundImage(UIImage(color: UIColor.snapYellow, size: getSnapcodeButton.frame.size), for: .normal)
+        getSnapcodeButton.setBackgroundImage(UIImage(color: UIColor.snapYellow.withAlphaComponent(0.75), size: getSnapcodeButton.frame.size), for: .highlighted)
+        getSnapcodeButton.addTarget(self, action: #selector(getSnapcodeButtonWasPressed), for: .touchUpInside)
+        
+        fetchSnapcodeIndicator = JGProgressHUD(style: .dark)
+        fetchSnapcodeIndicator.contentView.backgroundColor = UIColor.snapBlack
+        fetchSnapcodeIndicator.textLabel.text = "Fetching Snapcode"
+        
+        //Snapcode Selection UI
+        snapcodeImageView = UIImageView()
+        snapcodeImageView.frame = CGRect(x: 0.0, y: System.shared.statusBarHeight + usernameTextField.frame.height + 10.0, width: view.frame.width * 0.75, height: view.frame.width * 0.75)
+        snapcodeImageView.center.x = view.center.x
+        
+        snapcodeSelectionToolbar = UIToolbar(frame: CGRect(x: 0, y: view.frame.height - 45, width: view.frame.size.width, height: 45))
+        snapcodeSelectionToolbar.isTranslucent = false
+        snapcodeSelectionToolbar.barTintColor = UIColor.snapBlack
+        
+        let backBarButton = UIBarButtonItem(title: "Back", style:.plain, target: self, action: #selector(backButtonWasPressed))
+        backBarButton.tintColor = UIColor.snapYellow
+        
+        let nextBarButton: UIBarButtonItem = UIBarButtonItem(title: "Next", style:.plain, target: self, action: #selector(nextButtonWasPressed))
+        nextBarButton.tintColor = UIColor.snapYellow
+        
+        snapcodeSelectionToolbar.items = [backBarButton, UIBarButtonItem.flexibleSpace(), nextBarButton]
+        
+        toolbarInsturctionsLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width * 0.5, height: 45))
+        toolbarInsturctionsLabel.center = snapcodeSelectionToolbar.center
+        toolbarInsturctionsLabel.text = "Select Snapcode"
+        toolbarInsturctionsLabel.textColor = .white
+        toolbarInsturctionsLabel.textAlignment = .center
+        
+        snapcodeSelectionInsturctionsLabel = UILabel()
+        snapcodeSelectionInsturctionsLabel.text = "Bitmoji Snapcode"
+        snapcodeSelectionInsturctionsLabel.sizeToFit()
+        snapcodeSelectionInsturctionsLabel.textColor = .white
+        snapcodeSelectionInsturctionsLabel.textAlignment = .left
+        snapcodeSelectionInsturctionsLabel.frame.origin.y = snapcodeImageView.frame.maxY + (usernameTextField.frame.height * 1.5) + 40
+        snapcodeSelectionInsturctionsLabel.frame.origin.x = snapcodeImageView.frame.minX
+        
+        snapcodeSelectionSwitch = UISwitch()
+        snapcodeSelectionSwitch.center.y = snapcodeSelectionInsturctionsLabel.frame.midY
+        snapcodeSelectionSwitch.frame.origin.x = snapcodeImageView.frame.maxX - snapcodeSelectionSwitch.frame.width
+        snapcodeSelectionSwitch.setOn(true, animated: false)
+        snapcodeSelectionSwitch.onTintColor = UIColor.snapYellow
+        snapcodeSelectionSwitch.addTarget(self, action: #selector(bitmojiSwitchWasTapped), for: .valueChanged)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -73,20 +130,20 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            nextButton.center = CGPoint(x: view.frame.width / 2.0, y: view.frame.height - keyboardSize.height - nextButton.frame.height / 2.0)
+            getSnapcodeButton.center = CGPoint(x: view.frame.width / 2.0, y: view.frame.height - keyboardSize.height - getSnapcodeButton.frame.height / 2.0)
         }
     }
     
     @objc func usernameTextFieldTextChanged() {
         if let textLength = usernameTextField.text?.count, textLength > 0 {
-            view.addSubview(nextButton)
+            view.addSubview(getSnapcodeButton)
         } else {
-            nextButton.removeFromSuperview()
+            getSnapcodeButton.removeFromSuperview()
         }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        nextButtonWasPressed()
+        getSnapcodeButtonWasPressed()
         return false
     }
     
@@ -116,10 +173,20 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     
     func showCannotGetSnapcodeError() {
         print("Could not get snapcode")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.fetchSnapcodeIndicator.dismiss(animated: false)
+            self.fetchSnapcodeIndicator.animation.animationFinished()
+            self.view.addSubview(self.instructionsTextLabel)
+            self.view.addSubview(self.usernameTextField)
+            self.view.addSubview(self.getSnapcodeButton)
+            self.showKeyboard()
+//TODO: Show Error message
+        }
     }
     
     func showInvalidSnapchatUsernameError() {
         print("Invalid snapchat username")
+//TODO: Show Invalid Snapchat Username error message
     }
     
     func sanitizeSnapchatUsernameString(username: String) -> String? {
@@ -161,39 +228,91 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         return result
     }
     
-    @objc func nextButtonWasPressed() {
-        nextButton.isUserInteractionEnabled = false
+    @objc func getSnapcodeButtonWasPressed() {
         
         guard let username = usernameTextField.text, let sanitizedUsername = sanitizeSnapchatUsernameString(username: username) else {
             showInvalidSnapchatUsernameError()
-            nextButton.isUserInteractionEnabled = true
             return
         }
         
+        instructionsTextLabel.removeFromSuperview()
+        usernameTextField.removeFromSuperview()
+        getSnapcodeButton.removeFromSuperview()
+        fetchSnapcodeIndicator.show(in: view)
+        
         // Get snapcode with bitmoji image in the middle
-        self.getSnapcodeWithBitmojiImage(username: sanitizedUsername) { (bitmojiSnapcodeImage: UIImage?) in
+        getSnapcodeWithBitmojiImage(username: sanitizedUsername) { (bitmojiSnapcodeImage: UIImage?) in
             
             // Get regular snapcode with ghose in the middle
             let snapcodeEndpointRequest = SnapcodeEndpointRequest(snapchatUsername: sanitizedUsername)
             snapcodeEndpointRequest.start { (snapcodeImage: UIImage?) in
                 
                 if let bitmojiSnapcodeImage = bitmojiSnapcodeImage {
-                    System.shared.snapcode = bitmojiSnapcodeImage
+                    
+                    if let snapcodeImage = snapcodeImage {
+                        System.shared.snapcode = bitmojiSnapcodeImage
+                        self.bitmojiSnapcode = bitmojiSnapcodeImage
+                        self.defaultSnapcode = snapcodeImage
+                        self.showSnapcodeSelectionUI()
+                    } else {
+                        self.fetchSnapcodeIndicator.dismiss(animated: false)
+                        self.fetchSnapcodeIndicator.animation.animationFinished()
+                        System.shared.snapcode = bitmojiSnapcodeImage
+                        self.nextButtonWasPressed()
+                    }
+                    
                 } else if let snapcodeImage = snapcodeImage {
                     System.shared.snapcode = snapcodeImage
+                    self.fetchSnapcodeIndicator.dismiss(animated: false)
+                    self.fetchSnapcodeIndicator.animation.animationFinished()
+                    self.nextButtonWasPressed()
                 } else {
                     self.showCannotGetSnapcodeError()
-                    self.nextButton.isUserInteractionEnabled = true
                     return
                 }
                 
-                DispatchQueue.main.async {
-                    
-                    let selectPhotoViewController = SelectPhotoViewController()
-                    System.shared.appDelegate().pageViewController?.setViewControllers([selectPhotoViewController], direction: .forward, animated: true, completion: nil)
-                }
             }
         }
+    }
+    
+    func showSnapcodeSelectionUI() {
+        fetchSnapcodeIndicator.dismiss(animated: false)
+        fetchSnapcodeIndicator.animation.animationFinished()
+        
+        snapcodeImageView.image = bitmojiSnapcode
+        
+        usernameTextField.isUserInteractionEnabled = false
+        usernameTextField.frame.origin.y = snapcodeImageView.frame.maxY + 40
+        
+        let hapticFeedback = UIImpactFeedbackGenerator(style: .heavy)
+        hapticFeedback.impactOccurred()
+        
+        view.addSubview(snapcodeSelectionToolbar)
+        view.addSubview(toolbarInsturctionsLabel)
+        view.addSubview(usernameTextField)
+        view.addSubview(snapcodeSelectionInsturctionsLabel)
+        view.addSubview(snapcodeSelectionSwitch)
+        view.addSubview(snapcodeImageView)
+    }
+    
+    @objc func bitmojiSwitchWasTapped(toggle: UISwitch) {
+        if toggle.isOn {
+            snapcodeImageView.image = bitmojiSnapcode
+            System.shared.snapcode = bitmojiSnapcode
+        } else {
+            snapcodeImageView.image = defaultSnapcode
+            System.shared.snapcode = defaultSnapcode
+        }
+    }
+    
+    @objc func backButtonWasPressed() {
+        let fetchSnapcodeViewController = FetchSnapcodeViewController()
+        System.shared.appDelegate().pageViewController?.setViewControllers([fetchSnapcodeViewController], direction: .reverse, animated: true, completion: nil)
+    }
+    
+    @objc func nextButtonWasPressed() {
+        let selectPhotoViewController = SelectPhotoViewController()
+        System.shared.appDelegate().pageViewController?.setViewControllers([selectPhotoViewController], direction: .forward, animated: true, completion: nil)
     }
     
 }

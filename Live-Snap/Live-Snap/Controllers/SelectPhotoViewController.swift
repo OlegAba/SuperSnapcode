@@ -39,9 +39,8 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         
         let selectAlbumButton: UIBarButtonItem = UIBarButtonItem(title: "Albums", style:.plain, target: self, action: #selector(animateTableView))
         selectAlbumButton.tintColor = UIColor.snapYellow
-        
-        let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        toolBar.items = [backBarButton, flexibleSpaceBarButtonItem, selectAlbumButton]
+
+        toolBar.items = [backBarButton, UIBarButtonItem.flexibleSpace(), selectAlbumButton]
         
         currentAlbumLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width * 0.5, height: 45))
         currentAlbumLabel.center = CGPoint(x: view.frame.width / 2, y: view.frame.height - toolBar.frame.height / 2)
@@ -99,7 +98,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
             }
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return currentPhotoAlbum.assets.count
     }
