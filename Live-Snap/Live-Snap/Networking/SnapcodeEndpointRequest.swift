@@ -32,8 +32,6 @@ class SnapcodeEndpointRequest {
                     completion(nil)
                 }
             case .failure(let error):
-                completion(nil)
-                
                 let statusCode = response.response?.statusCode
                 let errorMessage = error.localizedDescription
                 
@@ -41,6 +39,8 @@ class SnapcodeEndpointRequest {
                 print("URL: \(url)")
                 print("Status Code: \(String(describing: statusCode))")
                 print("Error Message: \(errorMessage)")
+                
+                completion(nil)
             }
         
         }
