@@ -12,6 +12,7 @@
 		7C2B41CE2000A7220038CDCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2B41CD2000A7220038CDCE /* AppDelegate.swift */; };
 		7C2B41D52000A7220038CDCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C2B41D42000A7220038CDCE /* Assets.xcassets */; };
 		7C2B41D82000A7220038CDCE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C2B41D62000A7220038CDCE /* LaunchScreen.storyboard */; };
+		7C483D8720AA311A002EC5C6 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C483D8620AA311A002EC5C6 /* IconButton.swift */; };
 		7C5B7BA42006D8980062E399 /* VideoFromImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5B7BA32006D8980062E399 /* VideoFromImages.swift */; };
 		7C5C685E2017EB0E00328E4A /* AlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5C685D2017EB0E00328E4A /* AlbumTableViewCell.swift */; };
 		7C6E4D032000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E4D022000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift */; };
@@ -48,6 +49,7 @@
 		7C2B41D42000A7220038CDCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C2B41D72000A7220038CDCE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7C2B41D92000A7220038CDCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7C483D8620AA311A002EC5C6 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		7C5B7BA32006D8980062E399 /* VideoFromImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFromImages.swift; sourceTree = "<group>"; };
 		7C5C685D2017EB0E00328E4A /* AlbumTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTableViewCell.swift; sourceTree = "<group>"; };
 		7C6E4D022000ACFB0017A4B3 /* SnapcodeEndpointRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapcodeEndpointRequest.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			children = (
 				7C7F4AD8200F37780046D70D /* SelectPhotoCollectionViewCell.swift */,
 				7C5C685D2017EB0E00328E4A /* AlbumTableViewCell.swift */,
+				7C483D8620AA311A002EC5C6 /* IconButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				95D127DD200D5C24000AE7EF /* FetchSnapcodeViewController.swift in Sources */,
 				7C5C685E2017EB0E00328E4A /* AlbumTableViewCell.swift in Sources */,
 				95D127D5200AE014000AE7EF /* GenerateLiveWallpaperWithBarcode.swift in Sources */,
+				7C483D8720AA311A002EC5C6 /* IconButton.swift in Sources */,
 				7C7F4AD9200F37780046D70D /* SelectPhotoCollectionViewCell.swift in Sources */,
 				7C0071BC2060B6E300D0F99E /* UILabel+.swift in Sources */,
 				95D127DB200AF391000AE7EF /* FileManager+.swift in Sources */,
@@ -504,7 +508,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5M53C658XH;
 				INFOPLIST_FILE = "Live-Snap/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OlegAbalonski.Live-Snap.Application";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -526,7 +530,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5M53C658XH;
 				INFOPLIST_FILE = "Live-Snap/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OlegAbalonski.Live-Snap.Application";
 				PRODUCT_NAME = "$(TARGET_NAME)";
