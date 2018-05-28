@@ -189,25 +189,25 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         
         CATransaction.begin()
         
-        let color = CABasicAnimation(keyPath: "shadowColor")
-        color.fromValue = usernameTextField.layer.shadowColor
-        color.toValue = UIColor.red.cgColor
-        color.duration = 0.5
-        color.fillMode = kCAFillModeForwards
-        color.isRemovedOnCompletion = false
+        let yellowToRed = CABasicAnimation(keyPath: "shadowColor")
+        yellowToRed.fromValue = usernameTextField.layer.shadowColor
+        yellowToRed.toValue = UIColor.red.cgColor
+        yellowToRed.duration = 0.5
+        yellowToRed.fillMode = kCAFillModeForwards
+        yellowToRed.isRemovedOnCompletion = false
         
         CATransaction.setCompletionBlock{ [weak self] in
-            let color2 = CABasicAnimation(keyPath: "shadowColor")
-            color2.fromValue = UIColor.red.cgColor
-            color2.toValue = UIColor.snapYellow.cgColor
-            color2.duration = 0.5
-            color2.fillMode = kCAFillModeForwards
-            color2.isRemovedOnCompletion = false
+            let redToYellow = CABasicAnimation(keyPath: "shadowColor")
+            redToYellow.fromValue = UIColor.red.cgColor
+            redToYellow.toValue = UIColor.snapYellow.cgColor
+            redToYellow.duration = 0.5
+            redToYellow.fillMode = kCAFillModeForwards
+            redToYellow.isRemovedOnCompletion = false
             
-            self?.usernameTextField.layer.add(color2, forKey: color2.keyPath)
+            self?.usernameTextField.layer.add(redToYellow, forKey: redToYellow.keyPath)
         }
         
-        usernameTextField.layer.add(color, forKey: color.keyPath)
+        usernameTextField.layer.add(yellowToRed, forKey: yellowToRed.keyPath)
         
         CATransaction.commit()
     }

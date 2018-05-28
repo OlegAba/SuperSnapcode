@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7C0071BC2060B6E300D0F99E /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0071BB2060B6E300D0F99E /* UILabel+.swift */; };
+		7C18013B20BC86E700EAF82A /* SaveSuccessPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C18013A20BC86E700EAF82A /* SaveSuccessPopUpView.swift */; };
 		7C1F7D7B20184FCF00D9540B /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F7D7A20184FCF00D9540B /* ImageManager.swift */; };
 		7C2B41CE2000A7220038CDCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2B41CD2000A7220038CDCE /* AppDelegate.swift */; };
 		7C2B41D52000A7220038CDCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C2B41D42000A7220038CDCE /* Assets.xcassets */; };
@@ -43,6 +44,7 @@
 		312E8FFEA88FFE1BEC68EA55 /* Pods-Live-Snap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Live-Snap.release.xcconfig"; path = "Pods/Target Support Files/Pods-Live-Snap/Pods-Live-Snap.release.xcconfig"; sourceTree = "<group>"; };
 		485CEC0DAA851B1A97331AA0 /* Pods-Live-Snap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Live-Snap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Live-Snap/Pods-Live-Snap.debug.xcconfig"; sourceTree = "<group>"; };
 		7C0071BB2060B6E300D0F99E /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		7C18013A20BC86E700EAF82A /* SaveSuccessPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSuccessPopUpView.swift; sourceTree = "<group>"; };
 		7C1F7D7A20184FCF00D9540B /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		7C2B41CA2000A7220038CDCE /* Live-Snap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Live-Snap.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C2B41CD2000A7220038CDCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				7C7F4AD8200F37780046D70D /* SelectPhotoCollectionViewCell.swift */,
 				7C5C685D2017EB0E00328E4A /* AlbumTableViewCell.swift */,
 				7C483D8620AA311A002EC5C6 /* IconButton.swift */,
+				7C18013A20BC86E700EAF82A /* SaveSuccessPopUpView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				7C713254205CBD16004D8DAC /* DeniedPhotoPermissionViewController.swift in Sources */,
 				7C2B41CE2000A7220038CDCE /* AppDelegate.swift in Sources */,
 				95D127E9200D88D1000AE7EF /* CropWallpaperViewController.swift in Sources */,
+				7C18013B20BC86E700EAF82A /* SaveSuccessPopUpView.swift in Sources */,
 				7C8906E3200AD21300E64CAB /* LivePhotoMaker.swift in Sources */,
 				95D127DF200D609B000AE7EF /* UIColor+.swift in Sources */,
 				95D127E1200D65A4000AE7EF /* UITextField+.swift in Sources */,
