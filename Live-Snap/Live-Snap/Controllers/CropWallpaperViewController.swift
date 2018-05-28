@@ -13,14 +13,13 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
     
     var imageToCrop: UIImage! = UIImage()
     var toolbarInstructionsLabel: UILabel!
-    var cropViewController: CropViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.snapBlack
         
-        cropViewController = CropViewController(image: imageToCrop)
+        let cropViewController = CropViewController(image: imageToCrop)
         cropViewController.delegate = self
         cropViewController.aspectRatioLockEnabled = true
         cropViewController.customAspectRatio = UIScreen.main.bounds.size

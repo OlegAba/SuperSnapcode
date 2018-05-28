@@ -13,12 +13,18 @@ class IconButton: UIButton {
     var icon: UIImageView!
     var label: UILabel!
     
-    init(icon: UIImageView, label: UILabel, spaceBetween: Float) {
-        let largerHeight = icon.frame.height > label.frame.height ? icon.frame.height : label.frame.height
-        super.init(frame: CGRect(x: 0, y: 0, width: icon.frame.width + CGFloat(spaceBetween) + label.frame.width, height: largerHeight))
-        
+    init(icon: UIImageView, text: String, textColor: UIColor, fontSize: Float, spaceBetween: Float) {
         self.icon = icon
-        self.label = label
+        
+        label = UILabel()
+        label.text = text
+        label.font = label.font.withSize(CGFloat(fontSize))
+        label.sizeToFit()
+        label.textColor = textColor
+        
+        let largerHeight = icon.frame.height > label.frame.height ? icon.frame.height : label.frame.height
+        
+        super.init(frame: CGRect(x: 0, y: 0, width: icon.frame.width + CGFloat(spaceBetween) + label.frame.width, height: largerHeight))
         
         setLayout()
     }

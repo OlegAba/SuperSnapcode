@@ -169,9 +169,7 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
             self.saveSuccessPopUpView.center.y = self.view.center.y
             self.saveSuccessBackgroundView.alpha = 0.75
         }) { (finished: Bool) in
-            if finished {
-                self.view.isUserInteractionEnabled = true
-            }
+            self.view.isUserInteractionEnabled = true
         }
     }
     
@@ -207,15 +205,12 @@ fileprivate class SaveSuccessPopUpView: UIView {
     var successIconImageView: UIImageView!
     var successLabel: UILabel!
     var lineBreakOneView: UIView!
-    var goToPhotosLabel: UILabel!
     var goToPhotosImageView: UIImageView!
     var goToPhotosIconButton: UIButton!
     var lineBreakTwoView: UIView!
     var lineBreakThreeView: UIView!
-    var newLabel: UILabel!
     var newImageView: UIImageView!
     var newIconButton: UIButton!
-    var rateLabel: UILabel!
     var rateImageView: UIImageView!
     var rateIconButton: UIButton!
     
@@ -254,19 +249,13 @@ fileprivate class SaveSuccessPopUpView: UIView {
         lineBreakOneView.frame.origin.y = successLabel.frame.maxY + 15.0
         lineBreakOneView.backgroundColor = UIColor.black
         
-        goToPhotosLabel = UILabel()
-        goToPhotosLabel.text = "Go to Photos"
-        goToPhotosLabel.font = goToPhotosLabel.font.withSize(15)
-        goToPhotosLabel.sizeToFit()
-        goToPhotosLabel.textColor = UIColor.snapYellow
-        
-        goToPhotosImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: goToPhotosLabel.frame.height, height: goToPhotosLabel.frame.height))
+        goToPhotosImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 18.0, height: 18.0))
         let openWallpaperSettingsImage = UIImage(named: "open")?.withRenderingMode(.alwaysTemplate)
         goToPhotosImageView.image = openWallpaperSettingsImage
         goToPhotosImageView.tintColor = UIColor.snapYellow
         goToPhotosImageView.contentMode = .scaleAspectFill
         
-        goToPhotosIconButton = IconButton(icon: goToPhotosImageView, label: goToPhotosLabel, spaceBetween: 10.0)
+        goToPhotosIconButton = IconButton(icon: goToPhotosImageView, text: "Go to Photos", textColor: UIColor.snapYellow, fontSize: 15.0, spaceBetween: 10.0)
         goToPhotosIconButton.center.x = center.x
         goToPhotosIconButton.frame.origin.y = lineBreakOneView.frame.maxY + 20.0
         goToPhotosIconButton.addTarget(self, action: #selector(goToPhotosButtonWasPressed), for: .touchUpInside)
@@ -281,36 +270,24 @@ fileprivate class SaveSuccessPopUpView: UIView {
         lineBreakThreeView.frame.origin.y = lineBreakTwoView.frame.maxY
         lineBreakThreeView.backgroundColor = .black
         
-        newLabel = UILabel()
-        newLabel.text = "New"
-        newLabel.font = newLabel.font.withSize(15)
-        newLabel.sizeToFit()
-        newLabel.textColor = UIColor.snapYellow
-        
-        newImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: newLabel.frame.height, height: newLabel.frame.height))
+        newImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 18.0, height: 18.0))
         let newImage = UIImage(named: "plus")?.withRenderingMode(.alwaysTemplate)
         newImageView.image = newImage
         newImageView.tintColor = UIColor.snapYellow
         newImageView.contentMode = .scaleAspectFill
         
-        newIconButton = IconButton(icon: newImageView, label: newLabel, spaceBetween: 10.0)
+        newIconButton = IconButton(icon: newImageView, text: "New", textColor: UIColor.snapYellow, fontSize: 15.0, spaceBetween: 10.0)
         newIconButton.center.x = center.x - (frame.width / 4)
         newIconButton.frame.origin.y = lineBreakTwoView.frame.maxY + 20.0
         newIconButton.addTarget(self, action: #selector(newButtonWasPressed), for: .touchUpInside)
         
-        rateLabel = UILabel()
-        rateLabel.text = "Rate App"
-        rateLabel.font = rateLabel.font.withSize(15)
-        rateLabel.sizeToFit()
-        rateLabel.textColor = UIColor.snapYellow
-        
-        rateImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: rateLabel.frame.height, height: rateLabel.frame.height))
+        rateImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 18.0, height: 18.0))
         let rateImage = UIImage(named: "star")?.withRenderingMode(.alwaysTemplate)
         rateImageView.image = rateImage
         rateImageView.tintColor = UIColor.snapYellow
         rateImageView.contentMode = .scaleAspectFill
         
-        rateIconButton = IconButton(icon: rateImageView, label: rateLabel, spaceBetween: 10.0)
+        rateIconButton = IconButton(icon: rateImageView, text: "Rate App", textColor: UIColor.yellow, fontSize: 15.0, spaceBetween: 10.0)
         rateIconButton.center.x = center.x + (frame.width / 4)
         rateIconButton.frame.origin.y = lineBreakTwoView.frame.maxY + 20.0
         rateIconButton.addTarget(self, action: #selector(rateButtonWasPressed), for: .touchUpInside)
@@ -348,9 +325,9 @@ fileprivate class SaveSuccessPopUpView: UIView {
 //TODO: Add App ID when published to store
         let appReviewURL = "itms-apps://itunes.apple.com/app/viewContentsUserReviews?id=\(appID)"
         
-        if let url = URL(string: appReviewURL), UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
+        guard let url = URL(string: appReviewURL), UIApplication.shared.canOpenURL(url) else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        
     }
     
 }

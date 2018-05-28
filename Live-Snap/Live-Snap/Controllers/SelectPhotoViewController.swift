@@ -86,7 +86,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         super.viewDidAppear(animated)
         
         if !collectionView.isDescendant(of: view) {
-            ImageManager.shared.requestPhotoLibraryPermission { (authorized) in
+            ImageManager.shared.requestPhotoLibraryPermission { (authorized: Bool) in
                 DispatchQueue.main.async {
                     if authorized {
                         self.photoAlbums = ImageManager.shared.grabAllPhotoAlbums()
@@ -96,10 +96,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                         self.view.addSubview(self.tableView)
                         self.view.bringSubview(toFront: self.toolBar)
                         self.view.bringSubview(toFront: self.currentAlbumLabel)
-                        
-                        self.collectionView.reloadData()
-                        self.collectionView.collectionViewLayout.invalidateLayout()
-                        self.tableView.reloadData()
+
                     } else {
                         let deniedPhotoLibraryPermissionViewController = DeniedPhotoLibraryPermissionViewController()
                         System.shared.appDelegate().pageViewController?.setViewControllers([deniedPhotoLibraryPermissionViewController], direction: .reverse, animated: true, completion: nil)
@@ -147,10 +144,8 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
             if let image = image {
                 System.shared.imageToCrop = image
                 
-                
                 let cropWallpaperViewController = CropWallpaperViewController()
                 cropWallpaperViewController.imageToCrop = image
-                //self.present(cropWallpaperViewController, animated: true, completion: nil)
                 System.shared.appDelegate().pageViewController?.setViewControllers([cropWallpaperViewController], direction: .forward, animated: true, completion: nil)
             }
         })
