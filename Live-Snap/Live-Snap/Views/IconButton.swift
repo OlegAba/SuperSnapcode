@@ -13,18 +13,19 @@ class IconButton: UIButton {
     var icon: UIImageView!
     var label: UILabel!
     
-    init(icon: UIImageView, text: String, textColor: UIColor, fontSize: Float, spaceBetween: Float) {
+    var text: String!
+    var textColor: UIColor!
+    var fontSize: Float!
+    var spaceBetween: Float!
+    
+    init(frame: CGRect, icon: UIImageView, text: String, textColor: UIColor, fontSize: Float, spaceBetween: Float) {
+        super.init(frame: frame)
+        
         self.icon = icon
-        
-        label = UILabel()
-        label.text = text
-        label.font = label.font.withSize(CGFloat(fontSize))
-        label.sizeToFit()
-        label.textColor = textColor
-        
-        let largerHeight = icon.frame.height > label.frame.height ? icon.frame.height : label.frame.height
-        
-        super.init(frame: CGRect(x: 0, y: 0, width: icon.frame.width + CGFloat(spaceBetween) + label.frame.width, height: largerHeight))
+        self.text = text
+        self.textColor = textColor
+        self.fontSize = fontSize
+        self.spaceBetween = spaceBetween
         
         setLayout()
     }
@@ -34,10 +35,17 @@ class IconButton: UIButton {
     }
     
     func setLayout() {
-        icon.frame.origin.x = 0
+        label = UILabel()
+        label.text = text
+        label.font = label.font.withSize(CGFloat(fontSize))
+        label.sizeToFit()
+        label.textColor = textColor
+        
+        let iconOriginX = (frame.width - (label.frame.width + CGFloat(spaceBetween) + icon.frame.width)) / 2
+        icon.frame.origin.x = iconOriginX
         icon.center.y = center.y
         
-        label.frame.origin.x = frame.width - label.frame.width
+        label.frame.origin.x = icon.frame.maxX + CGFloat(spaceBetween)
         label.center.y = center.y
         
         addSubview(icon)

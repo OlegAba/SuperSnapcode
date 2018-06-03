@@ -68,7 +68,7 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         forceTouchNotifierLabel.textAlignment = .center
         forceTouchNotifierLabel.isHidden = true
         
-        saveSuccessPopUpView = SaveSuccessPopUpView(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.75, height: 207))
+        saveSuccessPopUpView = SaveSuccessPopUpView(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.75, height: 211))
         saveSuccessPopUpView.center.x = view.center.x
         saveSuccessPopUpView.frame.origin.y = view.frame.height
         

@@ -63,14 +63,15 @@ class SaveSuccessPopUpView: UIView {
         goToPhotosImageView.tintColor = UIColor.snapYellow
         goToPhotosImageView.contentMode = .scaleAspectFill
         
-        goToPhotosIconButton = IconButton(icon: goToPhotosImageView, text: "Go to Photos", textColor: UIColor.snapYellow, fontSize: 15.0, spaceBetween: 10.0)
+        let goToPhotosIconButtonFrame = CGRect(x: 0, y: 0, width: frame.width, height: 60.0)
+        goToPhotosIconButton = IconButton(frame: goToPhotosIconButtonFrame, icon: goToPhotosImageView, text: "Go to Photos", textColor: UIColor.snapYellow, fontSize: 15.0, spaceBetween: 10.0)
         goToPhotosIconButton.center.x = center.x
-        goToPhotosIconButton.frame.origin.y = lineBreakOneView.frame.maxY + 20.0
+        goToPhotosIconButton.frame.origin.y = lineBreakOneView.frame.maxY
         goToPhotosIconButton.addTarget(self, action: #selector(goToPhotosButtonWasPressed), for: .touchUpInside)
         
         lineBreakTwoView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: frame.width, height: 1.0))
         lineBreakTwoView.center.x = center.x
-        lineBreakTwoView.frame.origin.y = goToPhotosIconButton.frame.maxY + 20.0
+        lineBreakTwoView.frame.origin.y = goToPhotosIconButton.frame.maxY
         lineBreakTwoView.backgroundColor = .black
         
         lineBreakThreeView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 1.0, height: lineBreakTwoView.frame.origin.y - lineBreakOneView.frame.origin.y))
@@ -84,9 +85,10 @@ class SaveSuccessPopUpView: UIView {
         newImageView.tintColor = UIColor.snapYellow
         newImageView.contentMode = .scaleAspectFill
         
-        newIconButton = IconButton(icon: newImageView, text: "New", textColor: UIColor.snapYellow, fontSize: 15.0, spaceBetween: 10.0)
+        let newIconButtonFrame = CGRect(x: 0, y: 0, width: frame.width / 2, height: 60.0)
+        newIconButton = IconButton(frame: newIconButtonFrame, icon: newImageView, text: "New", textColor: UIColor.snapYellow, fontSize: 15.0, spaceBetween: 10.0)
         newIconButton.center.x = center.x - (frame.width / 4)
-        newIconButton.frame.origin.y = lineBreakTwoView.frame.maxY + 20.0
+        newIconButton.frame.origin.y = lineBreakTwoView.frame.maxY
         newIconButton.addTarget(self, action: #selector(newButtonWasPressed), for: .touchUpInside)
         
         rateImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 18.0, height: 18.0))
@@ -95,9 +97,10 @@ class SaveSuccessPopUpView: UIView {
         rateImageView.tintColor = UIColor.snapYellow
         rateImageView.contentMode = .scaleAspectFill
         
-        rateIconButton = IconButton(icon: rateImageView, text: "Rate App", textColor: UIColor.yellow, fontSize: 15.0, spaceBetween: 10.0)
+        let rateIconButtonFrame = CGRect(x: 0, y: 0, width: frame.width / 2, height: 60.0)
+        rateIconButton = IconButton(frame: rateIconButtonFrame, icon: rateImageView, text: "Rate App", textColor: UIColor.snapYellow, fontSize: 15.0, spaceBetween: 10.0)
         rateIconButton.center.x = center.x + (frame.width / 4)
-        rateIconButton.frame.origin.y = lineBreakTwoView.frame.maxY + 20.0
+        rateIconButton.frame.origin.y = lineBreakTwoView.frame.maxY
         rateIconButton.addTarget(self, action: #selector(rateButtonWasPressed), for: .touchUpInside)
         
         addSubview(successIconImageView)

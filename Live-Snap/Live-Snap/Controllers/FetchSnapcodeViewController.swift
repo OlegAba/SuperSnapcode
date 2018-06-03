@@ -189,25 +189,25 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         
         CATransaction.begin()
         
-        let yellowToRed = CABasicAnimation(keyPath: "shadowColor")
-        yellowToRed.fromValue = usernameTextField.layer.shadowColor
-        yellowToRed.toValue = UIColor.red.cgColor
-        yellowToRed.duration = 0.5
-        yellowToRed.fillMode = kCAFillModeForwards
-        yellowToRed.isRemovedOnCompletion = false
+        let yellowToRedAnimation = CABasicAnimation(keyPath: "shadowColor")
+        yellowToRedAnimation.fromValue = usernameTextField.layer.shadowColor
+        yellowToRedAnimation.toValue = UIColor.red.cgColor
+        yellowToRedAnimation.duration = 0.5
+        yellowToRedAnimation.fillMode = kCAFillModeForwards
+        yellowToRedAnimation.isRemovedOnCompletion = false
         
         CATransaction.setCompletionBlock{ [weak self] in
-            let redToYellow = CABasicAnimation(keyPath: "shadowColor")
-            redToYellow.fromValue = UIColor.red.cgColor
-            redToYellow.toValue = UIColor.snapYellow.cgColor
-            redToYellow.duration = 0.5
-            redToYellow.fillMode = kCAFillModeForwards
-            redToYellow.isRemovedOnCompletion = false
+            let redToYellowAnimation = CABasicAnimation(keyPath: "shadowColor")
+            redToYellowAnimation.fromValue = UIColor.red.cgColor
+            redToYellowAnimation.toValue = UIColor.snapYellow.cgColor
+            redToYellowAnimation.duration = 0.5
+            redToYellowAnimation.fillMode = kCAFillModeForwards
+            redToYellowAnimation.isRemovedOnCompletion = false
             
-            self?.usernameTextField.layer.add(redToYellow, forKey: redToYellow.keyPath)
+            self?.usernameTextField.layer.add(redToYellowAnimation, forKey: redToYellowAnimation.keyPath)
         }
         
-        usernameTextField.layer.add(yellowToRed, forKey: yellowToRed.keyPath)
+        usernameTextField.layer.add(yellowToRedAnimation, forKey: yellowToRedAnimation.keyPath)
         
         CATransaction.commit()
     }
