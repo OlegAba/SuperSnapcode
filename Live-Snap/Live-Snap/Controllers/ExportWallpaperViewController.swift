@@ -18,7 +18,8 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
     var toolBar: UIToolbar!
     var forceTouchNotifierLabel: UILabel!
     var forceTouchNotifierImageView: UIImageView!
-    var saveSuccessIndicator: JGProgressHUD!
+    var saveSuccessPopUpView: UIView!
+    var saveSuccessBackgroundView: UIView!
     var saveErrorIndicator: JGProgressHUD!
     
     var livePhoto: LivePhoto!
@@ -67,11 +68,13 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         forceTouchNotifierLabel.textAlignment = .center
         forceTouchNotifierLabel.isHidden = true
         
-        saveSuccessIndicator = JGProgressHUD(style: .dark)
-        saveSuccessIndicator.indicatorView = JGProgressHUDSuccessIndicatorView()
-        saveSuccessIndicator.textLabel.text = "Saved"
-        saveSuccessIndicator.shadow = JGProgressHUDShadow()
-        saveSuccessIndicator.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
+        saveSuccessPopUpView = SaveSuccessPopUpView(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.75, height: 211))
+        saveSuccessPopUpView.center.x = view.center.x
+        saveSuccessPopUpView.frame.origin.y = view.frame.height
+        
+        saveSuccessBackgroundView = UIView(frame: view.frame)
+        saveSuccessBackgroundView.backgroundColor = .black
+        saveSuccessBackgroundView.alpha = 0
         
         saveErrorIndicator = JGProgressHUD(style: .dark)
         saveErrorIndicator.indicatorView = JGProgressHUDErrorIndicatorView()
@@ -81,7 +84,6 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         
         view.addSubview(toolBar)
         view.addSubview(forceTouchNotifierLabel)
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -158,23 +160,26 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         System.shared.appDelegate().pageViewController?.setViewControllers([cropWallpaperViewController], direction: .reverse, animated: true, completion: nil)
     }
     
+    func showSaveSuccessPopUpView() {
+        view.isUserInteractionEnabled = false
+        view.addSubview(saveSuccessBackgroundView)
+        view.addSubview(saveSuccessPopUpView)
+        
+        UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseOut, animations: {
+            self.saveSuccessPopUpView.center.y = self.view.center.y
+            self.saveSuccessBackgroundView.alpha = 0.75
+        }) { (finished: Bool) in
+            self.view.isUserInteractionEnabled = true
+        }
+    }
+    
     @objc func saveButtonWasPressed() {
         view.isUserInteractionEnabled = false
         
         livePhoto.writeToPhotoLibrary { (success: Bool) in
             DispatchQueue.main.sync {
                 if success {
-                        self.saveSuccessIndicator.show(in: self.view, animated: true)
-                        self.saveSuccessIndicator.dismiss(afterDelay: 1.5, animated: true)
-                        self.saveSuccessIndicator.animation.animationFinished()
-                        let fetchSnapcodeViewController = FetchSnapcodeViewController()
-                    
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.7) {
-                            System.shared.imageToCrop = nil
-                            System.shared.snapcode = nil
-                            System.shared.wallpaper = nil
-                            System.shared.appDelegate().pageViewController?.setViewControllers([fetchSnapcodeViewController], direction: .forward, animated: true, completion: nil)
-                        }
+                    self.showSaveSuccessPopUpView()
                 } else {
                         print("Error exporting livePhoto")
                         self.saveErrorIndicator.show(in: self.view, animated: true)
@@ -193,7 +198,4 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         }
     }
     
-    
-    
 }
-

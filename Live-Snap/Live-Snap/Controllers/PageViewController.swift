@@ -23,5 +23,6 @@ class PageViewController: UIPageViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
 }
 

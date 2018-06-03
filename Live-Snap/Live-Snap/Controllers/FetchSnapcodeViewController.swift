@@ -186,7 +186,30 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     
     func showInvalidSnapchatUsernameError() {
         print("Invalid snapchat username")
-//TODO: Show Invalid Snapchat Username error message
+        
+        CATransaction.begin()
+        
+        let yellowToRedAnimation = CABasicAnimation(keyPath: "shadowColor")
+        yellowToRedAnimation.fromValue = usernameTextField.layer.shadowColor
+        yellowToRedAnimation.toValue = UIColor.red.cgColor
+        yellowToRedAnimation.duration = 0.5
+        yellowToRedAnimation.fillMode = kCAFillModeForwards
+        yellowToRedAnimation.isRemovedOnCompletion = false
+        
+        CATransaction.setCompletionBlock{ [weak self] in
+            let redToYellowAnimation = CABasicAnimation(keyPath: "shadowColor")
+            redToYellowAnimation.fromValue = UIColor.red.cgColor
+            redToYellowAnimation.toValue = UIColor.snapYellow.cgColor
+            redToYellowAnimation.duration = 0.5
+            redToYellowAnimation.fillMode = kCAFillModeForwards
+            redToYellowAnimation.isRemovedOnCompletion = false
+            
+            self?.usernameTextField.layer.add(redToYellowAnimation, forKey: redToYellowAnimation.keyPath)
+        }
+        
+        usernameTextField.layer.add(yellowToRedAnimation, forKey: yellowToRedAnimation.keyPath)
+        
+        CATransaction.commit()
     }
     
     func sanitizeSnapchatUsernameString(username: String) -> String? {

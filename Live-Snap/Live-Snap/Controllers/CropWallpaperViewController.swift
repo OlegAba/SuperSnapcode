@@ -51,11 +51,14 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
         view.addSubview(toolbarInstructionsLabel)
         cropViewController.didMove(toParentViewController: self)
     }
-    
+
+
     func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
         let selectPhotoViewController = SelectPhotoViewController()
         
         System.shared.appDelegate().pageViewController?.setViewControllers([selectPhotoViewController], direction: .reverse, animated: true, completion: nil)
+
+        cropViewController.delegate = nil
     }
     
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
@@ -68,6 +71,7 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
         let exportWallpaperViewController = ExportWallpaperViewController()
         System.shared.appDelegate().pageViewController?.setViewControllers([exportWallpaperViewController], direction: .forward, animated: true, completion: nil)
         
+        cropViewController.delegate = nil
     }
 
 }

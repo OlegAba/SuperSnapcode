@@ -69,31 +69,38 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
         statusBarView.backgroundColor = UIColor.snapBlack
         
-        self.view.addSubview(self.statusBarView)
-        self.view.addSubview(self.toolBar)
-        self.view.addSubview(self.currentAlbumLabel)
+        let photoPremissionStatus = PHPhotoLibrary.authorizationStatus()
+        if photoPremissionStatus == PHAuthorizationStatus.authorized {
+            photoAlbums = ImageManager.shared.grabAllPhotoAlbums()
+            currentPhotoAlbum = ImageManager.shared.findPhotoAlbum(photoAlbums: photoAlbums, name: currentAlbumLabel.text!)!
+            view.addSubview(collectionView)
+            view.addSubview(tableView)
+        }
+        
+        view.addSubview(statusBarView)
+        view.addSubview(toolBar)
+        view.addSubview(currentAlbumLabel)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        ImageManager.shared.requestPhotoLibraryPermission { (authorized) in
-            DispatchQueue.main.async {
-                if authorized {
-                    self.photoAlbums = ImageManager.shared.grabAllPhotoAlbums()
-                    self.currentPhotoAlbum = ImageManager.shared.findPhotoAlbum(photoAlbums: self.photoAlbums, name: self.currentAlbumLabel.text!)!
-                    
-                    self.view.addSubview(self.collectionView)
-                    self.view.addSubview(self.tableView)
-                    self.view.bringSubview(toFront: self.toolBar)
-                    self.view.bringSubview(toFront: self.currentAlbumLabel)
-                    
-                    self.collectionView.reloadData()
-                    self.collectionView.collectionViewLayout.invalidateLayout()
-                    self.tableView.reloadData()
-                } else {
-                    let deniedPhotoLibraryPermissionViewController = DeniedPhotoLibraryPermissionViewController()
-                    System.shared.appDelegate().pageViewController?.setViewControllers([deniedPhotoLibraryPermissionViewController], direction: .reverse, animated: true, completion: nil)
+        if !collectionView.isDescendant(of: view) {
+            ImageManager.shared.requestPhotoLibraryPermission { (authorized: Bool) in
+                DispatchQueue.main.async {
+                    if authorized {
+                        self.photoAlbums = ImageManager.shared.grabAllPhotoAlbums()
+                        self.currentPhotoAlbum = ImageManager.shared.findPhotoAlbum(photoAlbums: self.photoAlbums, name: self.currentAlbumLabel.text!)!
+                        
+                        self.view.addSubview(self.collectionView)
+                        self.view.addSubview(self.tableView)
+                        self.view.bringSubview(toFront: self.toolBar)
+                        self.view.bringSubview(toFront: self.currentAlbumLabel)
+
+                    } else {
+                        let deniedPhotoLibraryPermissionViewController = DeniedPhotoLibraryPermissionViewController()
+                        System.shared.appDelegate().pageViewController?.setViewControllers([deniedPhotoLibraryPermissionViewController], direction: .reverse, animated: true, completion: nil)
+                    }
                 }
             }
         }
