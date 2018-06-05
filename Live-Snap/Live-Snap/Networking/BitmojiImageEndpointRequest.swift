@@ -2,7 +2,7 @@
 //  BitmojiImageEndpointRequest.swift
 //  Live-Snap
 //
-//  Created by Baby on 3/13/18.
+//  Created by Oleg Abalonski on 3/13/18.
 //  Copyright © 2018 Oleg Abalonski. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  BitmojiSnapcodeEndpointRequest.swift
 //  Live-Snap
 //
-//  Created by Baby on 3/4/18.
+//  Created by Oleg Abalonski on 3/4/18.
 //  Copyright © 2018 Oleg Abalonski. All rights reserved.
 //
 

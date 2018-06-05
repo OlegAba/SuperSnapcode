@@ -2,8 +2,8 @@
 //  ExportWallpaperViewController.swift
 //  Live-Snap
 //
-//  Created by Baby on 1/18/18.
-//  Copyright © 2018 Baby. All rights reserved.
+//  Created by Oleg Abalonski on 1/18/18.
+//  Copyright © 2018 Oleg Abalonski. All rights reserved.
 //
 
 import UIKit
