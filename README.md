@@ -1,3 +1,7 @@
 # Live-Snap
 
-<p align="center"><img src=https://github.com/OlegAba/Live-Snap/blob/master/Live-Snap/Live-Snap/Assets.xcassets/AppIcon.appiconset/Icon-1024.png width=250 /></p>
+### 1. Installation
+We use [CocoaPods](http://cocoapods.org) for our dependency manager. This should be installed before continuing.
+
+To access the project, clone the project, and run `pod install` in the project directory.
+
