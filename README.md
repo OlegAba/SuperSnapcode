@@ -1,3 +1,3 @@
 # Live-Snap
 
-<span style="display: block; text-align: center">![Icon](/Live-Snap/Live-Snap/Assets.xcassets/AppIcon.appiconset/Icon-180.png)</span>
+<p align="center"><img src=https://github.com/OlegAba/Live-Snap/blob/master/Live-Snap/Live-Snap/Assets.xcassets/AppIcon.appiconset/Icon-1024.png width=500 /></p>
