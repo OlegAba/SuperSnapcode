@@ -13,8 +13,8 @@ class SaveSuccessPopUpView: UIView {
     var successIconImageView: UIImageView!
     var successLabel: UILabel!
     var lineBreakOneView: UIView!
-    var goToPhotosImageView: UIImageView!
-    var goToPhotosIconButton: UIButton!
+    var openSettingsImageView: UIImageView!
+    var openSettingsIconButton: UIButton!
     var lineBreakTwoView: UIView!
     var lineBreakThreeView: UIView!
     var newImageView: UIImageView!
@@ -57,21 +57,21 @@ class SaveSuccessPopUpView: UIView {
         lineBreakOneView.frame.origin.y = successLabel.frame.maxY + 15.0
         lineBreakOneView.backgroundColor = UIColor.black
         
-        goToPhotosImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 18.0, height: 18.0))
-        let openWallpaperSettingsImage = UIImage(named: "open")?.withRenderingMode(.alwaysTemplate)
-        goToPhotosImageView.image = openWallpaperSettingsImage
-        goToPhotosImageView.tintColor = UIColor.snapYellow
-        goToPhotosImageView.contentMode = .scaleAspectFill
+        openSettingsImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 18.0, height: 18.0))
+        let openSettingsImage = UIImage(named: "gear")?.withRenderingMode(.alwaysTemplate)
+        openSettingsImageView.image = openSettingsImage
+        openSettingsImageView.tintColor = UIColor.snapYellow
+        openSettingsImageView.contentMode = .scaleAspectFill
         
-        let goToPhotosIconButtonFrame = CGRect(x: 0, y: 0, width: frame.width, height: 60.0)
-        goToPhotosIconButton = IconButton(frame: goToPhotosIconButtonFrame, icon: goToPhotosImageView, text: "Go to Photos", textColor: UIColor.snapYellow, fontSize: 15.0, spaceBetween: 10.0)
-        goToPhotosIconButton.center.x = center.x
-        goToPhotosIconButton.frame.origin.y = lineBreakOneView.frame.maxY
-        goToPhotosIconButton.addTarget(self, action: #selector(goToPhotosButtonWasPressed), for: .touchUpInside)
+        let openSettingsIconButtonFrame = CGRect(x: 0, y: 0, width: frame.width, height: 60.0)
+        openSettingsIconButton = IconButton(frame: openSettingsIconButtonFrame, icon: openSettingsImageView, text: "Open Wallpaper Settings", textColor: UIColor.snapYellow, fontSize: 15.0, spaceBetween: 10.0)
+        openSettingsIconButton.center.x = center.x
+        openSettingsIconButton.frame.origin.y = lineBreakOneView.frame.maxY
+        openSettingsIconButton.addTarget(self, action: #selector(goToPhotosButtonWasPressed), for: .touchUpInside)
         
         lineBreakTwoView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: frame.width, height: 1.0))
         lineBreakTwoView.center.x = center.x
-        lineBreakTwoView.frame.origin.y = goToPhotosIconButton.frame.maxY
+        lineBreakTwoView.frame.origin.y = openSettingsIconButton.frame.maxY
         lineBreakTwoView.backgroundColor = .black
         
         lineBreakThreeView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 1.0, height: lineBreakTwoView.frame.origin.y - lineBreakOneView.frame.origin.y))
@@ -106,7 +106,7 @@ class SaveSuccessPopUpView: UIView {
         addSubview(successIconImageView)
         addSubview(successLabel)
         addSubview(lineBreakOneView)
-        addSubview(goToPhotosIconButton)
+        addSubview(openSettingsIconButton)
         addSubview(lineBreakTwoView)
         addSubview(lineBreakThreeView)
         addSubview(newIconButton)
@@ -115,11 +115,12 @@ class SaveSuccessPopUpView: UIView {
     
     
     @objc func goToPhotosButtonWasPressed() {
-        let photoLibraryURL = "photos-redirect://"
+        guard let generalSettingsURL = URL(string: "App-Prefs:root=General") else { return }
+        if UIApplication.shared.canOpenURL(generalSettingsURL) {
+            UIApplication.shared.open(generalSettingsURL, options: [:], completionHandler: nil)
+        } else { return }
         
-        if let url = URL(string: photoLibraryURL), UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
+        newButtonWasPressed()
     }
     
     @objc func newButtonWasPressed() {
@@ -133,7 +134,7 @@ class SaveSuccessPopUpView: UIView {
     
     @objc func rateButtonWasPressed() {
         let appID = ""
-        //TODO: Add App ID when published to store
+//TODO: Add App ID when published to store
         let appReviewURL = "itms-apps://itunes.apple.com/app/viewContentsUserReviews?id=\(appID)"
         
         guard let url = URL(string: appReviewURL), UIApplication.shared.canOpenURL(url) else { return }
