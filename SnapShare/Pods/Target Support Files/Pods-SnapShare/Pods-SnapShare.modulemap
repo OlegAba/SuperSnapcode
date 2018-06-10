@@ -1,0 +1,6 @@
+framework module Pods_SnapShare {
+  umbrella header "Pods-SnapShare-umbrella.h"
+
+  export *
+  module * { export * }
+}
