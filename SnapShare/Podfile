@@ -10,4 +10,5 @@ target 'SnapShare' do
   pod 'CropViewController'
   pod 'SVGKit', :git => 'https://github.com/SVGKit/SVGKit.git', :branch => '2.x'
   pod 'JGProgressHUD'
+  pod 'NVActivityIndicatorView'
 end

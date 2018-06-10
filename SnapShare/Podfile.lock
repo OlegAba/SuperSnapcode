@@ -8,6 +8,9 @@ PODS:
     - CocoaLumberjack/Default
   - CropViewController (2.3.6)
   - JGProgressHUD (2.0)
+  - NVActivityIndicatorView (4.1.1):
+    - NVActivityIndicatorView/Presenter (= 4.1.1)
+  - NVActivityIndicatorView/Presenter (4.1.1)
   - SVGKit (2.0.1):
     - CocoaLumberjack (~> 3.x)
 
@@ -15,6 +18,7 @@ DEPENDENCIES:
   - Alamofire
   - CropViewController
   - JGProgressHUD
+  - NVActivityIndicatorView
   - SVGKit (from `https://github.com/SVGKit/SVGKit.git`, branch `2.x`)
 
 SPEC REPOS:
@@ -23,6 +27,7 @@ SPEC REPOS:
     - CocoaLumberjack
     - CropViewController
     - JGProgressHUD
+    - NVActivityIndicatorView
 
 EXTERNAL SOURCES:
   SVGKit:
@@ -39,8 +44,9 @@ SPEC CHECKSUMS:
   CocoaLumberjack: 2e258a064cacc8eb9a2aca318e24d02a0a7fd56d
   CropViewController: e6d4bd512d15a1709e9ddf71fe7d98ffd05dda0f
   JGProgressHUD: c402c0f41fc291ca7e33bba2f999118d9682dd9c
+  NVActivityIndicatorView: 60109b9bf46efc2e71ab81453196ccdfdfeea870
   SVGKit: 4055d9e809b5db8633755979cfb3b02dc5a8c20d
 
-PODFILE CHECKSUM: f34b2f42b063fa6036375b49811ee3c9b251c63f
+PODFILE CHECKSUM: 9d350fd805c307d7da5b93e5f19051c0b6524360
 
 COCOAPODS: 1.5.3

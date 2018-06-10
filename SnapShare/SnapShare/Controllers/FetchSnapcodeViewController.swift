@@ -16,7 +16,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     var getSnapcodeButton: UIButton!
     var cannotGetSnapcodeErrorIndicator: JGProgressHUD!
     var noInternetConnectionErrorIndicator: JGProgressHUD!
-    var fetchSnapcodeIndicator: JGProgressHUD!
+    var fetchSnapcodeIndicator: LoadingIndicatorView!
     
     var snapcodeImageView: UIImageView!
     var snapcodeSelectionToolbar: UIToolbar!
@@ -78,10 +78,13 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         noInternetConnectionErrorIndicator.textLabel.text = "No internet connection!\nPlease check your network settings"
         noInternetConnectionErrorIndicator.shadow = JGProgressHUDShadow()
         noInternetConnectionErrorIndicator.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
-        
-        fetchSnapcodeIndicator = JGProgressHUD(style: .dark)
-        fetchSnapcodeIndicator.contentView.backgroundColor = UIColor.snapBlack
-        fetchSnapcodeIndicator.textLabel.text = "Fetching Snapcode"
+      
+        fetchSnapcodeIndicator = LoadingIndicatorView(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.5, height: view.frame.height * 0.1), text: "Fetching Snapcode", color: UIColor.snapWhite)
+        fetchSnapcodeIndicator.center = view.center
+        if view.isIPhoneX() {
+            fetchSnapcodeIndicator.frame.origin.y += 17
+        }
+        view.addSubview(fetchSnapcodeIndicator)
         
         //Snapcode Selection UI
         snapcodeImageView = UIImageView()
@@ -188,8 +191,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     func showCannotGetSnapcodeError() {
         print("Could not get snapcode")
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.fetchSnapcodeIndicator.dismiss(animated: false)
-            self.fetchSnapcodeIndicator.animation.animationFinished()
+            self.fetchSnapcodeIndicator.stopAnimating()
             self.view.addSubview(self.instructionsTextLabel)
             self.view.addSubview(self.usernameTextField)
             self.view.addSubview(self.getSnapcodeButton)
@@ -291,7 +293,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         instructionsTextLabel.removeFromSuperview()
         usernameTextField.removeFromSuperview()
         getSnapcodeButton.removeFromSuperview()
-        fetchSnapcodeIndicator.show(in: view)
+        fetchSnapcodeIndicator.startAnimating()
         
         // Get snapcode with bitmoji image in the middle
         getSnapcodeWithBitmojiImage(username: sanitizedUsername) { (bitmojiSnapcodeImage: UIImage?) in
@@ -308,16 +310,14 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
                         self.defaultSnapcode = snapcodeImage
                         self.showSnapcodeSelectionUI()
                     } else {
-                        self.fetchSnapcodeIndicator.dismiss(animated: false)
-                        self.fetchSnapcodeIndicator.animation.animationFinished()
+                        self.fetchSnapcodeIndicator.stopAnimating()
                         System.shared.snapcode = bitmojiSnapcodeImage
                         self.nextButtonWasPressed()
                     }
                     
                 } else if let snapcodeImage = snapcodeImage {
                     System.shared.snapcode = snapcodeImage
-                    self.fetchSnapcodeIndicator.dismiss(animated: false)
-                    self.fetchSnapcodeIndicator.animation.animationFinished()
+                    self.fetchSnapcodeIndicator.stopAnimating()
                     self.nextButtonWasPressed()
                 } else {
                     self.showCannotGetSnapcodeError()
@@ -329,8 +329,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     }
     
     func showSnapcodeSelectionUI() {
-        fetchSnapcodeIndicator.dismiss(animated: false)
-        fetchSnapcodeIndicator.animation.animationFinished()
+        fetchSnapcodeIndicator.stopAnimating()
         
         snapcodeImageView.image = bitmojiSnapcode
         
