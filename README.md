@@ -1,4 +1,4 @@
-# Live-Snap
+# SnapShare
 
 ### 1. Installation
 We use [CocoaPods](http://cocoapods.org) for our dependency manager. This should be installed before continuing.
