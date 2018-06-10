@@ -6,5 +6,5 @@ DerivedData
 *.xcuserstate
 *.DS_Store
 
-Live-Snap/Pods/
-Live-Snap/Podfile.lock
+SnapShare/Pods/
+SnapShare/Podfile.lock
