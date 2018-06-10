@@ -38,6 +38,7 @@
 		7CC24D7420CCF5640097C215 /* AlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D5920CCF5640097C215 /* AlbumTableViewCell.swift */; };
 		7CC24D7520CCF5640097C215 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D5A20CCF5640097C215 /* IconButton.swift */; };
 		7CC24D7620CCF5640097C215 /* SelectPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D5B20CCF5640097C215 /* SelectPhotoCollectionViewCell.swift */; };
+		7CE82FAB20CD054A00476CF0 /* NetworkConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE82FAA20CD054A00476CF0 /* NetworkConnectivity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +77,7 @@
 		7CC24D5920CCF5640097C215 /* AlbumTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumTableViewCell.swift; sourceTree = "<group>"; };
 		7CC24D5A20CCF5640097C215 /* IconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		7CC24D5B20CCF5640097C215 /* SelectPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		7CE82FAA20CD054A00476CF0 /* NetworkConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnectivity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +114,6 @@
 		7CA4A76D20CCF2470087DFC0 /* SnapShare */ = {
 			isa = PBXGroup;
 			children = (
-				7CC24D3A20CCF5640097C215 /* Base.lproj */,
 				7CC24D5020CCF5640097C215 /* Controllers */,
 				7CC24D3B20CCF5640097C215 /* Extensions */,
 				7CC24D4820CCF5640097C215 /* Models */,
@@ -132,13 +133,6 @@
 				7CA4A77720CCF2480087DFC0 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		7CC24D3A20CCF5640097C215 /* Base.lproj */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Base.lproj;
 			sourceTree = "<group>";
 		};
 		7CC24D3B20CCF5640097C215 /* Extensions */ = {
@@ -162,6 +156,7 @@
 				7CC24D4520CCF5640097C215 /* SnapcodeEndpointRequest.swift */,
 				7CC24D4620CCF5640097C215 /* BitmojiImageEndpointRequest.swift */,
 				7CC24D4720CCF5640097C215 /* BitmojiSnapcodeEndpointRequest.swift */,
+				7CE82FAA20CD054A00476CF0 /* NetworkConnectivity.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -346,6 +341,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CE82FAB20CD054A00476CF0 /* NetworkConnectivity.swift in Sources */,
 				7CC24D6A20CCF5640097C215 /* GenerateLiveWallpaperWithBarcode.swift in Sources */,
 				7CC24D5C20CCF5640097C215 /* UIView+.swift in Sources */,
 				7CC24D6420CCF5640097C215 /* SnapcodeEndpointRequest.swift in Sources */,

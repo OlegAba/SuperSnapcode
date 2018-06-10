@@ -23,13 +23,14 @@ class DeniedPhotoLibraryPermissionViewController: UIViewController, UIToolbarDel
             view.frame.size.height -= 34.0
         }
         
-        deniedPhotoPermissionTitleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.9, height: 0))
-        deniedPhotoPermissionTitleLabel.center = CGPoint(x: view.frame.midX, y: view.frame.midY / 2)
+        deniedPhotoPermissionTitleLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height * 0.2, width: view.frame.width * 0.9, height: 0))
+        deniedPhotoPermissionTitleLabel.center.x = view.center.x
         deniedPhotoPermissionTitleLabel.text = "\(System.shared.appName) needs access to your photo library to import and export images"
         deniedPhotoPermissionTitleLabel.font = deniedPhotoPermissionTitleLabel.font.withSize(20.0)
         deniedPhotoPermissionTitleLabel.textAlignment = .center
         deniedPhotoPermissionTitleLabel.textColor = UIColor.snapWhite
-        deniedPhotoPermissionTitleLabel.numberOfLines = 0
+        deniedPhotoPermissionTitleLabel.numberOfLines = 2
+        deniedPhotoPermissionTitleLabel.adjustsFontSizeToFitWidth = true
         deniedPhotoPermissionTitleLabel.sizeToFit()
         
         deniedPhotoPermissionInstructionsLabel = UILabel(frame: CGRect(x: view.frame.width / 8, y: deniedPhotoPermissionTitleLabel.frame.maxY + 50.0, width: view.frame.width * 0.9, height: 0))

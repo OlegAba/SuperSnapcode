@@ -14,6 +14,8 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     var instructionsTextLabel: UILabel!
     var usernameTextField: UITextField!
     var getSnapcodeButton: UIButton!
+    var cannotGetSnapcodeErrorIndicator: JGProgressHUD!
+    var noInternetConnectionErrorIndicator: JGProgressHUD!
     var fetchSnapcodeIndicator: JGProgressHUD!
     
     var snapcodeImageView: UIImageView!
@@ -64,6 +66,18 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         getSnapcodeButton.setBackgroundImage(UIImage(color: UIColor.snapYellow, size: getSnapcodeButton.frame.size), for: .normal)
         getSnapcodeButton.setBackgroundImage(UIImage(color: UIColor.snapYellow.withAlphaComponent(0.75), size: getSnapcodeButton.frame.size), for: .highlighted)
         getSnapcodeButton.addTarget(self, action: #selector(getSnapcodeButtonWasPressed), for: .touchUpInside)
+        
+        cannotGetSnapcodeErrorIndicator = JGProgressHUD(style: .dark)
+        cannotGetSnapcodeErrorIndicator.indicatorView = JGProgressHUDErrorIndicatorView()
+        cannotGetSnapcodeErrorIndicator.textLabel.text = "Failed to get Snapcode!\nPlease try again"
+        cannotGetSnapcodeErrorIndicator.shadow = JGProgressHUDShadow()
+        cannotGetSnapcodeErrorIndicator.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
+        
+        noInternetConnectionErrorIndicator = JGProgressHUD(style: .dark)
+        noInternetConnectionErrorIndicator.indicatorView = JGProgressHUDErrorIndicatorView()
+        noInternetConnectionErrorIndicator.textLabel.text = "No internet connection!\nPlease check your network settings"
+        noInternetConnectionErrorIndicator.shadow = JGProgressHUDShadow()
+        noInternetConnectionErrorIndicator.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
         
         fetchSnapcodeIndicator = JGProgressHUD(style: .dark)
         fetchSnapcodeIndicator.contentView.backgroundColor = UIColor.snapBlack
@@ -180,7 +194,10 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
             self.view.addSubview(self.usernameTextField)
             self.view.addSubview(self.getSnapcodeButton)
             self.showKeyboard()
-//TODO: Show Error message
+            
+            self.cannotGetSnapcodeErrorIndicator.show(in: self.view, animated: true)
+            self.cannotGetSnapcodeErrorIndicator.dismiss(afterDelay: 2.0, animated: true)
+            self.cannotGetSnapcodeErrorIndicator.animation.animationFinished()
         }
     }
     
@@ -210,6 +227,14 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         usernameTextField.layer.add(yellowToRedAnimation, forKey: yellowToRedAnimation.keyPath)
         
         CATransaction.commit()
+    }
+    
+    func showNoInternetConnectionError() {
+        print("No internet connection")
+        
+        self.noInternetConnectionErrorIndicator.show(in: self.view, animated: true)
+        self.noInternetConnectionErrorIndicator.dismiss(afterDelay: 2.0, animated: true)
+        self.noInternetConnectionErrorIndicator.animation.animationFinished()
     }
     
     func sanitizeSnapchatUsernameString(username: String) -> String? {
@@ -255,6 +280,11 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         
         guard let username = usernameTextField.text, let sanitizedUsername = sanitizeSnapchatUsernameString(username: username) else {
             showInvalidSnapchatUsernameError()
+            return
+        }
+        
+        if !NetworkConnectivity.isConnected {
+            showNoInternetConnectionError()
             return
         }
         
