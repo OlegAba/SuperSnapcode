@@ -1,0 +1,10 @@
+*.pbxuser
+!default.pbxuser
+xcuserdata
+*.xccheckout
+DerivedData
+*.xcuserstate
+*.DS_Store
+
+SnapShare/Pods/
+SnapShare/Podfile.lock
