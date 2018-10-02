@@ -14,7 +14,9 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     var instructionsTextLabel: UILabel!
     var usernameTextField: UITextField!
     var getSnapcodeButton: UIButton!
-    var fetchSnapcodeIndicator: JGProgressHUD!
+    var cannotGetSnapcodeErrorIndicator: JGProgressHUD!
+    var noInternetConnectionErrorIndicator: JGProgressHUD!
+    var fetchSnapcodeIndicator: LoadingIndicatorView!
     
     var snapcodeImageView: UIImageView!
     var snapcodeSelectionToolbar: UIToolbar!
@@ -65,9 +67,24 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         getSnapcodeButton.setBackgroundImage(UIImage(color: UIColor.snapYellow.withAlphaComponent(0.75), size: getSnapcodeButton.frame.size), for: .highlighted)
         getSnapcodeButton.addTarget(self, action: #selector(getSnapcodeButtonWasPressed), for: .touchUpInside)
         
-        fetchSnapcodeIndicator = JGProgressHUD(style: .dark)
-        fetchSnapcodeIndicator.contentView.backgroundColor = UIColor.snapBlack
-        fetchSnapcodeIndicator.textLabel.text = "Fetching Snapcode"
+        cannotGetSnapcodeErrorIndicator = JGProgressHUD(style: .dark)
+        cannotGetSnapcodeErrorIndicator.indicatorView = JGProgressHUDErrorIndicatorView()
+        cannotGetSnapcodeErrorIndicator.textLabel.text = "Failed to get Snapcode!\nPlease try again"
+        cannotGetSnapcodeErrorIndicator.shadow = JGProgressHUDShadow()
+        cannotGetSnapcodeErrorIndicator.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
+        
+        noInternetConnectionErrorIndicator = JGProgressHUD(style: .dark)
+        noInternetConnectionErrorIndicator.indicatorView = JGProgressHUDErrorIndicatorView()
+        noInternetConnectionErrorIndicator.textLabel.text = "No internet connection!\nPlease check your network settings"
+        noInternetConnectionErrorIndicator.shadow = JGProgressHUDShadow()
+        noInternetConnectionErrorIndicator.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
+      
+        fetchSnapcodeIndicator = LoadingIndicatorView(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.5, height: view.frame.height * 0.1), text: "Fetching Snapcode", color: UIColor.snapWhite)
+        fetchSnapcodeIndicator.center = view.center
+        if view.isIPhoneX() {
+            fetchSnapcodeIndicator.frame.origin.y += 17
+        }
+        view.addSubview(fetchSnapcodeIndicator)
         
         //Snapcode Selection UI
         snapcodeImageView = UIImageView()
@@ -174,13 +191,15 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     func showCannotGetSnapcodeError() {
         print("Could not get snapcode")
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.fetchSnapcodeIndicator.dismiss(animated: false)
-            self.fetchSnapcodeIndicator.animation.animationFinished()
+            self.fetchSnapcodeIndicator.stopAnimating()
             self.view.addSubview(self.instructionsTextLabel)
             self.view.addSubview(self.usernameTextField)
             self.view.addSubview(self.getSnapcodeButton)
             self.showKeyboard()
-//TODO: Show Error message
+            
+            self.cannotGetSnapcodeErrorIndicator.show(in: self.view, animated: true)
+            self.cannotGetSnapcodeErrorIndicator.dismiss(afterDelay: 2.0, animated: true)
+            self.cannotGetSnapcodeErrorIndicator.animation.animationFinished()
         }
     }
     
@@ -210,6 +229,14 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         usernameTextField.layer.add(yellowToRedAnimation, forKey: yellowToRedAnimation.keyPath)
         
         CATransaction.commit()
+    }
+    
+    func showNoInternetConnectionError() {
+        print("No internet connection")
+        
+        self.noInternetConnectionErrorIndicator.show(in: self.view, animated: true)
+        self.noInternetConnectionErrorIndicator.dismiss(afterDelay: 2.0, animated: true)
+        self.noInternetConnectionErrorIndicator.animation.animationFinished()
     }
     
     func sanitizeSnapchatUsernameString(username: String) -> String? {
@@ -258,10 +285,15 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        if !NetworkConnectivity.isConnected {
+            showNoInternetConnectionError()
+            return
+        }
+        
         instructionsTextLabel.removeFromSuperview()
         usernameTextField.removeFromSuperview()
         getSnapcodeButton.removeFromSuperview()
-        fetchSnapcodeIndicator.show(in: view)
+        fetchSnapcodeIndicator.startAnimating()
         
         // Get snapcode with bitmoji image in the middle
         getSnapcodeWithBitmojiImage(username: sanitizedUsername) { (bitmojiSnapcodeImage: UIImage?) in
@@ -278,16 +310,14 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
                         self.defaultSnapcode = snapcodeImage
                         self.showSnapcodeSelectionUI()
                     } else {
-                        self.fetchSnapcodeIndicator.dismiss(animated: false)
-                        self.fetchSnapcodeIndicator.animation.animationFinished()
+                        self.fetchSnapcodeIndicator.stopAnimating()
                         System.shared.snapcode = bitmojiSnapcodeImage
                         self.nextButtonWasPressed()
                     }
                     
                 } else if let snapcodeImage = snapcodeImage {
                     System.shared.snapcode = snapcodeImage
-                    self.fetchSnapcodeIndicator.dismiss(animated: false)
-                    self.fetchSnapcodeIndicator.animation.animationFinished()
+                    self.fetchSnapcodeIndicator.stopAnimating()
                     self.nextButtonWasPressed()
                 } else {
                     self.showCannotGetSnapcodeError()
@@ -299,8 +329,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     }
     
     func showSnapcodeSelectionUI() {
-        fetchSnapcodeIndicator.dismiss(animated: false)
-        fetchSnapcodeIndicator.animation.animationFinished()
+        fetchSnapcodeIndicator.stopAnimating()
         
         snapcodeImageView.image = bitmojiSnapcode
         

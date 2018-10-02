@@ -14,7 +14,7 @@ import JGProgressHUD
 class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
     
     var livePhotoPreviewView: PHLivePhotoView!
-    var activityIndicatorForCreatingLivePhoto: JGProgressHUD!
+    var activityIndicatorForCreatingLivePhoto: LoadingIndicatorView!
     var toolBar: UIToolbar!
     var forceTouchNotifierLabel: UILabel!
     var forceTouchNotifierImageView: UIImageView!
@@ -34,10 +34,9 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
         livePhotoPreviewView.delegate = self
         view.addSubview(livePhotoPreviewView)
         
-        activityIndicatorForCreatingLivePhoto = JGProgressHUD(style: .dark)
-        activityIndicatorForCreatingLivePhoto.contentView.backgroundColor = UIColor.snapBlack
-        activityIndicatorForCreatingLivePhoto.textLabel.text = "Generating Live Photo"
-        activityIndicatorForCreatingLivePhoto.show(in: view)
+        activityIndicatorForCreatingLivePhoto = LoadingIndicatorView(frame: CGRect(x: 0, y: 0, width: view.frame.width * 0.5, height: view.frame.height * 0.1), text: "Generating Live Photo", color: UIColor.snapWhite)
+        activityIndicatorForCreatingLivePhoto.center = view.center
+        view.addSubview(activityIndicatorForCreatingLivePhoto)
         
         toolBar = UIToolbar(frame: CGRect(x: 0, y: view.frame.size.height, width: view.frame.size.width, height: 45))
         toolBar.isTranslucent = false
@@ -87,6 +86,8 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        activityIndicatorForCreatingLivePhoto.startAnimating()
+        
         DispatchQueue.global(qos: .userInitiated).async {
             self.createLivePhoto()
         }
@@ -101,12 +102,11 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
                 DispatchQueue.main.async {
                     self.livePhoto = livePhoto
                     self.livePhotoPreviewView.livePhoto = livePhoto.phLivePhoto
-                    self.activityIndicatorForCreatingLivePhoto.dismiss(animated: false)
-                    self.activityIndicatorForCreatingLivePhoto.animation.animationFinished()
+                    self.activityIndicatorForCreatingLivePhoto.stopAnimating()
                     self.livePhotoPreviewView.startPlayback(with: .full)
                 }
             } else {
-//TODO: Handle failure Case
+                self.backButtonWasPressed()
             }
         }
         
