@@ -49,7 +49,7 @@ class DeniedPhotoLibraryPermissionViewController: UIViewController, UIToolbarDel
         
         toolBar.items = [UIBarButtonItem.flexibleSpace(), settingsButton, UIBarButtonItem.flexibleSpace()]
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         view.addSubview(deniedPhotoPermissionTitleLabel)
         view.addSubview(deniedPhotoPermissionInstructionsLabel)
@@ -66,9 +66,14 @@ class DeniedPhotoLibraryPermissionViewController: UIViewController, UIToolbarDel
     }
     
     @objc func settingsButtonWasPressed() {
-        let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+        let settingsUrl = NSURL(string: UIApplication.openSettingsURLString)
         if let url = settingsUrl {
-            UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url as URL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

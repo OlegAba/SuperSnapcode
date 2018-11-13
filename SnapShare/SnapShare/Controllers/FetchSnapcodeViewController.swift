@@ -129,7 +129,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         super.viewDidAppear(animated)
         
         // Notification for when keyboard will show up to set frame of next button
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         showKeyboard()
     }
@@ -146,7 +146,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             getSnapcodeButton.center = CGPoint(x: view.frame.width / 2.0, y: view.frame.height - keyboardSize.height - getSnapcodeButton.frame.height / 2.0)
         }
     }
@@ -212,7 +212,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
         yellowToRedAnimation.fromValue = usernameTextField.layer.shadowColor
         yellowToRedAnimation.toValue = UIColor.red.cgColor
         yellowToRedAnimation.duration = 0.5
-        yellowToRedAnimation.fillMode = kCAFillModeForwards
+        yellowToRedAnimation.fillMode = CAMediaTimingFillMode.forwards
         yellowToRedAnimation.isRemovedOnCompletion = false
         
         CATransaction.setCompletionBlock{ [weak self] in
@@ -220,7 +220,7 @@ class FetchSnapcodeViewController: UIViewController, UITextFieldDelegate {
             redToYellowAnimation.fromValue = UIColor.red.cgColor
             redToYellowAnimation.toValue = UIColor.snapYellow.cgColor
             redToYellowAnimation.duration = 0.5
-            redToYellowAnimation.fillMode = kCAFillModeForwards
+            redToYellowAnimation.fillMode = CAMediaTimingFillMode.forwards
             redToYellowAnimation.isRemovedOnCompletion = false
             
             self?.usernameTextField.layer.add(redToYellowAnimation, forKey: redToYellowAnimation.keyPath)

@@ -44,7 +44,7 @@ class VideoFromImages {
         let bufferAdapter = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: writerInput, sourcePixelBufferAttributes: bufferAttributes)
         
         assetWriter.startWriting()
-        assetWriter.startSession(atSourceTime: kCMTimeZero)
+        assetWriter.startSession(atSourceTime: CMTime.zero)
         
         let mediaInputQueue = DispatchQueue(label: "MediaInputQueue")
         
@@ -64,11 +64,11 @@ class VideoFromImages {
                         
                         // Write the current sample buffer as a frame in the video
                         if i == 0 {
-                            bufferAdapter.append(sampleBuffer, withPresentationTime: kCMTimeZero)
+                            bufferAdapter.append(sampleBuffer, withPresentationTime: CMTime.zero)
                         }
                         else {
-                            let frameTime = CMTimeMake(1, Int32(self.framesPerSecond))
-                            let lastTime = CMTimeMake(Int64(i - 1), frameTime.timescale)
+                            let frameTime = CMTimeMake(value: 1, timescale: Int32(self.framesPerSecond))
+                            let lastTime = CMTimeMake(value: Int64(i - 1), timescale: frameTime.timescale)
                             let presentTime = CMTimeAdd(lastTime, frameTime)
                             
                             bufferAdapter.append(sampleBuffer, withPresentationTime: presentTime)

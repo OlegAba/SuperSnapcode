@@ -117,7 +117,7 @@ class SaveSuccessPopUpView: UIView {
     @objc func goToPhotosButtonWasPressed() {
         guard let generalSettingsURL = URL(string: "App-Prefs:root=General") else { return }
         if UIApplication.shared.canOpenURL(generalSettingsURL) {
-            UIApplication.shared.open(generalSettingsURL, options: [:], completionHandler: nil)
+            UIApplication.shared.open(generalSettingsURL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         } else { return }
         
         newButtonWasPressed()
@@ -138,8 +138,13 @@ class SaveSuccessPopUpView: UIView {
         let appReviewURL = "itms-apps://itunes.apple.com/app/viewContentsUserReviews?id=\(appID)"
         
         guard let url = URL(string: appReviewURL), UIApplication.shared.canOpenURL(url) else { return }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

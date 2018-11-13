@@ -94,8 +94,8 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                         
                         self.view.addSubview(self.collectionView)
                         self.view.addSubview(self.tableView)
-                        self.view.bringSubview(toFront: self.toolBar)
-                        self.view.bringSubview(toFront: self.currentAlbumLabel)
+                        self.view.bringSubviewToFront(self.toolBar)
+                        self.view.bringSubviewToFront(self.currentAlbumLabel)
 
                     } else {
                         let deniedPhotoLibraryPermissionViewController = DeniedPhotoLibraryPermissionViewController()
