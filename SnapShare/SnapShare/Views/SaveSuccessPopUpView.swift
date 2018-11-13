@@ -13,8 +13,8 @@ class SaveSuccessPopUpView: UIView {
     var successIconImageView: UIImageView!
     var successLabel: UILabel!
     var lineBreakOneView: UIView!
-    var openSettingsImageView: UIImageView!
-    var openSettingsIconButton: UIButton!
+    var openPhotosImageView: UIImageView!
+    var openPhotosIconButton: UIButton!
     var lineBreakTwoView: UIView!
     var lineBreakThreeView: UIView!
     var newImageView: UIImageView!
@@ -57,21 +57,21 @@ class SaveSuccessPopUpView: UIView {
         lineBreakOneView.frame.origin.y = successLabel.frame.maxY + 15.0
         lineBreakOneView.backgroundColor = UIColor.black
         
-        openSettingsImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 18.0, height: 18.0))
-        let openSettingsImage = UIImage(named: "gear")?.withRenderingMode(.alwaysTemplate)
-        openSettingsImageView.image = openSettingsImage
-        openSettingsImageView.tintColor = UIColor.snapYellow
-        openSettingsImageView.contentMode = .scaleAspectFill
+        openPhotosImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 18.0, height: 18.0))
+        let openPhotosImage = UIImage(named: "photo-library")?.withRenderingMode(.alwaysTemplate)
+        openPhotosImageView.image = openPhotosImage
+        openPhotosImageView.tintColor = UIColor.snapYellow
+        openPhotosImageView.contentMode = .scaleAspectFill
         
-        let openSettingsIconButtonFrame = CGRect(x: 0, y: 0, width: frame.width, height: 60.0)
-        openSettingsIconButton = IconButton(frame: openSettingsIconButtonFrame, icon: openSettingsImageView, text: "Open Wallpaper Settings", textColor: UIColor.snapYellow, fontSize: 15.0, spaceBetween: 10.0)
-        openSettingsIconButton.center.x = center.x
-        openSettingsIconButton.frame.origin.y = lineBreakOneView.frame.maxY
-        openSettingsIconButton.addTarget(self, action: #selector(goToPhotosButtonWasPressed), for: .touchUpInside)
+        let openPhotosFrame = CGRect(x: 0, y: 0, width: frame.width, height: 60.0)
+        openPhotosIconButton = IconButton(frame: openPhotosFrame, icon: openPhotosImageView, text: "Open Photo Library", textColor: UIColor.snapYellow, fontSize: 15.0, spaceBetween: 10.0)
+        openPhotosIconButton.center.x = center.x
+        openPhotosIconButton.frame.origin.y = lineBreakOneView.frame.maxY
+        openPhotosIconButton.addTarget(self, action: #selector(goToPhotosButtonWasPressed), for: .touchUpInside)
         
         lineBreakTwoView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: frame.width, height: 1.0))
         lineBreakTwoView.center.x = center.x
-        lineBreakTwoView.frame.origin.y = openSettingsIconButton.frame.maxY
+        lineBreakTwoView.frame.origin.y = openPhotosIconButton.frame.maxY
         lineBreakTwoView.backgroundColor = .black
         
         lineBreakThreeView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 1.0, height: lineBreakTwoView.frame.origin.y - lineBreakOneView.frame.origin.y))
@@ -106,7 +106,7 @@ class SaveSuccessPopUpView: UIView {
         addSubview(successIconImageView)
         addSubview(successLabel)
         addSubview(lineBreakOneView)
-        addSubview(openSettingsIconButton)
+        addSubview(openPhotosIconButton)
         addSubview(lineBreakTwoView)
         addSubview(lineBreakThreeView)
         addSubview(newIconButton)
@@ -115,7 +115,7 @@ class SaveSuccessPopUpView: UIView {
     
     
     @objc func goToPhotosButtonWasPressed() {
-        guard let generalSettingsURL = URL(string: "App-Prefs:root=General") else { return }
+        guard let generalSettingsURL = URL(string: "photos-redirect://") else { return }
         if UIApplication.shared.canOpenURL(generalSettingsURL) {
             UIApplication.shared.open(generalSettingsURL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         } else { return }
