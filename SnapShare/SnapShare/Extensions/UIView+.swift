@@ -27,7 +27,10 @@ extension UIView {
     }
     
     func isIPhoneX() -> Bool {
-        if UIScreen.main.nativeBounds.height == 2436 {
+        let screenHeight = UIScreen.main.nativeBounds.height
+        if screenHeight == 2688.0 || // IPhone XS Max
+           screenHeight == 2436.0 || // IPhone X/S
+           screenHeight == 1792.0 {  // IPhone XR
             return true
         } else {
             return false
