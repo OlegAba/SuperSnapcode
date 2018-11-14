@@ -133,8 +133,7 @@ class SaveSuccessPopUpView: UIView {
     }
     
     @objc func rateButtonWasPressed() {
-        let appID = ""
-//TODO: Add App ID when published to store
+        let appID = "1442173056"
         let appReviewURL = "itms-apps://itunes.apple.com/app/viewContentsUserReviews?id=\(appID)"
         
         guard let url = URL(string: appReviewURL), UIApplication.shared.canOpenURL(url) else { return }
