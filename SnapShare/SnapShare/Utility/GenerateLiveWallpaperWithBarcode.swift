@@ -49,7 +49,7 @@ class GenerateLiveWallpaperWithBarcode {
             
             // Create image path
             guard let livePhotoImage = videoFrames.first else { completion(nil); return }
-            let livePhotoImageData = UIImageJPEGRepresentation(livePhotoImage, 1.0)
+            let livePhotoImageData = livePhotoImage.jpegData(compressionQuality: 1.0)
             guard let _ = try? livePhotoImageData?.write(to: imageFilePathURL) else { completion(nil); return }
 
             LivePhotoMaker(imagePath: imageFilePath, videoPath: videoFilePath).create(completion: { (livePhoto: LivePhoto?) in

@@ -62,7 +62,7 @@ class LivePhotoMaker {
     func convertImageToLivePhotoFormat(inputImagePath: String, outputImagePath: String) -> Bool {
         
         guard let image = UIImage(contentsOfFile: inputImagePath) else { return false }
-        guard let imageData = UIImageJPEGRepresentation(image, 1.0) else { return false }
+        guard let imageData = image.jpegData(compressionQuality: 1.0) else { return false }
 
         let destinationURL = URL(fileURLWithPath: outputImagePath) as CFURL
         guard let imageDestination = CGImageDestinationCreateWithURL(destinationURL, kUTTypeJPEG, 1, nil) else { return false }
@@ -123,7 +123,7 @@ class LivePhotoMaker {
 
         
         var formatDescription: CMFormatDescription?
-        CMMetadataFormatDescriptionCreateWithMetadataSpecifications(kCFAllocatorDefault, kCMMetadataFormatType_Boxed, [metadataSpecifications] as CFArray, &formatDescription)
+        CMMetadataFormatDescriptionCreateWithMetadataSpecifications(allocator: kCFAllocatorDefault, metadataType: kCMMetadataFormatType_Boxed, metadataSpecifications: [metadataSpecifications] as CFArray, formatDescriptionOut: &formatDescription)
         let assetWriterInput = AVAssetWriterInput(mediaType: .metadata, outputSettings: nil, sourceFormatHint: formatDescription)
         
         let adapter = AVAssetWriterInputMetadataAdaptor(assetWriterInput: assetWriterInput)
@@ -133,7 +133,7 @@ class LivePhotoMaker {
         // Create video
         writer.startWriting()
         reader.startReading()
-        writer.startSession(atSourceTime: kCMTimeZero)
+        writer.startSession(atSourceTime: CMTime.zero)
         
         // write metadata track
         let item2 = AVMutableMetadataItem()
@@ -141,7 +141,7 @@ class LivePhotoMaker {
         item2.keySpace = AVMetadataKeySpace.quickTimeMetadata
         item2.value = 0 as (NSCopying & NSObjectProtocol)?
         item2.dataType = "com.apple.metadata.datatype.int8"
-        adapter.append(AVTimedMetadataGroup(items: [item2], timeRange: CMTimeRangeMake(CMTimeMake(0, 1000), CMTimeMake(200, 3000))))
+        adapter.append(AVTimedMetadataGroup(items: [item2], timeRange: CMTimeRangeMake(start: CMTimeMake(value: 0, timescale: 1000), duration: CMTimeMake(value: 200, timescale: 3000))))
         
         // write video track
         writerInput.requestMediaDataWhenReady(on: DispatchQueue(label: "assetVideoWriterQueue", attributes: []), using: {

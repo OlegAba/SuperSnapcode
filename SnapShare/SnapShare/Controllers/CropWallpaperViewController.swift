@@ -40,7 +40,7 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
         toolbarInstructionsLabel.textColor = .white
         toolbarInstructionsLabel.textAlignment = .center
         
-        addChildViewController(cropViewController)
+        addChild(cropViewController)
         cropViewController.view.frame = CGRect(x: 0, y: 20, width: view.frame.width, height: view.frame.height - 20)
         if view.isIPhoneX() {
             cropViewController.view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
@@ -49,7 +49,7 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
         
         view.addSubview(cropViewController.view)
         view.addSubview(toolbarInstructionsLabel)
-        cropViewController.didMove(toParentViewController: self)
+        cropViewController.didMove(toParent: self)
     }
 
 
