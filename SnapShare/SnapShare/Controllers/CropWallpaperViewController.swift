@@ -64,7 +64,7 @@ class CropWallpaperViewController: UIViewController, CropViewControllerDelegate 
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         
         var resizeRatio: CGFloat = 4.0
-        if view.isIpad() {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             resizeRatio = 1.0
         }
         

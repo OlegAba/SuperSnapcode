@@ -37,17 +37,4 @@ extension UIView {
         }
     }
     
-    func isIpad() -> Bool {
-        let screenHeight = UIScreen.main.nativeBounds.height
-        let screenWidth = UIScreen.main.nativeBounds.width
-        if screenHeight == 1536.0 && screenWidth == 2048 || // iPad Mini & Air
-           screenHeight == 1668.0 && screenWidth == 2224 || // iPad Pro 10.5 Inch
-           screenHeight == 2388.0 && screenWidth == 1668.0 || // iPad Pro 11 Inch
-           screenHeight == 2732.0 && screenWidth == 2048.0 { //iPad Pro 12.9 Inch
-            return true
-        } else {
-            return false
-        }
-    }
-    
 }
