@@ -1,6 +1,6 @@
 # SuperSnapcode - Live Snapcode Wallpaper Maker
 
-SuperSnapcode allows users to turn their wallpaper into a live-wallpaer that presents their snapcode when pressed into. Users can show off their Bitmoji and allow other users to quickly add them as a friend, all without leaving their lock screen. 
+SuperSnapcode allows users to turn their wallpaper into a live-wallpaper that presents their snapcode when pressed into. Users can show off their Bitmoji and allow other users to quickly add them as a friend, all without leaving their lock screen. 
 
 ## Installation
 We use [CocoaPods](http://cocoapods.org) for our dependency manager. This should be installed before continuing.
