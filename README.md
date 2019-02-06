@@ -4,7 +4,7 @@
 
 SuperSnapcode allows users to turn their wallpaper into a live-wallpaper that presents their snapcode when pressed into. Users can show off their Bitmoji and allow other users to quickly add them as a friend, all without leaving their lock screen.
 
-## ScreenShots
+## Screenshots
 <p align="center">
 <img src="https://is4-ssl.mzstatic.com/image/thumb/Purple118/v4/17/8d/6a/178d6a5d-c248-40ce-734f-56aedf703ce7/pr_source.jpg/230x0w.jpg"  width=240 />
 <img src="https://is3-ssl.mzstatic.com/image/thumb/Purple128/v4/ca/ab/56/caab5653-0353-c034-216c-537cb939f0ea/pr_source.jpg/230x0w.jpg" width=240 />
