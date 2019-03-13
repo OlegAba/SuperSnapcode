@@ -1,11 +1,3 @@
-//
-//  SaveSuccessPopUpView.swift
-//  Live-Snap
-//
-//  Created by Oleg Abalonski on 5/28/18.
-//  Copyright © 2018 Oleg Abalonski. All rights reserved.
-//
-
 import UIKit
 
 class SaveSuccessPopUpView: UIView {

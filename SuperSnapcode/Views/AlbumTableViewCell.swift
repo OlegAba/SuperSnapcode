@@ -1,11 +1,3 @@
-//
-//  AlbumTableViewCell.swift
-//  Live-Snap
-//
-//  Created by Oleg Abalonski on 1/23/18.
-//  Copyright © 2018 Oleg Abalonski. All rights reserved.
-//
-
 import UIKit
 
 class AlbumTableViewCell: UITableViewCell {
