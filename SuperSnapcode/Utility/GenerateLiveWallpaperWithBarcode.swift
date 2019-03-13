@@ -13,18 +13,6 @@ class GenerateLiveWallpaperWithBarcode {
         self.barcodeImage = barcodeImage
     }
     
-//    func imageURL() -> URL {
-//        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-//        let imageFilePath = "\(documentsDirectory)/\(fileName).jpeg"
-//        return URL(fileURLWithPath: imageFilePath)
-//    }
-//
-//    func videoURL() -> URL {
-//        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-//        let videoFilePath = "\(documentsDirectory)/\(fileName).mov"
-//        return URL(fileURLWithPath: videoFilePath)
-//    }
-    
     func create(completion: @escaping (LPLivePhoto?) -> ()) {
         
         guard let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else { completion(nil); return }
