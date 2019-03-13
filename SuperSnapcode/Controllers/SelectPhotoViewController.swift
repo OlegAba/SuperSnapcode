@@ -131,6 +131,8 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        view.isUserInteractionEnabled = false
+        
         let asset = currentPhotoAlbum.assets.object(at: indexPath.row)
         ImageManager.shared.grabFullPhotoFromAsset(asset: asset, completion: { (image: UIImage?) in
             if let image = image {
@@ -139,6 +141,8 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
                 let cropWallpaperViewController = CropWallpaperViewController()
                 cropWallpaperViewController.imageToCrop = image
                 System.shared.appDelegate().pageViewController?.setViewControllers([cropWallpaperViewController], direction: .forward, animated: true, completion: nil)
+            } else {
+                self.view.isUserInteractionEnabled = true
             }
         })
     }
