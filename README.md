@@ -19,10 +19,11 @@ To access the project, run the following:
 git clone --recursive https://github.com/OlegAba/SuperSnapcode.git
 pod install
 ```
-Make sure to open the Xcode workspace! 
+Make sure to open the Xcode workspace!
 
 ## Build With
 [CocoaPods](https://github.com/CocoaPods/CocoaPods) - Dependency manager\
+[LPLivePhotoGenerator](https://github.com/OlegAba/LPLivePhotoGenerator) - A Swift library for creating and saving Live Photos\
 [Alamofire](https://github.com/Alamofire/Alamofire) - HTTP networking library\
 [CropViewController](https://github.com/TimOliver/TOCropViewController) - UIViewController subclass to crop out sections of UIImage objects, as well as perform basic rotations\
 [SVGKit](https://github.com/SVGKit/SVGKit) - Cocoa framework for rendering SVG files natively\
