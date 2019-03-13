@@ -7,6 +7,7 @@
 //
 
 import Photos
+import LPLivePhotoGenerator
 
 class GenerateLiveWallpaperWithBarcode {
     
@@ -20,19 +21,19 @@ class GenerateLiveWallpaperWithBarcode {
         self.barcodeImage = barcodeImage
     }
     
-    func imageURL() -> URL {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let imageFilePath = "\(documentsDirectory)/\(fileName).jpeg"
-        return URL(fileURLWithPath: imageFilePath)
-    }
+//    func imageURL() -> URL {
+//        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+//        let imageFilePath = "\(documentsDirectory)/\(fileName).jpeg"
+//        return URL(fileURLWithPath: imageFilePath)
+//    }
+//
+//    func videoURL() -> URL {
+//        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+//        let videoFilePath = "\(documentsDirectory)/\(fileName).mov"
+//        return URL(fileURLWithPath: videoFilePath)
+//    }
     
-    func videoURL() -> URL {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let videoFilePath = "\(documentsDirectory)/\(fileName).mov"
-        return URL(fileURLWithPath: videoFilePath)
-    }
-    
-    func create(completion: @escaping (LivePhoto?) -> ()) {
+    func create(completion: @escaping (LPLivePhoto?) -> ()) {
         
         guard let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else { completion(nil); return }
         
@@ -51,8 +52,11 @@ class GenerateLiveWallpaperWithBarcode {
             guard let livePhotoImage = videoFrames.first else { completion(nil); return }
             let livePhotoImageData = livePhotoImage.jpegData(compressionQuality: 1.0)
             guard let _ = try? livePhotoImageData?.write(to: imageFilePathURL) else { completion(nil); return }
-
-            LivePhotoMaker(imagePath: imageFilePath, videoPath: videoFilePath).create(completion: { (livePhoto: LivePhoto?) in
+            
+            LPLivePhotoGenerator.create(inputImagePath: imageFilePath, inputVideoPath: videoFilePath, completion: { (livePhoto: LPLivePhoto?, error: Error?) in
+                if let error = error {
+                    print(error)
+                }
                 completion(livePhoto)
             })
         }
