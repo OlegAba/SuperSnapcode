@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		49E4B2D46A3F8452CB02C7D3 /* Pods_SuperSnapcode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59F2C87E651B25827EF23F47 /* Pods_SuperSnapcode.framework */; };
+		0D3A1B7CB9F2BCFFBD8C7742 /* Pods_SuperSnapcode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C250EC8C7A5D8BF60C59943 /* Pods_SuperSnapcode.framework */; };
 		7C366B6320CDB9C500BADA96 /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C366B6220CDB9C500BADA96 /* LoadingIndicatorView.swift */; };
 		7CA4A76F20CCF2470087DFC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA4A76E20CCF2470087DFC0 /* AppDelegate.swift */; };
 		7CA4A77620CCF2480087DFC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CA4A77520CCF2480087DFC0 /* Assets.xcassets */; };
@@ -23,11 +23,9 @@
 		7CC24D6420CCF5640097C215 /* SnapcodeEndpointRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D4520CCF5640097C215 /* SnapcodeEndpointRequest.swift */; };
 		7CC24D6520CCF5640097C215 /* BitmojiImageEndpointRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D4620CCF5640097C215 /* BitmojiImageEndpointRequest.swift */; };
 		7CC24D6620CCF5640097C215 /* BitmojiSnapcodeEndpointRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D4720CCF5640097C215 /* BitmojiSnapcodeEndpointRequest.swift */; };
-		7CC24D6720CCF5640097C215 /* LivePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D4920CCF5640097C215 /* LivePhoto.swift */; };
 		7CC24D6820CCF5640097C215 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D4A20CCF5640097C215 /* ImageManager.swift */; };
 		7CC24D6920CCF5640097C215 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D4B20CCF5640097C215 /* System.swift */; };
 		7CC24D6A20CCF5640097C215 /* GenerateLiveWallpaperWithBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D4D20CCF5640097C215 /* GenerateLiveWallpaperWithBarcode.swift */; };
-		7CC24D6B20CCF5640097C215 /* LivePhotoMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D4E20CCF5640097C215 /* LivePhotoMaker.swift */; };
 		7CC24D6C20CCF5640097C215 /* VideoFromImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D4F20CCF5640097C215 /* VideoFromImages.swift */; };
 		7CC24D6D20CCF5640097C215 /* FetchSnapcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D5120CCF5640097C215 /* FetchSnapcodeViewController.swift */; };
 		7CC24D6E20CCF5640097C215 /* ExportWallpaperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24D5220CCF5640097C215 /* ExportWallpaperViewController.swift */; };
@@ -43,10 +41,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		386BF6C82E58A4E9F9A0DE77 /* Pods-SnapShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SnapShare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SnapShare/Pods-SnapShare.debug.xcconfig"; sourceTree = "<group>"; };
-		3B7D78584BCEB257CE22A588 /* Pods-SnapShare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SnapShare.release.xcconfig"; path = "Pods/Target Support Files/Pods-SnapShare/Pods-SnapShare.release.xcconfig"; sourceTree = "<group>"; };
-		491851837448443874F3F2D5 /* Pods-SuperSnapcode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperSnapcode.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SuperSnapcode/Pods-SuperSnapcode.debug.xcconfig"; sourceTree = "<group>"; };
-		59F2C87E651B25827EF23F47 /* Pods_SuperSnapcode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperSnapcode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		409609EFC7E97C11860BA7EC /* Pods-SuperSnapcode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperSnapcode.debug.xcconfig"; path = "Target Support Files/Pods-SuperSnapcode/Pods-SuperSnapcode.debug.xcconfig"; sourceTree = "<group>"; };
+		6C250EC8C7A5D8BF60C59943 /* Pods_SuperSnapcode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperSnapcode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C366B6220CDB9C500BADA96 /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorView.swift; sourceTree = "<group>"; };
 		7CA4A76B20CCF2470087DFC0 /* SuperSnapcode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperSnapcode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CA4A76E20CCF2470087DFC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,11 +60,9 @@
 		7CC24D4520CCF5640097C215 /* SnapcodeEndpointRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapcodeEndpointRequest.swift; sourceTree = "<group>"; };
 		7CC24D4620CCF5640097C215 /* BitmojiImageEndpointRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitmojiImageEndpointRequest.swift; sourceTree = "<group>"; };
 		7CC24D4720CCF5640097C215 /* BitmojiSnapcodeEndpointRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitmojiSnapcodeEndpointRequest.swift; sourceTree = "<group>"; };
-		7CC24D4920CCF5640097C215 /* LivePhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LivePhoto.swift; sourceTree = "<group>"; };
 		7CC24D4A20CCF5640097C215 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		7CC24D4B20CCF5640097C215 /* System.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
 		7CC24D4D20CCF5640097C215 /* GenerateLiveWallpaperWithBarcode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateLiveWallpaperWithBarcode.swift; sourceTree = "<group>"; };
-		7CC24D4E20CCF5640097C215 /* LivePhotoMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LivePhotoMaker.swift; sourceTree = "<group>"; };
 		7CC24D4F20CCF5640097C215 /* VideoFromImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoFromImages.swift; sourceTree = "<group>"; };
 		7CC24D5120CCF5640097C215 /* FetchSnapcodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchSnapcodeViewController.swift; sourceTree = "<group>"; };
 		7CC24D5220CCF5640097C215 /* ExportWallpaperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportWallpaperViewController.swift; sourceTree = "<group>"; };
@@ -81,7 +75,7 @@
 		7CC24D5A20CCF5640097C215 /* IconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		7CC24D5B20CCF5640097C215 /* SelectPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		7CE82FAA20CD054A00476CF0 /* NetworkConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnectivity.swift; sourceTree = "<group>"; };
-		C5F21A10572D4C88880B5094 /* Pods-SuperSnapcode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperSnapcode.release.xcconfig"; path = "Pods/Target Support Files/Pods-SuperSnapcode/Pods-SuperSnapcode.release.xcconfig"; sourceTree = "<group>"; };
+		B89FD77C7423C32F5D6F8BA0 /* Pods-SuperSnapcode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperSnapcode.release.xcconfig"; path = "Target Support Files/Pods-SuperSnapcode/Pods-SuperSnapcode.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49E4B2D46A3F8452CB02C7D3 /* Pods_SuperSnapcode.framework in Frameworks */,
+				0D3A1B7CB9F2BCFFBD8C7742 /* Pods_SuperSnapcode.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,8 +96,8 @@
 				7CA4A78020CCF2BC0087DFC0 /* Resources */,
 				7CA4A76D20CCF2470087DFC0 /* SuperSnapcode */,
 				7CA4A76C20CCF2470087DFC0 /* Products */,
-				965F6411FB24F3B08F87FC17 /* Pods */,
-				A37220C4E3126C1DD4F47F65 /* Frameworks */,
+				A645D70735D238FB066F428A /* Pods */,
+				A5121AAE6891B2B4EB4F3D01 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -168,7 +162,6 @@
 		7CC24D4820CCF5640097C215 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				7CC24D4920CCF5640097C215 /* LivePhoto.swift */,
 				7CC24D4A20CCF5640097C215 /* ImageManager.swift */,
 				7CC24D4B20CCF5640097C215 /* System.swift */,
 			);
@@ -179,7 +172,6 @@
 			isa = PBXGroup;
 			children = (
 				7CC24D4D20CCF5640097C215 /* GenerateLiveWallpaperWithBarcode.swift */,
-				7CC24D4E20CCF5640097C215 /* LivePhotoMaker.swift */,
 				7CC24D4F20CCF5640097C215 /* VideoFromImages.swift */,
 			);
 			path = Utility;
@@ -210,23 +202,21 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		965F6411FB24F3B08F87FC17 /* Pods */ = {
+		A5121AAE6891B2B4EB4F3D01 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				386BF6C82E58A4E9F9A0DE77 /* Pods-SnapShare.debug.xcconfig */,
-				3B7D78584BCEB257CE22A588 /* Pods-SnapShare.release.xcconfig */,
-				491851837448443874F3F2D5 /* Pods-SuperSnapcode.debug.xcconfig */,
-				C5F21A10572D4C88880B5094 /* Pods-SuperSnapcode.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		A37220C4E3126C1DD4F47F65 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				59F2C87E651B25827EF23F47 /* Pods_SuperSnapcode.framework */,
+				6C250EC8C7A5D8BF60C59943 /* Pods_SuperSnapcode.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A645D70735D238FB066F428A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				409609EFC7E97C11860BA7EC /* Pods-SuperSnapcode.debug.xcconfig */,
+				B89FD77C7423C32F5D6F8BA0 /* Pods-SuperSnapcode.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,11 +226,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7CA4A77D20CCF2480087DFC0 /* Build configuration list for PBXNativeTarget "SuperSnapcode" */;
 			buildPhases = (
-				D9C8E703B72679CB207E7B51 /* [CP] Check Pods Manifest.lock */,
+				6B2F580549A9D0720C21623D /* [CP] Check Pods Manifest.lock */,
 				7CA4A76720CCF2470087DFC0 /* Sources */,
 				7CA4A76820CCF2470087DFC0 /* Frameworks */,
 				7CA4A76920CCF2470087DFC0 /* Resources */,
-				B173F4749A36439DE9F1898E /* [CP] Embed Pods Frameworks */,
+				7A52E13F79A6BC0968681400 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -263,7 +253,7 @@
 				TargetAttributes = {
 					7CA4A76A20CCF2470087DFC0 = {
 						CreatedOnToolsVersion = 9.4;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1140;
 					};
 				};
 			};
@@ -298,50 +288,43 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B173F4749A36439DE9F1898E /* [CP] Embed Pods Frameworks */ = {
+		6B2F580549A9D0720C21623D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SuperSnapcode/Pods-SuperSnapcode-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
-				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
-				"${BUILT_PRODUCTS_DIR}/SVGKit/SVGKit.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVGKit.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SuperSnapcode/Pods-SuperSnapcode-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D9C8E703B72679CB207E7B51 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-SuperSnapcode-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7A52E13F79A6BC0968681400 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SuperSnapcode/Pods-SuperSnapcode-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SuperSnapcode/Pods-SuperSnapcode-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SuperSnapcode/Pods-SuperSnapcode-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -357,7 +340,6 @@
 				7CC24D6420CCF5640097C215 /* SnapcodeEndpointRequest.swift in Sources */,
 				7CC24D6E20CCF5640097C215 /* ExportWallpaperViewController.swift in Sources */,
 				7CC24D6D20CCF5640097C215 /* FetchSnapcodeViewController.swift in Sources */,
-				7CC24D6720CCF5640097C215 /* LivePhoto.swift in Sources */,
 				7CC24D7120CCF5640097C215 /* PageViewController.swift in Sources */,
 				7CC24D5D20CCF5640097C215 /* String+.swift in Sources */,
 				7CC24D7020CCF5640097C215 /* CropWallpaperViewController.swift in Sources */,
@@ -375,7 +357,6 @@
 				7CC24D7620CCF5640097C215 /* SelectPhotoCollectionViewCell.swift in Sources */,
 				7CC24D6620CCF5640097C215 /* BitmojiSnapcodeEndpointRequest.swift in Sources */,
 				7CC24D5E20CCF5640097C215 /* UIBarButtonItem+.swift in Sources */,
-				7CC24D6B20CCF5640097C215 /* LivePhotoMaker.swift in Sources */,
 				7CA4A76F20CCF2470087DFC0 /* AppDelegate.swift in Sources */,
 				7CC24D6320CCF5640097C215 /* UIColor+.swift in Sources */,
 				7CC24D7420CCF5640097C215 /* AlbumTableViewCell.swift in Sources */,
@@ -514,40 +495,40 @@
 		};
 		7CA4A77E20CCF2480087DFC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 491851837448443874F3F2D5 /* Pods-SuperSnapcode.debug.xcconfig */;
+			baseConfigurationReference = 409609EFC7E97C11860BA7EC /* Pods-SuperSnapcode.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5M53C658XH;
 				INFOPLIST_FILE = "$(SRCROOT)/SuperSnapcode/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Abalonski.SnapShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		7CA4A77F20CCF2480087DFC0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C5F21A10572D4C88880B5094 /* Pods-SuperSnapcode.release.xcconfig */;
+			baseConfigurationReference = B89FD77C7423C32F5D6F8BA0 /* Pods-SuperSnapcode.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5M53C658XH;
 				INFOPLIST_FILE = "$(SRCROOT)/SuperSnapcode/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Abalonski.SnapShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

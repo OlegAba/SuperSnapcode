@@ -1,11 +1,3 @@
-//
-//  DeniedPhotoPermissionViewController.swift
-//  Live-Snap
-//
-//  Created by Oleg Abalonski on 3/16/18.
-//  Copyright © 2018 Oleg Abalonski. All rights reserved.
-//
-
 import UIKit
 import Photos
 

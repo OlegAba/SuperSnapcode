@@ -1,15 +1,8 @@
-//
-//  ExportWallpaperViewController.swift
-//  Live-Snap
-//
-//  Created by Oleg Abalonski on 1/18/18.
-//  Copyright © 2018 Oleg Abalonski. All rights reserved.
-//
-
 import UIKit
 import PhotosUI
 import AVKit
 import JGProgressHUD
+import LPLivePhotoGenerator
 
 class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
     
@@ -22,7 +15,7 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
     var saveSuccessBackgroundView: UIView!
     var saveErrorIndicator: JGProgressHUD!
     
-    var livePhoto: LivePhoto!
+    var livePhoto: LPLivePhoto!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +90,8 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
     func createLivePhoto() {
         FileManager.default.clearDocumentsDirectory()
         let livePhotoGenerator = GenerateLiveWallpaperWithBarcode(fileName: "live_wallpaper", wallpaperImage: System.shared.wallpaper!, barcodeImage: System.shared.snapcode!)
-        livePhotoGenerator.create { (livePhoto: LivePhoto?) in
+        
+        livePhotoGenerator.create { (livePhoto: LPLivePhoto?) in
             if let livePhoto = livePhoto {
                 DispatchQueue.main.async {
                     self.livePhoto = livePhoto
@@ -176,26 +170,27 @@ class ExportWallpaperViewController: UIViewController, PHLivePhotoViewDelegate {
     @objc func saveButtonWasPressed() {
         view.isUserInteractionEnabled = false
         
-        livePhoto.writeToPhotoLibrary { (success: Bool) in
+        livePhoto.writeToPhotoLibrary { (livePhoto: LPLivePhoto, error: Error?) in
             DispatchQueue.main.sync {
-                if success {
-                    self.showSaveSuccessPopUpView()
+                if let error = error {
+                    print(error)
+                    self.saveErrorIndicator.show(in: self.view, animated: true)
+                    self.saveErrorIndicator.dismiss(afterDelay: 1.5, animated: true)
+                    self.saveErrorIndicator.animation.animationFinished()
+                    let fetchSnapcodeViewController = FetchSnapcodeViewController()
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.7) {
+                        System.shared.imageToCrop = nil
+                        System.shared.snapcode = nil
+                        System.shared.wallpaper = nil
+                        System.shared.appDelegate().pageViewController?.setViewControllers([fetchSnapcodeViewController], direction: .forward, animated: true, completion: nil)
+                    }
                 } else {
-                        print("Error exporting livePhoto")
-                        self.saveErrorIndicator.show(in: self.view, animated: true)
-                        self.saveErrorIndicator.dismiss(afterDelay: 1.5, animated: true)
-                        self.saveErrorIndicator.animation.animationFinished()
-                        let fetchSnapcodeViewController = FetchSnapcodeViewController()
-                    
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.7) {
-                            System.shared.imageToCrop = nil
-                            System.shared.snapcode = nil
-                            System.shared.wallpaper = nil
-                            System.shared.appDelegate().pageViewController?.setViewControllers([fetchSnapcodeViewController], direction: .forward, animated: true, completion: nil)
-                        }
+                    self.showSaveSuccessPopUpView()
                 }
             }
         }
+        
     }
     
 }

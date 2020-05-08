@@ -1,12 +1,5 @@
-//
-//  ImageManager.swift
-//  Live-Snap
-//
-//  Created by Oleg Abalonski on 1/24/18.
-//  Copyright © 2018 Oleg Abalonski. All rights reserved.
-//
-
 import Photos
+import UIKit
 
 class PhotoAlbum {
     var name: String

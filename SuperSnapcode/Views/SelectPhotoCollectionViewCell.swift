@@ -1,11 +1,3 @@
-//
-//  SelectPhotoCollectionViewCell.swift
-//  Live-Snap
-//
-//  Created by Oleg Abalonski on 1/14/18.
-//  Copyright © 2018 Oleg Abalonski. All rights reserved.
-//
-
 import UIKit
 
 class SelectPhotoCollectionViewCell: UICollectionViewCell {
