@@ -13,11 +13,11 @@ class SnapcodeEndpointRequest {
         
         let url = "https://feelinsonice-hrd.appspot.com/web/deeplink/snapcode?username=\(snapchatUsername)&type=PNG&size=800"
 
-        Alamofire.request(url).validate().responseData { (response: DataResponse<Data>) in
+        AF.request(url).validate().responseData { (response: AFDataResponse<Data>) in
             
             switch response.result {
             case .success:
-                if let imageData = response.result.value {
+                if let imageData = response.data {
                     let image = UIImage(data: imageData)
                     completion(image)
                 } else {
@@ -34,8 +34,6 @@ class SnapcodeEndpointRequest {
                 
                 completion(nil)
             }
-        
         }
-    
     }
 }

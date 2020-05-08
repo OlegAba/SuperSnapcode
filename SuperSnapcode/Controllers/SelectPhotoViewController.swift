@@ -3,10 +3,10 @@ import Photos
 
 class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIToolbarDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    var collectionView: UICollectionView!
+    var photosCollectionView: UICollectionView!
     var toolBar: UIToolbar!
     var currentAlbumLabel: UILabel!
-    var tableView: UITableView!
+    var albumsTableView: UITableView!
     var statusBarView: UIView!
     
     var photoAlbums = [PhotoAlbum]()
@@ -40,23 +40,23 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         currentAlbumLabel.textColor = .white
         currentAlbumLabel.textAlignment = .center
         
-        collectionView = UICollectionView(frame: CGRect(x: 0, y: statusBarHeight, width: view.frame.width, height: view.frame.height - (statusBarHeight + toolBar.frame.height)), collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.register(SelectPhotoCollectionViewCell.self, forCellWithReuseIdentifier: "SelectPhotoCollectionViewCellReuseIdentifier")
-        collectionView.backgroundColor = UIColor.snapBlack
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        photosCollectionView = UICollectionView(frame: CGRect(x: 0, y: statusBarHeight, width: view.frame.width, height: view.frame.height - (statusBarHeight + toolBar.frame.height)), collectionViewLayout: UICollectionViewFlowLayout())
+        photosCollectionView.register(SelectPhotoCollectionViewCell.self, forCellWithReuseIdentifier: "SelectPhotoCollectionViewCellReuseIdentifier")
+        photosCollectionView.backgroundColor = UIColor.snapBlack
+        photosCollectionView.dataSource = self
+        photosCollectionView.delegate = self
         
-        tableView = UITableView(frame: CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height))
-        tableView.backgroundColor = UIColor.snapBlack
-        tableView.register(AlbumTableViewCell.self, forCellReuseIdentifier: "AlbumTableViewCellReuseIdentifier")
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.separatorColor = UIColor.snapYellow
-        tableView.preservesSuperviewLayoutMargins = false
-        tableView.separatorInset = UIEdgeInsets.zero
-        tableView.layoutMargins = UIEdgeInsets.zero
-        tableView.tableFooterView = UIView()
-        tableView.isHidden = true
+        albumsTableView = UITableView(frame: CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height))
+        albumsTableView.backgroundColor = UIColor.snapBlack
+        albumsTableView.register(AlbumTableViewCell.self, forCellReuseIdentifier: "AlbumTableViewCellReuseIdentifier")
+        albumsTableView.dataSource = self
+        albumsTableView.delegate = self
+        albumsTableView.separatorColor = UIColor.snapYellow
+        albumsTableView.preservesSuperviewLayoutMargins = false
+        albumsTableView.separatorInset = UIEdgeInsets.zero
+        albumsTableView.layoutMargins = UIEdgeInsets.zero
+        albumsTableView.tableFooterView = UIView()
+        albumsTableView.isHidden = true
         
         statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
         statusBarView.backgroundColor = UIColor.snapBlack
@@ -65,8 +65,8 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         if photoPremissionStatus == PHAuthorizationStatus.authorized {
             photoAlbums = ImageManager.shared.grabAllPhotoAlbums()
             currentPhotoAlbum = ImageManager.shared.findPhotoAlbum(photoAlbums: photoAlbums, name: currentAlbumLabel.text!)!
-            view.addSubview(collectionView)
-            view.addSubview(tableView)
+            view.addSubview(photosCollectionView)
+            view.addSubview(albumsTableView)
         }
         
         view.addSubview(statusBarView)
@@ -77,15 +77,15 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if !collectionView.isDescendant(of: view) {
+        if !photosCollectionView.isDescendant(of: view) {
             ImageManager.shared.requestPhotoLibraryPermission { (authorized: Bool) in
                 DispatchQueue.main.async {
                     if authorized {
                         self.photoAlbums = ImageManager.shared.grabAllPhotoAlbums()
                         self.currentPhotoAlbum = ImageManager.shared.findPhotoAlbum(photoAlbums: self.photoAlbums, name: self.currentAlbumLabel.text!)!
                         
-                        self.view.addSubview(self.collectionView)
-                        self.view.addSubview(self.tableView)
+                        self.view.addSubview(self.photosCollectionView)
+                        self.view.addSubview(self.albumsTableView)
                         self.view.bringSubviewToFront(self.toolBar)
                         self.view.bringSubviewToFront(self.currentAlbumLabel)
 
@@ -158,7 +158,7 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
         
         if (photoAlbums.count - 1) == indexPath.row {
             let initialSelectionIndexPath = IndexPath(row: 0, section: 0)
-            self.tableView.selectRow(at: initialSelectionIndexPath, animated: true, scrollPosition: .none)
+            self.albumsTableView.selectRow(at: initialSelectionIndexPath, animated: true, scrollPosition: .none)
         }
         
         return cell
@@ -166,32 +166,32 @@ class SelectPhotoViewController: UIViewController, UICollectionViewDataSource, U
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let currentCell = self.tableView.cellForRow(at: indexPath) as? AlbumTableViewCell, let selectedAlbumName = currentCell.albumTitleLabel.text else { return }
+        guard let currentCell = self.albumsTableView.cellForRow(at: indexPath) as? AlbumTableViewCell, let selectedAlbumName = currentCell.albumTitleLabel.text else { return }
         guard selectedAlbumName != currentAlbumLabel.text! else { self.animateTableView(); return }
         
         currentAlbumLabel.text = selectedAlbumName
         currentPhotoAlbum = ImageManager.shared.findPhotoAlbum(photoAlbums: self.photoAlbums, name: selectedAlbumName)
         
         animateTableView()
-        collectionView.reloadData()
-        collectionView.collectionViewLayout.invalidateLayout()
+        photosCollectionView.reloadData()
+        photosCollectionView.collectionViewLayout.invalidateLayout()
     }
     
     @objc func animateTableView() {
         view.isUserInteractionEnabled = false
         
-        if self.tableView.isHidden {
-            self.tableView.isHidden = false
+        if self.albumsTableView.isHidden {
+            self.albumsTableView.isHidden = false
             UIView.animate(withDuration: 0.3, animations: {
-                self.tableView.frame = CGRect(x: 0, y: self.statusBarHeight, width: self.view.frame.width, height: self.view.frame.height)
+                self.albumsTableView.frame = CGRect(x: 0, y: self.statusBarHeight, width: self.view.frame.width, height: self.view.frame.height)
             }, completion: { (finished: Bool) in
                 self.view.isUserInteractionEnabled = true
             })
         } else {
             UIView.animate(withDuration: 0.3, animations: {
-                self.tableView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: self.view.frame.height)
+                self.albumsTableView.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: self.view.frame.height)
             }, completion: { (finished: Bool) in
-                self.tableView.isHidden = true
+                self.albumsTableView.isHidden = true
                 self.view.isUserInteractionEnabled = true
             })
         }

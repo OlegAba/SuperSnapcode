@@ -13,13 +13,12 @@ class BitmojiImageEndpointRequest {
         
         let url = "https://feelinsonice-hrd.appspot.com/web/deeplink/snapcode?username=\(snapchatUsername)&type=SVG"
         
-        Alamofire.request(url).validate().responseString { (response: DataResponse<String>) in
-            
+        AF.request(url).validate().responseString { (response: AFDataResponse<String>) in
             
             switch response.result {
             case .success:
                 
-                if let responseString = response.result.value {
+                if let responseString = response.value {
                    
                     if let base64EndodedPNGString = responseString.stringBetweenSubstrings(beginSubstring: "data:image/png;base64,", endSubstring: "\""),
                     let imageData = Data(base64Encoded: base64EndodedPNGString) {
@@ -43,7 +42,6 @@ class BitmojiImageEndpointRequest {
                 
                 completion(nil)
             }
-            
         }
     }
 }

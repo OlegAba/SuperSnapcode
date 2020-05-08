@@ -14,19 +14,19 @@ class BitmojiSnapcodeEndpointRequest {
         
         let url = "https://feelinsonice-hrd.appspot.com/web/deeplink/snapcode?username=\(snapchatUsername)&type=SVG"
         
-        Alamofire.request(url).validate().responseData { (response: DataResponse<Data>) in
-            
+        AF.request(url).validate().responseData { (response: AFDataResponse<Data>) in
             
             switch response.result {
             case .success:
                 
-                if let imageData = response.result.value {
+                if let imageData = response.data {
                     let svgImage = SVGKImage(data: imageData)
                     let image = svgImage?.uiImage
                     completion(image)
                 } else {
                     completion(nil)
                 }
+                
             case .failure(let error):
                 completion(nil)
                 let statusCode = response.response?.statusCode
@@ -37,7 +37,6 @@ class BitmojiSnapcodeEndpointRequest {
                 print("Status Code: \(String(describing: statusCode))")
                 print("Error Message: \(errorMessage)")
             }
-            
         }
     }
 }
