@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -216,7 +216,6 @@
 				409609EFC7E97C11860BA7EC /* Pods-SuperSnapcode.debug.xcconfig */,
 				B89FD77C7423C32F5D6F8BA0 /* Pods-SuperSnapcode.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -254,7 +253,7 @@
 				TargetAttributes = {
 					7CA4A76A20CCF2470087DFC0 = {
 						CreatedOnToolsVersion = 9.4;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1140;
 					};
 				};
 			};
@@ -509,7 +508,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Abalonski.SnapShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -529,7 +528,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Abalonski.SnapShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

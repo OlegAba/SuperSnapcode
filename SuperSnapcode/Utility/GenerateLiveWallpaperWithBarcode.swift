@@ -31,7 +31,7 @@ class GenerateLiveWallpaperWithBarcode {
             // Create image path
             guard let livePhotoImage = videoFrames.first else { completion(nil); return }
             let livePhotoImageData = livePhotoImage.jpegData(compressionQuality: 1.0)
-            guard let _ = try? livePhotoImageData?.write(to: imageFilePathURL) else { completion(nil); return }
+            guard let _ = ((try? livePhotoImageData?.write(to: imageFilePathURL)) as ()??) else { completion(nil); return }
             
             LPLivePhotoGenerator.create(inputImagePath: imageFilePath, inputVideoPath: videoFilePath, completion: { (livePhoto: LPLivePhoto?, error: Error?) in
                 if let error = error {
