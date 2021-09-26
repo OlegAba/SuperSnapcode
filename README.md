@@ -1,6 +1,6 @@
 # SuperSnapcode - Live Snapcode Wallpaper Maker
 
-<p align="center"><a href="https://itunes.apple.com/us/app/supersnapcode-live-wallpaper/id1442173056?mt=8"><img src="https://raw.githubusercontent.com/GitHawkApp/GitHawk/master/images/app-store-badge.png" width="250" /></a></p>
+<p align="center"><a href="https://itunes.apple.com/us/app/supersnapcode-live-wallpaper/id1442173056?mt=8"><img src="https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2019-11-16&amp;kind=iossoftware&amp;bubble=ios_apps" width="250" /></a></p>
 
 SuperSnapcode allows users to turn their wallpaper into a live-wallpaper that presents their snapcode when pressed into. Users can show off their Bitmoji and allow other users to quickly add them as a friend, all without leaving their lock screen.
 
